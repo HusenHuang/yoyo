@@ -11,5 +11,13 @@
 
     <artifactId>yoyo-authority</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.husen</groupId>
+            <artifactId>yoyo-authority-core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
 
 </project>

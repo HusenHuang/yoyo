@@ -36,6 +36,13 @@
             <version>${project.parent.version}</version>
         </dependency>
 
+        <!-- mongo -->
+        <dependency>
+            <groupId>com.husen</groupId>
+            <artifactId>yoyo-redis</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
         <!-- web framework-->
         <dependency>
             <groupId>com.husen</groupId>

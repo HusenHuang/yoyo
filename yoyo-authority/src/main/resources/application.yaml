@@ -1,0 +1,18 @@
+server:
+  port: 81
+
+logging:
+  path: ${user.home}/${spring.application.name}
+  level:
+    root: info
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://mongo.limaila.com/ci-user
+      port: 27017
+  jackson:
+    default-property-inclusion: non_null
+  redis:
+    database: 0
+    url: redis://redis.limaila.com:6379
