@@ -29,12 +29,19 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- mongo-->
+        <!-- mongo -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+            <groupId>com.husen</groupId>
+            <artifactId>yoyo-mongo</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
 
+        <!-- web framework-->
+        <dependency>
+            <groupId>com.husen</groupId>
+            <artifactId>yoyo-web-framework</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>com.husen</groupId>

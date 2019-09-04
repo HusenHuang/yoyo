@@ -14,11 +14,6 @@ import lombok.ToString;
 public enum RTSubCode {
 
     /**
-     * RT:响应成功时
-     */
-    SUCCESS(0, "SUCCESS"),
-
-    /**
      * RT:响应失败时
      */
     FAIL(2, "EX_FAIL"),

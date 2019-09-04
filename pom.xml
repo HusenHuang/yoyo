@@ -18,6 +18,7 @@
         <module>yoyo-log</module>
         <module>yoyo-web-framework</module>
         <module>yoyo-mongo</module>
+        <module>yoyo-redis</module>
     </modules>
 
 

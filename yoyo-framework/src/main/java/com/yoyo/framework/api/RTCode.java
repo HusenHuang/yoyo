@@ -19,17 +19,28 @@ public enum RTCode {
     SUCCESS(0, "SUCCESS"),
 
     /**
-     * RT_EX:响应失败时
+     * 系统校验失败
      */
-    RT_EX_FAIL(1, "RT_EX_FAIL"),
+    RT_EX_FAIL(1, "系统校验失败"),
+
+    /**
+     * 系统链路异常
+     */
+    EX_FAIL(2, "系统链路异常"),
 
 
     /**
-     * EX: 响应失败
+     * 系统限流
      */
-    EX_FAIL(2, "EX_FAIL"),
+    LIMIT_FAIL(3, "系统限流"),
 
+
+    /**
+     * 系统获取锁失败
+     */
+    GET_LOCK_FAIL(4, "系统获取锁失败"),
     ;
+
 
     RTCode(Integer code, String msg) {
         this.code = code;

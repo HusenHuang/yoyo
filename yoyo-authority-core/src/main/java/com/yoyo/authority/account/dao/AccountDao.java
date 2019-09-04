@@ -1,5 +1,7 @@
 package com.yoyo.authority.account.dao;
 
+import com.yoyo.authority.account.pojo.AccountDTO;
+import com.yoyo.framework.mongo.MongoDao;
 import org.springframework.stereotype.Repository;
 
 /***
@@ -9,9 +11,7 @@ import org.springframework.stereotype.Repository;
  @VERSION: 1.0
  ***/
 @Repository
-public class AccountDao {
-
-
+public class AccountDao extends MongoDao<Integer, AccountDTO> {
 
 
 }
