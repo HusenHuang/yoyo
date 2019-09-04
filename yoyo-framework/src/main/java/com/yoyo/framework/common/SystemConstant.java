@@ -57,12 +57,12 @@ public class SystemConstant {
     public static final String HEADER_RQUEST_TYPE = "clientReqType";
 
     /**
-     * 空
+     * 系统-空
      */
     public static final String SYSTEM_EMPTY = "";
 
     /**
-     * 东八区
+     * 系统时区-东八区
      */
     public static final ZoneOffset SYSTEM_ZO = ZoneOffset.of("+8");
 }
