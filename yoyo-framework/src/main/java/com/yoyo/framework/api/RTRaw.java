@@ -1,6 +1,7 @@
 package com.yoyo.framework.api;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -11,6 +12,7 @@ import java.io.Serializable;
  @VERSION: 1.0
  ***/
 @Data
+@Accessors(chain = true)
 public class RTRaw<T> implements Serializable {
 
     /**
@@ -44,9 +46,4 @@ public class RTRaw<T> implements Serializable {
      * 链路追踪消息ID
      */
     private String traceId;
-
-    /**
-     * 异常信息内容
-     */
-    private String throwableMessage;
 }

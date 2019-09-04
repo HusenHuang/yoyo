@@ -1,5 +1,7 @@
 package com.yoyo.framework.common;
 
+import java.time.ZoneOffset;
+
 /***
  @Author:MrHuang
  @Date: 2019/7/12 15:23
@@ -32,4 +34,35 @@ public class SystemConstant {
      * DATE FORMAT
      */
     public static final String FORMAT_DATE_PATTERN = "yyyy-MM-dd";
+
+
+    /**
+     * 系统TraceId
+     */
+    public static final String SYSTEM_TRACE_ID = "X-B3-TraceId";
+
+    /**
+     * 系统SpanId
+     */
+    public static final String SYSTEM_SPAN_ID = "X-B3-SpanId";
+
+    /**
+     * 请求的TokenId
+     */
+    public static final String HEADER_TOKEN_ID = "tokenId";
+
+    /**
+     * 请求的类型
+     */
+    public static final String HEADER_RQUEST_TYPE = "clientReqType";
+
+    /**
+     * 空
+     */
+    public static final String SYSTEM_EMPTY = "";
+
+    /**
+     * 东八区
+     */
+    public static final ZoneOffset SYSTEM_ZO = ZoneOffset.of("+8");
 }

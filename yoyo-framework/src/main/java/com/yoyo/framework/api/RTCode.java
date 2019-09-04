@@ -19,9 +19,16 @@ public enum RTCode {
     SUCCESS(0, "SUCCESS"),
 
     /**
-     * RT:响应失败时
+     * RT_EX:响应失败时
      */
-    FAIL(-1, "FAIL"),
+    RT_EX_FAIL(1, "RT_EX_FAIL"),
+
+
+    /**
+     * EX: 响应失败
+     */
+    EX_FAIL(2, "EX_FAIL"),
+
     ;
 
     RTCode(Integer code, String msg) {

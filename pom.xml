@@ -12,15 +12,20 @@
 
     <modules>
         <module>yoyo-framework</module>
+        <module>yoyo-authority-api</module>
+        <module>yoyo-authority-core</module>
+        <module>yoyo-authority</module>
+        <module>yoyo-log</module>
+        <module>yoyo-web-framework</module>
     </modules>
 
 
 
     <properties>
         <java.version>1.8</java.version>
-        <spring-boot.version>2.1.6.RELEASE</spring-boot.version>
+        <spring-boot.version>2.1.7.RELEASE</spring-boot.version>
         <spring-cloud.version>Greenwich.SR1</spring-cloud.version>
-        <alibaba-cloud.version>0.9.0.RELEASE</alibaba-cloud.version>
+        <alibaba-cloud.version>2.1.0.RELEASE</alibaba-cloud.version>
         <dubbo.version>2.7.1</dubbo.version>
         <rocketmq-boot.version>2.0.3</rocketmq-boot.version>
         <ci.version>1.1</ci.version>
@@ -36,6 +41,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
             <!-- 整合springCloud-->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
@@ -44,13 +50,45 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+
             <!-- 整合aliCloud-->
             <dependency>
-                <groupId>org.springframework.cloud</groupId>
+                <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
                 <version>${alibaba-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+
+            <!-- Aapche Dubbo  -->
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-dependencies-bom</artifactId>
+                <version>${dubbo.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo</artifactId>
+                <version>${dubbo.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>javax.servlet</groupId>
+                        <artifactId>servlet-api</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <dependency>

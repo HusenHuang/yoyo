@@ -21,7 +21,7 @@ public enum RTSubCode {
     /**
      * RT:响应失败时
      */
-    FAIL(-1, "FAIL"),
+    FAIL(2, "EX_FAIL"),
     ;
 
     RTSubCode(Integer code, String msg) {

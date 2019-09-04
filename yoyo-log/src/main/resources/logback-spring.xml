@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- 读取application.properties的变量 -->
+    <springProperty scope="context" name="logPath" source="logging.path" defaultValue="app/logs"/>
+    <springProperty scope="context" name="applicationName" source="spring.application.name" defaultValue="undefined"/>
+    <springProperty scope="context" name="logLevel" source="logging.level.root" defaultValue="debug"/>
+
+    <!-- contextName -->
+    <contextName>${applicationName}</contextName>
+
+    <!-- 输出到桌面 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!--encoder 默认配置为PatternLayoutEncoder-->
+        <encoder>
+            <pattern>
+                [%X{X-B3-TraceId:-}] [%X{X-B3-SpanId:-}] [%d{yyyyMMdd:HH:mm:ss.SSS}] [%logger] [%thread] %-5level %msg%n
+            </pattern>
+            <charset>utf-8</charset>
+        </encoder>
+        <!--此日志appender是为开发使用，只配置最底级别，控制台输出的日志级别是大于或等于此级别的日志信息-->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>debug</level>
+        </filter>
+    </appender>
+
+    <!-- TRACE, DEBUG, INFO, WARN, ERROR, ALL, OFF -->
+    <!-- 生产环境下，将此级别配置为适合的级别，以免日志文件太多或影响程序性能 -->
+    <root level="${logLevel}">
+        <!-- 生产环境将请stdout,testfile去掉 -->
+        <appender-ref ref="STDOUT" />
+    </root>
+
+</configuration>
