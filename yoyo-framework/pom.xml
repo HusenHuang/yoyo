@@ -79,6 +79,14 @@
             <version>${commons-codec.version}</version>
         </dependency>
 
+        <!-- commons-lang3 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.9</version>
+        </dependency>
+
+
         <!-- jwt-->
         <dependency>
             <groupId>com.auth0</groupId>
