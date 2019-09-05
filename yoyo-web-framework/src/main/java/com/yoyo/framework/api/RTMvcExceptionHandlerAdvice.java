@@ -26,7 +26,7 @@ public class RTMvcExceptionHandlerAdvice {
     @ExceptionHandler(RTException.class)
     @ResponseStatus(code = HttpStatus.OK)
     public RTRaw handlerRTException(RTException ex) {
-        return RTRawWrite.error(ex);
+        return RTRawWrite.error(RTCode.RT_EX_FAIL.getCode(), RTCode.RT_EX_FAIL.getMsg(), ex.getMessage());
     }
 
 
@@ -39,7 +39,7 @@ public class RTMvcExceptionHandlerAdvice {
     @ResponseStatus(code = HttpStatus.OK)
     public RTRaw handlerException(Exception ex) {
         log.error("ExceptionHandlerAdvice handler exception ", ex);
-        return RTRawWrite.error(ex);
+        return RTRawWrite.error(RTCode.EX_FAIL.getCode(), RTCode.EX_FAIL.getMsg(), null);
     }
 
 
@@ -51,7 +51,7 @@ public class RTMvcExceptionHandlerAdvice {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(code = HttpStatus.OK)
     public RTRaw handlerMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
-        return RTRawWrite.subError(RTSubCode.FAIL.getCode(), ex.getBindingResult().getAllErrors().get(0).getDefaultMessage());
+        return RTRawWrite.error(RTCode.RT_EX_FAIL.getCode(), RTCode.RT_EX_FAIL.getMsg(), ex.getBindingResult().getAllErrors().get(0).getDefaultMessage());
     }
 
 

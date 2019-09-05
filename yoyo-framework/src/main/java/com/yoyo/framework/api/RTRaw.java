@@ -16,24 +16,17 @@ import java.io.Serializable;
 public class RTRaw<T> implements Serializable {
 
     /**
-     * 网关层code
+     * 业务CODE
      */
     private Integer code;
 
     /**
-     * 业务层code
-     * 当异常时候才返回
-     */
-    private Integer subCode;
-
-    /**
-     * 网关层msg
+     * 业务MSG
      */
     private String msg;
 
     /**
-     * 业务层msg
-     * 当异常时候才返回
+     * 业务SUB MSG
      */
     private String subMsg;
 
