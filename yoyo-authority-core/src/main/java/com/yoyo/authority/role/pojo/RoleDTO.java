@@ -4,6 +4,7 @@ import com.yoyo.framework.mongo.MongoVersion;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.io.Serializable;
@@ -18,6 +19,7 @@ import java.util.List;
  ***/
 @Data
 @Accessors(chain = true)
+@Document(collection = "t_role")
 public class RoleDTO implements Serializable {
 
     @Id

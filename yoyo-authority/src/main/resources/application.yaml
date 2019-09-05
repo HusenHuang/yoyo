@@ -9,7 +9,7 @@ logging:
 spring:
   data:
     mongodb:
-      uri: mongodb://mongo.limaila.com/yoyo-account
+      uri: mongodb://mongo.limaila.com/yoyo-authority
       port: 27017
   jackson:
     default-property-inclusion: non_null

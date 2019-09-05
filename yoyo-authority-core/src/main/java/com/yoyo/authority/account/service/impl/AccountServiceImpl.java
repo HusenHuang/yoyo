@@ -67,8 +67,8 @@ public class AccountServiceImpl implements IAccountService {
                 .setName(req.getName())
                 .setPassword(req.getPassword())
                 .setEmail(req.getEmail())
-                .setCreateTime(DateUtils.localDateTime2DateString(LocalDateTime.now()))
-                .setUpdateTime(DateUtils.localDateTime2DateString(LocalDateTime.now()))
+                .setCreateTime(DateUtils.localDateTime2TimeString(LocalDateTime.now()))
+                .setUpdateTime(DateUtils.localDateTime2TimeString(LocalDateTime.now()))
                 .setVersion("0");
         AccountDTO result = accountDao.insert(accountDTO);
         return BeanUtils.copy(result, AccountRegisterRsp.class);
