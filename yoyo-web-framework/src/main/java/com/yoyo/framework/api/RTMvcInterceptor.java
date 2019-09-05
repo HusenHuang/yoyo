@@ -30,6 +30,8 @@ public class RTMvcInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        String id = request.getSession().getId();
+        System.out.println("sessionId = " + id);
         RTMvcContext context = new RTMvcContext()
                 .setServerIp(IpUtils.getInstance().getServerIP())
                 .setClientIp(IpUtils.getInstance().getClientIP(request))

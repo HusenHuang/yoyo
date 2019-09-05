@@ -15,4 +15,6 @@ spring:
     default-property-inclusion: non_null
   redis:
     database: 0
-    url: redis://redis.limaila.com:6379
+    password: hxc
+    host: redis.limaila.com
+    port: 6379

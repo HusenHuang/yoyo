@@ -27,7 +27,7 @@ public class PrintMethodAspect {
     /**
      * 定义切入点
      */
-    @Pointcut("@annotation(com.husen.ci.framework.annotation.PrintMethod)")
+    @Pointcut("@annotation(com.yoyo.framework.PrintMethod)")
     public void printMethodAnnotationPointcut() {
     }
 

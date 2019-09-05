@@ -2,6 +2,8 @@ package com.yoyo.authority;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScans;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
@@ -15,7 +17,10 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 @SpringBootApplication
 @EnableAspectJAutoProxy(proxyTargetClass = true, exposeProxy = true)
 @EnableScheduling
-@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 86400)
+@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 3600)
+@ComponentScans(value = {
+        @ComponentScan("com.yoyo.framework")
+})
 public class AuthorityApplication {
 
     public static void main(String[] args) {
