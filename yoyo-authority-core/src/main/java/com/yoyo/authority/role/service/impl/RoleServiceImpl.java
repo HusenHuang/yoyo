@@ -4,6 +4,7 @@ import com.yoyo.authority.role.dao.RoleDao;
 import com.yoyo.authority.role.pojo.RoleDTO;
 import com.yoyo.authority.role.service.IRoleService;
 import com.yoyo.framework.date.DateUtils;
+import com.yoyo.framework.exception.RTException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -47,11 +48,22 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
-    public boolean addRole(String name) {
-        RoleDTO roleDTO = new RoleDTO().setName(name).setRoleStatus(0)
+    public boolean addRole(String name, String remark) {
+        RoleDTO roleDTO = new RoleDTO().setName(name).setRemark(remark).setRoleStatus(0)
                 .setCreateTime(DateUtils.localDateTime2TimeString(LocalDateTime.now()))
                 .setUpdateTime(DateUtils.localDateTime2DateString(LocalDateTime.now()));
         RoleDTO result = this.add(roleDTO);
         return result != null;
+    }
+
+    @Override
+    public boolean updateRole(String id, String name, String remark) {
+        RoleDTO roleDTO = this.get(id);
+        if (roleDTO == null) {
+            throw new RTException("角色不存在");
+        }
+        roleDTO.setName(name);
+        roleDTO.setRemark(remark);
+        return this.update(roleDTO);
     }
 }

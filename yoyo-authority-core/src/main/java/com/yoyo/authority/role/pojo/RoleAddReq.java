@@ -18,4 +18,6 @@ public class RoleAddReq implements Serializable {
 
     @NotBlank(message = "角色名称不能为空")
     private String name;
+
+    private String remark;
 }

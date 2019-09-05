@@ -11,5 +11,8 @@ import com.yoyo.framework.api.IRTWithVersionService;
  ***/
 public interface IRoleService extends IRTWithVersionService<String, RoleDTO> {
 
-    boolean addRole(String name);
+    boolean addRole(String name, String remark);
+
+    boolean updateRole(String id ,String name, String remark);
+
 }

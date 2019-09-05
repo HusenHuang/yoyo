@@ -3,31 +3,24 @@ package com.yoyo.authority.role.pojo;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.List;
 
 /***
  @Author:MrHuang
- @Date: 2019/9/4 10:48
+ @Date: 2019/9/5 17:59
  @DESC: TODO
  @VERSION: 1.0
  ***/
 @Data
 @Accessors(chain = true)
-public class RoleDTO implements Serializable {
+public class RoleUpdateReq implements Serializable {
 
+    @NotBlank(message = "角色ID不能为空")
     private String rid;
 
+    @NotBlank(message = "角色名称不能为空")
     private String name;
 
     private String remark;
-
-    private Integer roleStatus;
-
-    private List<Integer> bindMenuId;
-
-    private String createTime;
-
-    private String updateTime;
 }
