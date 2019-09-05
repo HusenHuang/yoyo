@@ -1,5 +1,6 @@
 package com.yoyo.authority.account.pojo;
 
+import com.yoyo.framework.mongo.MongoVersion;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
@@ -44,8 +45,11 @@ public class AccountDTO implements Serializable {
     private Integer bindRoleId;
 
     @Field
-    private LocalDateTime createTime;
+    private String createTime;
 
     @Field
-    private LocalDateTime updateTime;
+    private String updateTime;
+
+    @MongoVersion
+    private String version;
 }

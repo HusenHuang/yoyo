@@ -3,24 +3,23 @@ package com.yoyo.authority.account.pojo;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /***
  @Author:MrHuang
- @Date: 2019/9/5 11:04
+ @Date: 2019/9/5 14:17
  @DESC: TODO
  @VERSION: 1.0
  ***/
 @Data
 @Accessors(chain = true)
-public class AccountRegisterRsp implements Serializable {
+public class AccountLoginReq implements Serializable {
 
     private String name;
 
-    private Integer activeState;
-
     private String email;
 
-    private LocalDateTime createTime;
+    @NotBlank(message = "密码不能为空")
+    private String password;
 }

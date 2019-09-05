@@ -1,6 +1,8 @@
 package com.yoyo.framework.api;
 
 import com.yoyo.framework.exception.RTException;
+import com.yoyo.framework.exception.RTGetLockException;
+import com.yoyo.framework.exception.RTLimitException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -41,6 +43,31 @@ public class RTMvcExceptionHandlerAdvice {
         return RTRawWrite.error(RTCode.RT_EX_FAIL.getCode(), RTCode.RT_EX_FAIL.getMsg(), ex.getBindingResult().getAllErrors().get(0).getDefaultMessage());
     }
 
+    /**
+     * 限流异常
+     * @param ex
+     * @return
+     */
+    @ExceptionHandler(RTLimitException.class)
+    @ResponseStatus(code = HttpStatus.OK)
+    public RTRaw handlerRTLimitException(RTLimitException ex) {
+        log.error("ExceptionHandlerAdvice handler RTLimitException ", ex);
+        return RTRawWrite.error(RTCode.LIMIT_FAIL.getCode(), RTCode.LIMIT_FAIL.getMsg(), ex.getMessage());
+    }
+
+
+    /**
+     * 并发获取锁异常
+     * @param ex
+     * @return
+     */
+    @ExceptionHandler(RTGetLockException.class)
+    @ResponseStatus(code = HttpStatus.OK)
+    public RTRaw handlerRTGetLockException(RTGetLockException ex) {
+        log.error("ExceptionHandlerAdvice handler RTGetLockException ", ex);
+        return RTRawWrite.error(RTCode.GET_LOCK_FAIL.getCode(), RTCode.GET_LOCK_FAIL.getMsg(), ex.getMessage());
+    }
+
 
     /**
      * 全局异常处理
@@ -50,7 +77,7 @@ public class RTMvcExceptionHandlerAdvice {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(code = HttpStatus.OK)
     public RTRaw handlerException(Exception ex) {
-        log.error("ExceptionHandlerAdvice handler exception ", ex);
+        log.error("ExceptionHandlerAdvice handler Exception ", ex);
         return RTRawWrite.error(RTCode.EX_FAIL.getCode(), RTCode.EX_FAIL.getMsg(), RTCode.EX_FAIL.getMsg());
     }
 

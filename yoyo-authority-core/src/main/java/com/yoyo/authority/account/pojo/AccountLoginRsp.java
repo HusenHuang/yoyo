@@ -8,13 +8,15 @@ import java.time.LocalDateTime;
 
 /***
  @Author:MrHuang
- @Date: 2019/9/5 11:04
+ @Date: 2019/9/5 14:18
  @DESC: TODO
  @VERSION: 1.0
  ***/
 @Data
 @Accessors(chain = true)
-public class AccountRegisterRsp implements Serializable {
+public class AccountLoginRsp implements Serializable {
+
+    private String tokenId;
 
     private String name;
 

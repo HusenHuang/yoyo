@@ -12,8 +12,10 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.Assert;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.Optional;
 
 /***
  @Author:MrHuang
@@ -59,14 +61,31 @@ public class MongoDao<K,V> {
     }
 
     /**
-     * 更新
+     * 强制更新
      * @param v
      * @return
      */
     public UpdateResult updateById(V v) {
         Update update = Update.fromDocument(Document.parse(JSONUtils.object2Json(v)));
-        Object fieldValue = ReflectUtil.getFieldValue(v, Id.class);
-        return mongoTemplate.updateFirst(Query.query(Criteria.where("_id").is(fieldValue)), update, v.getClass());
+        Object id = ReflectUtil.getFieldValue(v, Id.class);
+        return mongoTemplate.updateFirst(Query.query(Criteria.where("_id").is(id)), update, v.getClass());
+    }
+
+    /**
+     * 乐观锁更新
+     * @param v
+     * @return
+     */
+    public UpdateResult updateByIdWithVersion(V v) {
+        Object id = ReflectUtil.getFieldValue(v, Id.class);
+        ReflectUtil.FieldNameValue version = ReflectUtil.getFieldNameValue(v, MongoVersion.class);
+        Assert.notNull(version, "MongoVersion not find");
+        Object fieldValue = Optional.ofNullable(version.getFieldValue()).orElse("0");
+        Criteria criteria = Criteria.where("_id").is(id).and(version.getFieldName()).is(fieldValue);
+        // 版本号+1
+        ReflectUtil.setFieldValue(v, version.getFieldName(), (Integer.parseInt(fieldValue.toString()) + 1) + "");
+        Update update = Update.fromDocument(Document.parse(JSONUtils.object2Json(v)));
+        return mongoTemplate.updateFirst(Query.query(criteria), update, v.getClass());
     }
 
     /**

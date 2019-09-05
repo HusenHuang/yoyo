@@ -1,8 +1,6 @@
 package com.yoyo.authority.account.service;
 
-import com.yoyo.authority.account.pojo.AccountDTO;
-import com.yoyo.authority.account.pojo.AccountRegisterReq;
-import com.yoyo.authority.account.pojo.AccountRegisterRsp;
+import com.yoyo.authority.account.pojo.*;
 import com.yoyo.framework.api.IRTService;
 
 /***
@@ -15,4 +13,5 @@ public interface IAccountService extends IRTService<String, AccountDTO> {
 
     AccountRegisterRsp register(AccountRegisterReq req);
 
+    AccountLoginRsp login(AccountLoginReq req);
 }
