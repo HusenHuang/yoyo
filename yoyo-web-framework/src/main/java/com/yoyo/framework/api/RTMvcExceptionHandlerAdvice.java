@@ -29,6 +29,18 @@ public class RTMvcExceptionHandlerAdvice {
         return RTRawWrite.error(RTCode.RT_EX_FAIL.getCode(), RTCode.RT_EX_FAIL.getMsg(), ex.getMessage());
     }
 
+    /**
+     * 这种错误一般是提示，认为非异常
+     * 参数校验异常
+     * @param ex
+     * @return
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(code = HttpStatus.OK)
+    public RTRaw handlerMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+        return RTRawWrite.error(RTCode.RT_EX_FAIL.getCode(), RTCode.RT_EX_FAIL.getMsg(), ex.getBindingResult().getAllErrors().get(0).getDefaultMessage());
+    }
+
 
     /**
      * 全局异常处理
@@ -39,20 +51,11 @@ public class RTMvcExceptionHandlerAdvice {
     @ResponseStatus(code = HttpStatus.OK)
     public RTRaw handlerException(Exception ex) {
         log.error("ExceptionHandlerAdvice handler exception ", ex);
-        return RTRawWrite.error(RTCode.EX_FAIL.getCode(), RTCode.EX_FAIL.getMsg(), null);
+        return RTRawWrite.error(RTCode.EX_FAIL.getCode(), RTCode.EX_FAIL.getMsg(), RTCode.EX_FAIL.getMsg());
     }
 
 
-    /**
-     * 参数校验异常
-     * @param ex
-     * @return
-     */
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(code = HttpStatus.OK)
-    public RTRaw handlerMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
-        return RTRawWrite.error(RTCode.RT_EX_FAIL.getCode(), RTCode.RT_EX_FAIL.getMsg(), ex.getBindingResult().getAllErrors().get(0).getDefaultMessage());
-    }
+
 
 
 }

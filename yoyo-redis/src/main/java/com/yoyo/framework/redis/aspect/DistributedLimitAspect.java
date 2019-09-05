@@ -1,5 +1,6 @@
 package com.yoyo.framework.redis.aspect;
 
+import com.yoyo.framework.api.RTCode;
 import com.yoyo.framework.exception.RTLimitException;
 import com.yoyo.framework.redis.DistributedLimitUtils;
 import com.yoyo.framework.redis.annotation.DistributedLimit;
@@ -44,7 +45,7 @@ public class DistributedLimitAspect {
         boolean isLimit = DistributedLimitUtils.isLimit(distributedLimitKey, limitNum, expireSecond);
         log.info("DistributedLimitAspect isLimit = {}", isLimit);
         if (isLimit) {
-            throw new RTLimitException();
+            throw new RTLimitException(RTCode.LIMIT_FAIL.getMsg());
         }
     }
 }

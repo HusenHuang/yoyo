@@ -8,9 +8,9 @@ import com.yoyo.framework.api.RTCode;
  @DESC: TODO
  @VERSION: 1.0
  ***/
-public class RTGetLockException extends RTException {
+public class RTGetLockException extends RuntimeException {
 
-    public RTGetLockException() {
-        super(RTCode.GET_LOCK_FAIL.getCode(), RTCode.GET_LOCK_FAIL.getMsg());
+    public RTGetLockException(String message) {
+        super(message);
     }
 }

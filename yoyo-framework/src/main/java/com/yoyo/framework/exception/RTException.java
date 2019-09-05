@@ -13,21 +13,7 @@ import lombok.ToString;
 @ToString
 public class RTException extends RuntimeException {
 
-    private int code;
-
-    private String msg;
-
-    public RTException(int code ,String msg) {
-        super(msg);
-        this.code = code;
-        this.msg = msg;
+    public RTException(String message) {
+        super(message);
     }
-
-    public RTException(int code, Throwable cause) {
-        super(cause);
-        this.code = code;
-        this.msg = cause.getMessage();
-    }
-
-
 }

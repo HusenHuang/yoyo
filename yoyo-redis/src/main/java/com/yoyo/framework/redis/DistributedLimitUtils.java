@@ -1,5 +1,6 @@
 package com.yoyo.framework.redis;
 
+import com.yoyo.framework.api.RTCode;
 import com.yoyo.framework.exception.RTLimitException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +71,7 @@ public class DistributedLimitUtils {
         if (isLimit(limitKey, limitNum, expireSecond)) {
             call.call();
         } else {
-            throw new RTLimitException();
+            throw new RTLimitException(RTCode.LIMIT_FAIL.getMsg());
         }
     }
 }

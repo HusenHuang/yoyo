@@ -1,5 +1,6 @@
 package com.yoyo.framework.redis.aspect;
 
+import com.yoyo.framework.api.RTCode;
 import com.yoyo.framework.exception.RTGetLockException;
 import com.yoyo.framework.redis.DistributedLockUtils;
 import com.yoyo.framework.redis.annotation.DistributedLock;
@@ -55,7 +56,7 @@ public class DistributedLockAspect {
         }
         // 锁获取失败 直接抛出异常
         if (!isGetLock) {
-            throw new RTGetLockException();
+            throw new RTGetLockException(RTCode.GET_LOCK_FAIL.getMsg());
         }
         // 2. 执行代码逻辑
         Object result = null;
