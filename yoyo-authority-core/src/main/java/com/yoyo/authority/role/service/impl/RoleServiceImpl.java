@@ -51,7 +51,8 @@ public class RoleServiceImpl implements IRoleService {
     public boolean addRole(String name, String remark) {
         RoleDTO roleDTO = new RoleDTO().setName(name).setRemark(remark).setRoleStatus(0)
                 .setCreateTime(DateUtils.localDateTime2TimeString(LocalDateTime.now()))
-                .setUpdateTime(DateUtils.localDateTime2DateString(LocalDateTime.now()));
+                .setUpdateTime(DateUtils.localDateTime2DateString(LocalDateTime.now()))
+                .setVersion("0");
         RoleDTO result = this.add(roleDTO);
         return result != null;
     }
@@ -64,6 +65,6 @@ public class RoleServiceImpl implements IRoleService {
         }
         roleDTO.setName(name);
         roleDTO.setRemark(remark);
-        return this.update(roleDTO);
+        return this.updateWithVersion(roleDTO);
     }
 }
