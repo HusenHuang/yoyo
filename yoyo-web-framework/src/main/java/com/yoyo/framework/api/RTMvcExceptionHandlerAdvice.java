@@ -5,6 +5,7 @@ import com.yoyo.framework.exception.RTGetLockException;
 import com.yoyo.framework.exception.RTLimitException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -28,7 +29,7 @@ public class RTMvcExceptionHandlerAdvice {
     @ExceptionHandler(RTException.class)
     @ResponseStatus(code = HttpStatus.OK)
     public RTRaw handlerRTException(RTException ex) {
-        return RTRawWrite.error(RTCode.RT_EX_FAIL.getCode(), RTCode.RT_EX_FAIL.getMsg(), ex.getMessage());
+        return RTRawWrite.error(RTCode.REQ_PARAM_CHECK_ERROR.getCode(), RTCode.REQ_PARAM_CHECK_ERROR.getMsg(), ex.getMessage());
     }
 
     /**
@@ -40,7 +41,7 @@ public class RTMvcExceptionHandlerAdvice {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(code = HttpStatus.OK)
     public RTRaw handlerMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
-        return RTRawWrite.error(RTCode.RT_EX_FAIL.getCode(), RTCode.RT_EX_FAIL.getMsg(), ex.getBindingResult().getAllErrors().get(0).getDefaultMessage());
+        return RTRawWrite.error(RTCode.REQ_PARAM_CHECK_ERROR.getCode(), RTCode.REQ_PARAM_CHECK_ERROR.getMsg(), ex.getBindingResult().getAllErrors().get(0).getDefaultMessage());
     }
 
     /**
@@ -81,6 +82,17 @@ public class RTMvcExceptionHandlerAdvice {
         return RTRawWrite.error(RTCode.EX_FAIL.getCode(), RTCode.EX_FAIL.getMsg(), RTCode.EX_FAIL.getMsg());
     }
 
+    /**
+     * 全局异常处理
+     * @param ex
+     * @return
+     */
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ResponseStatus(code = HttpStatus.OK)
+    public RTRaw handlerHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
+        log.error("ExceptionHandlerAdvice handler HttpMessageNotReadableException ", ex);
+        return RTRawWrite.error(RTCode.REQ_BODY_CHECK_ERROR.getCode(), RTCode.REQ_BODY_CHECK_ERROR.getMsg(), RTCode.REQ_BODY_CHECK_ERROR.getMsg());
+    }
 
 
 

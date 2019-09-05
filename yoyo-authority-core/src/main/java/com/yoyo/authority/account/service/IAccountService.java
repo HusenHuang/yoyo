@@ -2,6 +2,7 @@ package com.yoyo.authority.account.service;
 
 import com.yoyo.authority.account.pojo.*;
 import com.yoyo.framework.api.IRTService;
+import com.yoyo.framework.api.IRTWithVersionService;
 
 /***
  @Author:MrHuang
@@ -9,7 +10,7 @@ import com.yoyo.framework.api.IRTService;
  @DESC: TODO
  @VERSION: 1.0
  ***/
-public interface IAccountService extends IRTService<String, AccountDTO> {
+public interface IAccountService extends IRTWithVersionService<String, AccountDTO> {
 
     AccountRegisterRsp register(AccountRegisterReq req);
 

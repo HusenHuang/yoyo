@@ -48,6 +48,11 @@ public class AccountServiceImpl implements IAccountService {
     }
 
     @Override
+    public boolean updateWithVersion(AccountDTO accountDTO) {
+        return accountDao.updateByIdWithVersion(accountDTO).getModifiedCount() > 0;
+    }
+
+    @Override
     public AccountRegisterRsp register(AccountRegisterReq req) {
         if (!CheckUtils.isEmail(req.getEmail())) {
             throw new RTException("邮箱格式不对");
@@ -87,4 +92,6 @@ public class AccountServiceImpl implements IAccountService {
         rsp.setTokenId(JwtUtils.encode(accountDTO.getAid()));
         return rsp;
     }
+
+
 }
