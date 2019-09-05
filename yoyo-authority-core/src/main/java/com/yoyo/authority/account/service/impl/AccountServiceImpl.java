@@ -85,8 +85,6 @@ public class AccountServiceImpl implements IAccountService {
         }
         AccountLoginRsp rsp = BeanUtils.copy(accountDTO, AccountLoginRsp.class);
         rsp.setTokenId(JwtUtils.encode(accountDTO.getAid()));
-        UpdateResult updateResult = accountDao.updateByIdWithVersion(accountDTO);
-        System.out.println(updateResult);
         return rsp;
     }
 }
