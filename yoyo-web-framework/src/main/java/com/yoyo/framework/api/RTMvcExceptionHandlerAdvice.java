@@ -3,6 +3,7 @@ package com.yoyo.framework.api;
 import com.yoyo.framework.exception.RTException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -39,6 +40,18 @@ public class RTMvcExceptionHandlerAdvice {
     public RTRaw handlerException(Exception ex) {
         log.error("ExceptionHandlerAdvice handler exception ", ex);
         return RTRawWrite.error(ex);
+    }
+
+
+    /**
+     * 参数校验异常
+     * @param ex
+     * @return
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(code = HttpStatus.OK)
+    public RTRaw handlerMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+        return RTRawWrite.subError(RTSubCode.FAIL.getCode(), ex.getBindingResult().getAllErrors().get(0).getDefaultMessage());
     }
 
 

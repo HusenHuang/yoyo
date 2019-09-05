@@ -20,15 +20,6 @@ public class RTRawWrite {
                 .setPayLoad(payload);
     }
 
-    public static RTRaw error(RTException ex) {
-        return new RTRaw()
-                .setCode(RTCode.RT_EX_FAIL.getCode())
-                .setMsg(RTCode.RT_EX_FAIL.getMsg())
-                .setSubCode(ex.getCode())
-                .setSubMsg(ex.getMsg())
-                .setTraceId(MDC.get(SystemConstant.SYSTEM_TRACE_ID));
-    }
-
     public static RTRaw error(Exception ex) {
         return new RTRaw()
                 .setCode(RTCode.EX_FAIL.getCode())
@@ -36,10 +27,18 @@ public class RTRawWrite {
                 .setTraceId(MDC.get(SystemConstant.SYSTEM_TRACE_ID));
     }
 
-    public static RTRaw limitError() {
+    public static RTRaw subError(RTException ex) {
+        return subError(ex.getCode(), ex.getMsg());
+    }
+
+    public static RTRaw subError(Integer subCode, String subMsg) {
         return new RTRaw()
-                .setCode(RTCode.LIMIT_FAIL.getCode())
-                .setMsg(RTCode.LIMIT_FAIL.getMsg())
+                .setCode(RTCode.RT_EX_FAIL.getCode())
+                .setMsg(RTCode.RT_EX_FAIL.getMsg())
+                .setSubCode(subCode)
+                .setSubMsg(subMsg)
                 .setTraceId(MDC.get(SystemConstant.SYSTEM_TRACE_ID));
     }
+
+
 }

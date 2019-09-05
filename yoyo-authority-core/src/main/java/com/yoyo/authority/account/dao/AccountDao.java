@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
  @VERSION: 1.0
  ***/
 @Repository
-public class AccountDao extends MongoDao<Integer, AccountDTO> {
+public class AccountDao extends MongoDao<String, AccountDTO> {
 
 
 }
