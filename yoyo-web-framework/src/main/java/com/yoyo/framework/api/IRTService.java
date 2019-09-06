@@ -8,11 +8,11 @@ package com.yoyo.framework.api;
  ***/
 public interface IRTService<K, V> {
 
-    V add(V accountDTO);
+    V add(V v);
 
     V get(K id);
 
-    boolean update(V accountDTO);
+    boolean update(V v);
 
     boolean delete(K id);
 }

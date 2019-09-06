@@ -42,7 +42,7 @@ public class AccountDTO implements Serializable {
     private String email;
 
     @Field
-    private Integer bindRoleId;
+    private String bindRoleId;
 
     @Field
     private String createTime;

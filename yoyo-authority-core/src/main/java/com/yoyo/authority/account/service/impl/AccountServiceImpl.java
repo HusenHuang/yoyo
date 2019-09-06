@@ -93,5 +93,17 @@ public class AccountServiceImpl implements IAccountService {
         return rsp;
     }
 
+    @Override
+    public AccountBindRoleRsp bindRole(AccountBindRoleReq req) {
+        String aid = JwtUtils.decode(req.getTokenId());
+        AccountDTO accountDTO = this.get(aid);
+        if (accountDTO == null) {
+            throw new RTException("账号不存在");
+        }
+        accountDTO.setBindRoleId(req.getRid());
+        boolean result = this.updateWithVersion(accountDTO);
+        return new AccountBindRoleRsp().setOpStatus(result);
+    }
+
 
 }

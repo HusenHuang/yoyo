@@ -15,4 +15,6 @@ public interface IAccountService extends IRTWithVersionService<String, AccountDT
     AccountRegisterRsp register(AccountRegisterReq req);
 
     AccountLoginRsp login(AccountLoginReq req);
+
+    AccountBindRoleRsp bindRole(AccountBindRoleReq req);
 }
