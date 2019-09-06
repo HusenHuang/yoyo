@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /***
  @Author:MrHuang
@@ -35,6 +36,11 @@ public class AccountServiceImpl implements IAccountService {
     @Override
     public AccountDTO get(String aid) {
         return accountDao.findById(aid);
+    }
+
+    @Override
+    public List<AccountDTO> list(String... ids) {
+        return accountDao.findByIds(ids);
     }
 
     @Override

@@ -3,12 +3,15 @@ package com.yoyo.authority.menu.service.impl;
 import com.yoyo.authority.menu.dao.MenuDao;
 import com.yoyo.authority.menu.pojo.MenuDTO;
 import com.yoyo.authority.menu.pojo.MenuGetRsp;
+import com.yoyo.authority.menu.pojo.MenuVO;
 import com.yoyo.authority.menu.service.IMenuService;
 import com.yoyo.framework.exception.RTException;
 import com.yoyo.framework.utils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 /***
  @Author:MrHuang
@@ -36,6 +39,11 @@ public class MenuServiceImpl implements IMenuService {
     @Override
     public MenuDTO get(String id) {
         return menuDao.findById(id);
+    }
+
+    @Override
+    public List<MenuDTO> list(String... ids) {
+        return menuDao.findByIds(ids);
     }
 
     @Override
@@ -73,7 +81,8 @@ public class MenuServiceImpl implements IMenuService {
     @Override
     public MenuGetRsp getMenu(String mid) {
         MenuDTO menuDTO = this.get(mid);
-        return BeanUtils.copy(menuDTO, MenuGetRsp.class);
+        MenuVO menuVO = BeanUtils.copy(menuDTO, MenuVO.class);
+        return new MenuGetRsp().setMenu(menuVO);
     }
 
     @Override

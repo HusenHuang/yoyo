@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.List;
 import java.util.Optional;
 
 /***
@@ -58,6 +59,15 @@ public class MongoDao<K,V> {
     public V findById(K id) {
         writeClassType();
         return mongoTemplate.findById(id, vClass);
+    }
+
+    /**
+     * 根据ID批量查询
+     * @param ids
+     * @return
+     */
+    public List<V> findByIds(K ... ids) {
+        return mongoTemplate.find(Query.query(Criteria.where("_id").in(ids)), vClass);
     }
 
     /**

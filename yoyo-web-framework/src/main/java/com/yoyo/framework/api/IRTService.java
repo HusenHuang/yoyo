@@ -1,5 +1,7 @@
 package com.yoyo.framework.api;
 
+import java.util.List;
+
 /***
  @Author:MrHuang
  @Date: 2019/9/5 10:57
@@ -11,6 +13,8 @@ public interface IRTService<K, V> {
     V add(V v);
 
     V get(K id);
+
+    List<V> list(K ... ids);
 
     boolean update(V v);
 

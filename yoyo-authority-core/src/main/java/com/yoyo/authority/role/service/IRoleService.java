@@ -1,6 +1,7 @@
 package com.yoyo.authority.role.service;
 
 import com.yoyo.authority.role.pojo.RoleDTO;
+import com.yoyo.authority.role.pojo.RoleMenuGetRsp;
 import com.yoyo.framework.api.IRTWithVersionService;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface IRoleService extends IRTWithVersionService<String, RoleDTO> {
     boolean updateRole(String id ,String name, String remark);
 
     boolean bindMenu(String id, List<String> menuIdList);
+
+    RoleMenuGetRsp getRoleMenu(String rid);
 }

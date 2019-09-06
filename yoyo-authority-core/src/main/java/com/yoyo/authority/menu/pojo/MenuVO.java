@@ -7,13 +7,21 @@ import java.io.Serializable;
 
 /***
  @Author:MrHuang
- @Date: 2019/9/6 14:32
+ @Date: 2019/9/6 15:18
  @DESC: TODO
  @VERSION: 1.0
  ***/
 @Data
 @Accessors(chain = true)
-public class MenuGetRsp implements Serializable {
+public class MenuVO implements Serializable {
 
-    private MenuVO menu;
+    private String parentId;
+
+    private String name;
+
+    private String path;
+
+    private Integer menuStatus;
+
+    private Integer ordered;
 }
