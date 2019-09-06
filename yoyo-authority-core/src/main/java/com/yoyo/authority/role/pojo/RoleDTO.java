@@ -35,7 +35,7 @@ public class RoleDTO implements Serializable {
     private Integer roleStatus;
 
     @Field
-    private List<Integer> bindMenuId;
+    private List<String> bindMenuId;
 
     @Field
     private String createTime;

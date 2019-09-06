@@ -2,9 +2,13 @@ package com.yoyo.authority.menu.service.impl;
 
 import com.yoyo.authority.menu.dao.MenuDao;
 import com.yoyo.authority.menu.pojo.MenuDTO;
+import com.yoyo.authority.menu.pojo.MenuGetRsp;
 import com.yoyo.authority.menu.service.IMenuService;
 import com.yoyo.framework.exception.RTException;
+import com.yoyo.framework.utils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 /***
  @Author:MrHuang
@@ -12,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  @DESC: TODO
  @VERSION: 1.0
  ***/
+@Service
 public class MenuServiceImpl implements IMenuService {
 
     @Autowired
@@ -48,7 +53,7 @@ public class MenuServiceImpl implements IMenuService {
         MenuDTO menuDTO = new MenuDTO()
                 .setName(name)
                 .setPath(path)
-                .setParentId(parentId)
+                .setParentId(StringUtils.hasLength(parentId) ? parentId : null)
                 .setOrdered(ordered)
                 .setMenuStatus(0)
                 .setVersion("0");
@@ -61,12 +66,18 @@ public class MenuServiceImpl implements IMenuService {
         if (menuDTO == null) {
             throw new RTException("菜单不存在");
         }
-        menuDTO.setName(name).setPath(path).setParentId(parentId).setOrdered(ordered);
+        menuDTO.setName(name).setPath(path).setParentId(StringUtils.hasLength(parentId) ? parentId : null).setOrdered(ordered);
         return this.updateWithVersion(menuDTO);
     }
 
     @Override
-    public MenuDTO getMenu(String mid) {
-        return this.get(mid);
+    public MenuGetRsp getMenu(String mid) {
+        MenuDTO menuDTO = this.get(mid);
+        return BeanUtils.copy(menuDTO, MenuGetRsp.class);
+    }
+
+    @Override
+    public boolean deleteMenu(String mid) {
+        return this.delete(mid);
     }
 }

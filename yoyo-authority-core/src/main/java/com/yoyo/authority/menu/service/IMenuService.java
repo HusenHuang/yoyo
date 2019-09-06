@@ -1,6 +1,7 @@
 package com.yoyo.authority.menu.service;
 
 import com.yoyo.authority.menu.pojo.MenuDTO;
+import com.yoyo.authority.menu.pojo.MenuGetRsp;
 import com.yoyo.framework.api.IRTWithVersionService;
 
 /***
@@ -15,5 +16,7 @@ public interface IMenuService extends IRTWithVersionService<String, MenuDTO> {
 
     boolean updateMenu(String mid ,String name, String path, String parentId, int ordered);
 
-    MenuDTO getMenu(String mid);
+    MenuGetRsp getMenu(String mid);
+
+    boolean deleteMenu(String mid);
 }

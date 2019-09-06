@@ -85,6 +85,7 @@ public class MongoDao<K,V> {
         // 版本号+1
         ReflectUtil.setFieldValue(v, version.getFieldName(), (Integer.parseInt(fieldValue.toString()) + 1) + "");
         Update update = Update.fromDocument(Document.parse(JSONUtils.object2Json(v)));
+        update.set("_class", vClass.getName());
         return mongoTemplate.updateFirst(Query.query(criteria), update, v.getClass());
     }
 

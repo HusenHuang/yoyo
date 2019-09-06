@@ -2,6 +2,7 @@ package com.yoyo.authority.menu.dao;
 
 import com.yoyo.authority.menu.pojo.MenuDTO;
 import com.yoyo.framework.mongo.MongoDao;
+import org.springframework.stereotype.Repository;
 
 /***
  @Author:MrHuang
@@ -9,6 +10,7 @@ import com.yoyo.framework.mongo.MongoDao;
  @DESC: TODO
  @VERSION: 1.0
  ***/
+@Repository
 public class MenuDao extends MongoDao<String, MenuDTO> {
 
 }

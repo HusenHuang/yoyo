@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /***
  @Author:MrHuang
@@ -65,6 +66,16 @@ public class RoleServiceImpl implements IRoleService {
         }
         roleDTO.setName(name);
         roleDTO.setRemark(remark);
+        return this.updateWithVersion(roleDTO);
+    }
+
+    @Override
+    public boolean bindMenu(String id, List<String> menuIdList) {
+        RoleDTO roleDTO = this.get(id);
+        if (roleDTO == null) {
+            throw new RTException("角色不存在");
+        }
+        roleDTO.setBindMenuId(menuIdList);
         return this.updateWithVersion(roleDTO);
     }
 }
