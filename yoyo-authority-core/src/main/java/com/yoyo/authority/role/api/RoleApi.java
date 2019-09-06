@@ -2,16 +2,14 @@ package com.yoyo.authority.role.api;
 
 import com.yoyo.authority.role.pojo.RoleAddReq;
 import com.yoyo.authority.role.pojo.RoleBindMenuReq;
+import com.yoyo.authority.role.pojo.RoleMenuGetRsp;
 import com.yoyo.authority.role.pojo.RoleUpdateReq;
 import com.yoyo.authority.role.service.IRoleService;
 import com.yoyo.framework.api.RTRaw;
 import com.yoyo.framework.api.RTRawWrite;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /***
  @Author:MrHuang
@@ -41,6 +39,13 @@ public class RoleApi {
     @PostMapping("/bindMenu")
     public RTRaw<Boolean> bindMenu(@Validated @RequestBody RoleBindMenuReq req) {
         boolean result = roleService.bindMenu(req.getRid(), req.getMidList());
+        return RTRawWrite.success(result);
+    }
+
+
+    @GetMapping("/getRoleMenu/{roleId}")
+    public RTRaw<RoleMenuGetRsp> getRoleMenu(@Validated @PathVariable String roleId) {
+        RoleMenuGetRsp result = roleService.getRoleMenu(roleId);
         return RTRawWrite.success(result);
     }
 }

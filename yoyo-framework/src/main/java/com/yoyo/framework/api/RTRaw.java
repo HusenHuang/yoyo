@@ -26,6 +26,11 @@ public class RTRaw<T> implements Serializable {
     private String msg;
 
     /**
+     * 业务SUB CODE
+     */
+    private Integer subCode;
+
+    /**
      * 业务SUB MSG
      */
     private String subMsg;

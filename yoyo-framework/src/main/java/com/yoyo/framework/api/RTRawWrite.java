@@ -21,10 +21,11 @@ public class RTRawWrite {
     }
 
 
-    public static RTRaw error(int code, String msg, String subMsg) {
+    public static RTRaw error(int code, String msg, Integer subCode, String subMsg) {
         return new RTRaw()
                 .setCode(code)
                 .setMsg(msg)
+                .setSubCode(subCode)
                 .setSubMsg(subMsg)
                 .setTraceId(MDC.get(SystemConstant.SYSTEM_TRACE_ID));
     }

@@ -4,6 +4,8 @@ import com.mongodb.client.result.UpdateResult;
 import com.yoyo.authority.account.dao.AccountDao;
 import com.yoyo.authority.account.pojo.*;
 import com.yoyo.authority.account.service.IAccountService;
+import com.yoyo.authority.role.pojo.RoleMenuGetRsp;
+import com.yoyo.authority.role.service.IRoleService;
 import com.yoyo.framework.auth.JwtUtils;
 import com.yoyo.framework.date.DateUtils;
 import com.yoyo.framework.exception.RTException;
@@ -27,6 +29,9 @@ public class AccountServiceImpl implements IAccountService {
 
     @Autowired
     private AccountDao accountDao;
+
+    @Autowired
+    private IRoleService roleService;
 
     @Override
     public AccountDTO add(AccountDTO accountDTO) {
@@ -96,6 +101,10 @@ public class AccountServiceImpl implements IAccountService {
         }
         AccountLoginRsp rsp = BeanUtils.copy(accountDTO, AccountLoginRsp.class);
         rsp.setTokenId(JwtUtils.encode(accountDTO.getAid()));
+        if (StringUtils.hasLength(accountDTO.getBindRoleId())) {
+            RoleMenuGetRsp roleMenu = roleService.getRoleMenu(accountDTO.getBindRoleId());
+            rsp.setMenuList(roleMenu.getMenuList());
+        }
         return rsp;
     }
 

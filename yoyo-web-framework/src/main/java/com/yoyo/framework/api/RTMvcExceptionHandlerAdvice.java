@@ -29,7 +29,7 @@ public class RTMvcExceptionHandlerAdvice {
     @ExceptionHandler(RTException.class)
     @ResponseStatus(code = HttpStatus.OK)
     public RTRaw handlerRTException(RTException ex) {
-        return RTRawWrite.error(RTCode.REQ_PARAM_CHECK_ERROR.getCode(), RTCode.REQ_PARAM_CHECK_ERROR.getMsg(), ex.getMessage());
+        return RTRawWrite.error(RTCode.REQ_PARAM_CHECK_ERROR.getCode(), RTCode.REQ_PARAM_CHECK_ERROR.getMsg(), ex.getCode(),ex.getMessage());
     }
 
     /**
@@ -41,7 +41,7 @@ public class RTMvcExceptionHandlerAdvice {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(code = HttpStatus.OK)
     public RTRaw handlerMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
-        return RTRawWrite.error(RTCode.REQ_PARAM_CHECK_ERROR.getCode(), RTCode.REQ_PARAM_CHECK_ERROR.getMsg(), ex.getBindingResult().getAllErrors().get(0).getDefaultMessage());
+        return RTRawWrite.error(RTCode.REQ_PARAM_CHECK_ERROR.getCode(), RTCode.REQ_PARAM_CHECK_ERROR.getMsg(), null, ex.getBindingResult().getAllErrors().get(0).getDefaultMessage());
     }
 
     /**
@@ -53,7 +53,7 @@ public class RTMvcExceptionHandlerAdvice {
     @ResponseStatus(code = HttpStatus.OK)
     public RTRaw handlerRTLimitException(RTLimitException ex) {
         log.error("ExceptionHandlerAdvice handler RTLimitException ", ex);
-        return RTRawWrite.error(RTCode.LIMIT_FAIL.getCode(), RTCode.LIMIT_FAIL.getMsg(), ex.getMessage());
+        return RTRawWrite.error(RTCode.LIMIT_FAIL.getCode(), RTCode.LIMIT_FAIL.getMsg(), null, ex.getMessage());
     }
 
 
@@ -66,7 +66,7 @@ public class RTMvcExceptionHandlerAdvice {
     @ResponseStatus(code = HttpStatus.OK)
     public RTRaw handlerRTGetLockException(RTGetLockException ex) {
         log.error("ExceptionHandlerAdvice handler RTGetLockException ", ex);
-        return RTRawWrite.error(RTCode.GET_LOCK_FAIL.getCode(), RTCode.GET_LOCK_FAIL.getMsg(), ex.getMessage());
+        return RTRawWrite.error(RTCode.GET_LOCK_FAIL.getCode(), RTCode.GET_LOCK_FAIL.getMsg(), null, ex.getMessage());
     }
 
 
@@ -79,11 +79,11 @@ public class RTMvcExceptionHandlerAdvice {
     @ResponseStatus(code = HttpStatus.OK)
     public RTRaw handlerException(Exception ex) {
         log.error("ExceptionHandlerAdvice handler Exception ", ex);
-        return RTRawWrite.error(RTCode.EX_FAIL.getCode(), RTCode.EX_FAIL.getMsg(), RTCode.EX_FAIL.getMsg());
+        return RTRawWrite.error(RTCode.EX_FAIL.getCode(), RTCode.EX_FAIL.getMsg(), null, RTCode.EX_FAIL.getMsg());
     }
 
     /**
-     * 全局异常处理
+     * 请求非法
      * @param ex
      * @return
      */
@@ -91,7 +91,7 @@ public class RTMvcExceptionHandlerAdvice {
     @ResponseStatus(code = HttpStatus.OK)
     public RTRaw handlerHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
         log.error("ExceptionHandlerAdvice handler HttpMessageNotReadableException ", ex);
-        return RTRawWrite.error(RTCode.REQ_BODY_CHECK_ERROR.getCode(), RTCode.REQ_BODY_CHECK_ERROR.getMsg(), RTCode.REQ_BODY_CHECK_ERROR.getMsg());
+        return RTRawWrite.error(RTCode.REQ_BODY_CHECK_ERROR.getCode(), RTCode.REQ_BODY_CHECK_ERROR.getMsg(), null, RTCode.REQ_BODY_CHECK_ERROR.getMsg());
     }
 
 
