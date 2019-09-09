@@ -19,4 +19,6 @@ public interface IRTService<K, V> {
     boolean update(V v);
 
     boolean delete(K id);
+
+    boolean updateWithVersion(V v);
 }

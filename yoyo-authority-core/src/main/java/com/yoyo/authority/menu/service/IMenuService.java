@@ -2,7 +2,6 @@ package com.yoyo.authority.menu.service;
 
 import com.yoyo.authority.menu.pojo.MenuDTO;
 import com.yoyo.authority.menu.pojo.MenuGetRsp;
-import com.yoyo.framework.api.IRTWithVersionService;
 
 /***
  @Author:MrHuang
@@ -10,7 +9,7 @@ import com.yoyo.framework.api.IRTWithVersionService;
  @DESC: TODO
  @VERSION: 1.0
  ***/
-public interface IMenuService extends IRTWithVersionService<String, MenuDTO> {
+public interface IMenuService extends com.yoyo.framework.api.IRTService<String, MenuDTO> {
 
     boolean addMenu(String name, String path, String parentId, int ordered);
 
