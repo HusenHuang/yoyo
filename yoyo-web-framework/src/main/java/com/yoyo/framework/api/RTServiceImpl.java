@@ -45,9 +45,4 @@ public class RTServiceImpl<K,V> implements IRTService<K,V> {
     public boolean delete(K id) {
         return dao.deleteById(id).getDeletedCount() > 0;
     }
-
-    @Override
-    public boolean deleteWithLogic(K id) {
-        return dao.deleteWithLogic(id).getModifiedCount() > 0;
-    }
 }

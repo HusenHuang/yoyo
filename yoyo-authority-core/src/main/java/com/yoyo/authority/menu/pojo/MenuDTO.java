@@ -1,6 +1,5 @@
 package com.yoyo.authority.menu.pojo;
 
-import com.yoyo.framework.mongo.MongoLogicDelete;
 import com.yoyo.framework.mongo.MongoVersion;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -9,7 +8,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /***
  @Author:MrHuang
@@ -49,8 +47,4 @@ public class MenuDTO implements Serializable {
     @Field
     @MongoVersion
     private String version;
-
-    @Field
-    @MongoLogicDelete
-    private Integer delStatus;
 }

@@ -53,11 +53,4 @@ public interface IRTService<K, V> {
      */
     boolean delete(K id);
 
-    /**
-     * 逻辑删除
-     * TODO：需要有@MongoLogic注解，字段类型必须为Integer
-     * @param id
-     * @return
-     */
-    boolean deleteWithLogic(K id);
 }
