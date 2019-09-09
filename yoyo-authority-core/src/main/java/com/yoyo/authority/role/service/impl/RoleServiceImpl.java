@@ -7,6 +7,7 @@ import com.yoyo.authority.role.dao.RoleDao;
 import com.yoyo.authority.role.pojo.RoleDTO;
 import com.yoyo.authority.role.pojo.RoleMenuGetRsp;
 import com.yoyo.authority.role.service.IRoleService;
+import com.yoyo.framework.api.RTServiceImpl;
 import com.yoyo.framework.date.DateUtils;
 import com.yoyo.framework.exception.RTException;
 import com.yoyo.framework.utils.BeanUtils;
@@ -24,43 +25,10 @@ import java.util.stream.Collectors;
  @VERSION: 1.0
  ***/
 @Repository
-public class RoleServiceImpl implements IRoleService {
-
-    @Autowired
-    private RoleDao roleDao;
+public class RoleServiceImpl extends RTServiceImpl<String, RoleDTO> implements IRoleService {
 
     @Autowired
     private IMenuService menuService;
-
-    @Override
-    public RoleDTO add(RoleDTO roleDTO) {
-        return roleDao.insert(roleDTO);
-    }
-
-    @Override
-    public RoleDTO get(String id) {
-        return roleDao.findById(id);
-    }
-
-    @Override
-    public List<RoleDTO> list(String... ids) {
-        return roleDao.findByIds(ids);
-    }
-
-    @Override
-    public boolean update(RoleDTO roleDTO) {
-        return roleDao.updateById(roleDTO).getModifiedCount() > 0;
-    }
-
-    @Override
-    public boolean delete(String id) {
-        return roleDao.deleteById(id).getDeletedCount() > 0;
-    }
-
-    @Override
-    public boolean updateWithVersion(RoleDTO roleDTO) {
-        return roleDao.updateByIdWithVersion(roleDTO).getModifiedCount() > 0;
-    }
 
     @Override
     public boolean addRole(String name, String remark) {

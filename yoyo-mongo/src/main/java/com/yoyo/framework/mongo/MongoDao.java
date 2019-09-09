@@ -2,6 +2,7 @@ package com.yoyo.framework.mongo;
 
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
+import com.yoyo.framework.common.SystemConstant;
 import com.yoyo.framework.json.JSONUtils;
 import com.yoyo.framework.reflect.ReflectUtil;
 import org.bson.Document;
@@ -13,6 +14,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
@@ -58,7 +60,14 @@ public class MongoDao<K,V> {
      */
     public V findById(K id) {
         writeClassType();
-        return mongoTemplate.findById(id, vClass);
+        V v = mongoTemplate.findById(id, vClass);
+        ReflectUtil.FieldNameValue fieldNameValue = ReflectUtil.getFieldNameValue(v, MongoLogicDelete.class);
+        if (fieldNameValue == null) {
+            return v;
+        } else {
+            boolean b = fieldNameValue.getFieldValue() != null && SystemConstant.LOGIC_DELETE_STATUS == Integer.parseInt(fieldNameValue.getFieldValue().toString());
+            return b ? null : v;
+        }
     }
 
     /**
@@ -100,11 +109,22 @@ public class MongoDao<K,V> {
     }
 
     /**
-     * 删除
+     * 物理删除
      * @param id
      * @return
      */
     public DeleteResult deleteById(K id) {
         return mongoTemplate.remove(Query.query(Criteria.where("_id").is(id)));
+    }
+
+    /**
+     * 逻辑删除
+     * @return
+     */
+    public UpdateResult deleteWithLogic(K id) {
+        writeClassType();
+        String fieldName = ReflectUtil.getFieldName(vClass, MongoLogicDelete.class);
+        Assert.notNull(fieldName, "MongoLogicDelete not find");
+        return mongoTemplate.updateFirst(Query.query(Criteria.where("_id").is(id)), Update.update(fieldName, SystemConstant.LOGIC_DELETE_STATUS), vClass);
     }
 }

@@ -1,11 +1,11 @@
 package com.yoyo.authority.account.service.impl;
 
-import com.mongodb.client.result.UpdateResult;
 import com.yoyo.authority.account.dao.AccountDao;
 import com.yoyo.authority.account.pojo.*;
 import com.yoyo.authority.account.service.IAccountService;
 import com.yoyo.authority.role.pojo.RoleMenuGetRsp;
 import com.yoyo.authority.role.service.IRoleService;
+import com.yoyo.framework.api.RTServiceImpl;
 import com.yoyo.framework.auth.JwtUtils;
 import com.yoyo.framework.date.DateUtils;
 import com.yoyo.framework.exception.RTException;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 /***
  @Author:MrHuang
@@ -25,43 +24,14 @@ import java.util.List;
  @VERSION: 1.0
  ***/
 @Service
-public class AccountServiceImpl implements IAccountService {
+public class AccountServiceImpl extends RTServiceImpl<String, AccountDTO> implements IAccountService  {
+
 
     @Autowired
     private AccountDao accountDao;
 
     @Autowired
     private IRoleService roleService;
-
-    @Override
-    public AccountDTO add(AccountDTO accountDTO) {
-        return accountDao.insert(accountDTO);
-    }
-
-    @Override
-    public AccountDTO get(String aid) {
-        return accountDao.findById(aid);
-    }
-
-    @Override
-    public List<AccountDTO> list(String... ids) {
-        return accountDao.findByIds(ids);
-    }
-
-    @Override
-    public boolean update(AccountDTO accountDTO) {
-        return accountDao.updateById(accountDTO).getModifiedCount() > 0;
-    }
-
-    @Override
-    public boolean delete(String aid) {
-        return accountDao.deleteById(aid).getDeletedCount() > 0;
-    }
-
-    @Override
-    public boolean updateWithVersion(AccountDTO accountDTO) {
-        return accountDao.updateByIdWithVersion(accountDTO).getModifiedCount() > 0;
-    }
 
     @Override
     public AccountRegisterRsp register(AccountRegisterReq req) {
@@ -81,7 +51,7 @@ public class AccountServiceImpl implements IAccountService {
                 .setCreateTime(DateUtils.localDateTime2TimeString(LocalDateTime.now()))
                 .setUpdateTime(DateUtils.localDateTime2TimeString(LocalDateTime.now()))
                 .setVersion("0");
-        AccountDTO result = accountDao.insert(accountDTO);
+        AccountDTO result = this.add(accountDTO);
         return BeanUtils.copy(result, AccountRegisterRsp.class);
     }
 

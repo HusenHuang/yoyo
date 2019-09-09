@@ -4,10 +4,12 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.reflect.FieldUtils;
+import org.springframework.util.CollectionUtils;
 
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.util.List;
 import java.util.Optional;
 
 /***
@@ -26,7 +28,11 @@ public class ReflectUtil {
      * @return
      */
     public static Field getField(Class<?> clazz,  Class<? extends Annotation> annotationCls) {
-        return org.apache.commons.lang3.reflect.FieldUtils.getFieldsListWithAnnotation(clazz, annotationCls).get(0);
+        List<Field> list = FieldUtils.getFieldsListWithAnnotation(clazz, annotationCls);
+        if (!CollectionUtils.isEmpty(list)) {
+            return list.get(0);
+        }
+        return null;
     }
 
     /**
@@ -46,7 +52,13 @@ public class ReflectUtil {
      * @return
      */
     public static String getFieldName(Object object, Class<? extends Annotation> annotationCls) {
-        return Optional.ofNullable(getFieldNameValue(object, annotationCls)).map(FieldNameValue::getFieldName).orElse(null);
+        return  Optional.ofNullable(getFieldNameValue(object, annotationCls)).map(FieldNameValue::getFieldName).orElse(null);
+    }
+
+    public static String getFieldName(Class objectClass, Class<? extends Annotation> annotationCls) {
+        Field field = ReflectUtil.getField(objectClass, annotationCls);
+        field.setAccessible(true);
+        return field.getName();
     }
 
     /**
@@ -56,7 +68,13 @@ public class ReflectUtil {
      * @return
      */
     public static FieldNameValue getFieldNameValue(Object object, Class<? extends Annotation> annotationCls) {
+        if (object == null) {
+            return null;
+        }
         Field field = ReflectUtil.getField(object.getClass(), annotationCls);
+        if (field == null) {
+            return null;
+        }
         field.setAccessible(true);
         try {
             return new FieldNameValue().setFieldName(field.getName()).setFieldValue(field.get(object));

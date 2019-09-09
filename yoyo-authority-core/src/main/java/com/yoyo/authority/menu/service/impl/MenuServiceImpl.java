@@ -5,13 +5,12 @@ import com.yoyo.authority.menu.pojo.MenuDTO;
 import com.yoyo.authority.menu.pojo.MenuGetRsp;
 import com.yoyo.authority.menu.pojo.MenuVO;
 import com.yoyo.authority.menu.service.IMenuService;
+import com.yoyo.framework.api.RTServiceImpl;
 import com.yoyo.framework.exception.RTException;
 import com.yoyo.framework.utils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-
-import java.util.List;
 
 /***
  @Author:MrHuang
@@ -20,41 +19,10 @@ import java.util.List;
  @VERSION: 1.0
  ***/
 @Service
-public class MenuServiceImpl implements IMenuService {
+public class MenuServiceImpl extends RTServiceImpl<String,MenuDTO> implements IMenuService {
 
     @Autowired
     private MenuDao menuDao;
-
-
-    @Override
-    public boolean updateWithVersion(MenuDTO menuDTO) {
-        return menuDao.updateByIdWithVersion(menuDTO).getModifiedCount() > 0;
-    }
-
-    @Override
-    public MenuDTO add(MenuDTO menuDTO) {
-        return menuDao.insert(menuDTO);
-    }
-
-    @Override
-    public MenuDTO get(String id) {
-        return menuDao.findById(id);
-    }
-
-    @Override
-    public List<MenuDTO> list(String... ids) {
-        return menuDao.findByIds(ids);
-    }
-
-    @Override
-    public boolean update(MenuDTO menuDTO) {
-        return menuDao.updateById(menuDTO).getModifiedCount() > 0;
-    }
-
-    @Override
-    public boolean delete(String id) {
-        return menuDao.deleteById(id).getDeletedCount() > 0;
-    }
 
     @Override
     public boolean addMenu(String name, String path, String parentId, int ordered) {

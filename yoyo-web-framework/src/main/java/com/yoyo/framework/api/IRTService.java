@@ -10,15 +10,54 @@ import java.util.List;
  ***/
 public interface IRTService<K, V> {
 
+    /**
+     * 新增
+     * @param v
+     * @return
+     */
     V add(V v);
 
+    /**
+     * 根据ID查询单个对象
+     * @param id
+     * @return
+     */
     V get(K id);
 
+    /**
+     * 根据多个ID查询多个对象
+     * @param ids
+     * @return
+     */
     List<V> list(K ... ids);
 
+    /**
+     * 根据ID更新对象信息
+     * @param v
+     * @return
+     */
     boolean update(V v);
 
+    /**
+     * 根据ID和版本号更新对象信息
+     * TODO: 需要有@MongoVersion注解,字段类型必须为String
+     * @param v
+     * @return
+     */
+    boolean updateWithVersion(V v);
+
+    /**
+     * 物理删除
+     * @param id
+     * @return
+     */
     boolean delete(K id);
 
-    boolean updateWithVersion(V v);
+    /**
+     * 逻辑删除
+     * TODO：需要有@MongoLogic注解，字段类型必须为Integer
+     * @param id
+     * @return
+     */
+    boolean deleteWithLogic(K id);
 }

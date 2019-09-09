@@ -1,5 +1,6 @@
 package com.yoyo.authority.menu.pojo;
 
+import com.yoyo.framework.mongo.MongoLogicDelete;
 import com.yoyo.framework.mongo.MongoVersion;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -45,6 +46,11 @@ public class MenuDTO implements Serializable {
     @Field
     private Integer ordered;
 
+    @Field
     @MongoVersion
     private String version;
+
+    @Field
+    @MongoLogicDelete
+    private Integer delStatus;
 }

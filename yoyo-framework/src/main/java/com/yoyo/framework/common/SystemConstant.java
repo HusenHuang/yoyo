@@ -65,4 +65,9 @@ public class SystemConstant {
      * 系统时区-东八区
      */
     public static final ZoneOffset SYSTEM_ZO = ZoneOffset.of("+8");
+
+    /**
+     * 系统逻辑删除值
+     */
+    public static final Integer LOGIC_DELETE_STATUS = -1;
 }
