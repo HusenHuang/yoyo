@@ -69,5 +69,5 @@ public class SystemConstant {
     /**
      * 系统逻辑删除值
      */
-    public static final Integer LOGIC_DELETE_STATUS = -1;
+    public static final String LOGIC_DELETE_STATUS = "-1";
 }

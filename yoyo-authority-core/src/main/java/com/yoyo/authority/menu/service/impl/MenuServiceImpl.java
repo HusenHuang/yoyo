@@ -5,7 +5,9 @@ import com.yoyo.authority.menu.pojo.MenuDTO;
 import com.yoyo.authority.menu.pojo.MenuGetRsp;
 import com.yoyo.authority.menu.pojo.MenuVO;
 import com.yoyo.authority.menu.service.IMenuService;
+import com.yoyo.framework.api.RTServiceCacheImpl;
 import com.yoyo.framework.api.RTServiceImpl;
+import com.yoyo.framework.common.SystemConstant;
 import com.yoyo.framework.exception.RTException;
 import com.yoyo.framework.utils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,11 @@ import org.springframework.util.StringUtils;
  @VERSION: 1.0
  ***/
 @Service
-public class MenuServiceImpl extends RTServiceImpl<String,MenuDTO> implements IMenuService {
+public class MenuServiceImpl extends RTServiceCacheImpl<String,MenuDTO> implements IMenuService {
+
+    public MenuServiceImpl() {
+        super("MENU", 86400);
+    }
 
     @Autowired
     private MenuDao menuDao;

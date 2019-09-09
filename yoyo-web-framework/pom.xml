@@ -27,6 +27,13 @@
             <version>${project.parent.version}</version>
         </dependency>
 
+        <!-- 基础框架包 -->
+        <dependency>
+            <groupId>com.husen</groupId>
+            <artifactId>yoyo-redis</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
         <!-- WEB框架包 -->
         <dependency>
             <groupId>com.husen</groupId>
