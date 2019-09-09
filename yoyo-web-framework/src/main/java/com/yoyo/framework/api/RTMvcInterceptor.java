@@ -1,6 +1,7 @@
 package com.yoyo.framework.api;
 
 import com.yoyo.framework.common.SystemConstant;
+import com.yoyo.framework.utils.CookieUtil;
 import com.yoyo.framework.utils.IpUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
