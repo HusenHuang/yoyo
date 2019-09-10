@@ -9,7 +9,6 @@ import org.springframework.util.Assert;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -78,11 +77,6 @@ public class RTServiceCacheImpl<K,V> extends RTServiceImpl<K,V> {
     }
 
     @Override
-    public List<V> list(K... ids) {
-        return this.list(Arrays.asList(ids));
-    }
-
-    @Override
     public List<V> list(List<K> ids) {
         Class<V> vClass = (Class<V>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[1];
         // 组装缓存Key
@@ -97,8 +91,9 @@ public class RTServiceCacheImpl<K,V> extends RTServiceImpl<K,V> {
                 // 收集起来,异步缓存起来
                 asyncKeyList.add(ids.get(i));
             } else {
-                ReflectUtil.FieldNameValue fieldNameValue = ReflectUtil.getFieldNameValue(v, Id.class);
-                if (Objects.isNull(fieldNameValue.getFieldValue())) {
+                ReflectUtil.FieldNameValue nameValue = ReflectUtil.getFieldNameValue(v, Id.class);
+                Assert.notNull(nameValue, "nameValue not null ...");
+                if (Objects.isNull(nameValue.getFieldValue())) {
                     // 如果是空缓存，不做处理
                 } else {
                     // 如果是非空缓存，加入集合
