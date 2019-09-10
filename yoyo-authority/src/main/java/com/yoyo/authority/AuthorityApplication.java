@@ -24,7 +24,7 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 public class AuthorityApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(AuthorityApplication.class);
+        SpringApplication.run(AuthorityApplication.class, args);
     }
 
 }
