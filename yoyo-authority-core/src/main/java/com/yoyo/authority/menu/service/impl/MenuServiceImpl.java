@@ -1,5 +1,6 @@
 package com.yoyo.authority.menu.service.impl;
 
+import com.yoyo.authority.menu.config.ConfigManager;
 import com.yoyo.authority.menu.dao.MenuDao;
 import com.yoyo.authority.menu.pojo.MenuDTO;
 import com.yoyo.authority.menu.pojo.MenuGetRsp;
@@ -12,8 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.Map;
-
 /***
  @Author:MrHuang
  @Date: 2019/9/5 18:25
@@ -24,7 +23,7 @@ import java.util.Map;
 public class MenuServiceImpl extends RTServiceCacheImpl<String,MenuDTO> implements IMenuService {
 
     public MenuServiceImpl() {
-        super("MENU", 86400);
+        super(ConfigManager.MENU_REDIS_CONFIG_PRE, ConfigManager.MENU_REDIS_CONFIG_EXPIRE_SECOND);
     }
 
     @Autowired
