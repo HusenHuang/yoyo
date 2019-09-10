@@ -1,15 +1,18 @@
 package com.yoyo.framework.api;
 
-import com.yoyo.framework.common.SystemConstant;
 import com.yoyo.framework.redis.RedisUtils;
 import com.yoyo.framework.reflect.ReflectUtil;
+import com.yoyo.framework.utils.AsyncExecutor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.annotation.Id;
 import org.springframework.util.Assert;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /***
  @Author:MrHuang
@@ -23,6 +26,8 @@ public class RTServiceCacheImpl<K,V> extends RTServiceImpl<K,V> {
     private String cacheKey;
 
     private int cacheExpireSecond;
+
+    private static final int SHORT_CACHE_SECOND = 1000;
 
     public RTServiceCacheImpl(String cacheKey, int cacheExpireSecond) {
         this.cacheKey = cacheKey;
@@ -52,7 +57,7 @@ public class RTServiceCacheImpl<K,V> extends RTServiceImpl<K,V> {
             if (Objects.isNull(result)) {
                 try {
                     result = vClass.newInstance();
-                    RedisUtils.setForString(getCacheKey(id.toString()), result, 1000);
+                    RedisUtils.setForString(getCacheKey(id.toString()), result, SHORT_CACHE_SECOND);
                 }  catch (Exception e) {
                     log.error("RTServiceCacheImpl get fail", e);
                 }
@@ -74,6 +79,29 @@ public class RTServiceCacheImpl<K,V> extends RTServiceImpl<K,V> {
 
     @Override
     public List<V> list(K... ids) {
+        Class<V> vClass = (Class<V>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+        List<String> keys = Arrays.stream(ids).map(s -> this.getCacheKey(s.toString())).collect(Collectors.toList());
+        List<V> vs = RedisUtils.multiGetForString(vClass, keys);
+        List<K> asyncList = new ArrayList<>();
+        for (int i = 0; i < ids.length; i ++) {
+            V v = vs.get(i);
+            if (Objects.isNull(v)) {
+                // 收集起来,异步缓存起来
+                asyncList.add(ids[i]);
+            } else {
+                ReflectUtil.FieldNameValue fieldNameValue = ReflectUtil.getFieldNameValue(v, Id.class);
+                if (Objects.isNull(fieldNameValue.getFieldValue())) {
+                    // 如果是空缓存,设置为null
+                    vs.set(i, null);
+                }
+            }
+        }
+        AsyncExecutor.execute(() -> {
+            for (K id : asyncList) {
+                // 异步刷新缓存
+                this.get(id);
+            }
+        });
         return super.list(ids);
     }
 

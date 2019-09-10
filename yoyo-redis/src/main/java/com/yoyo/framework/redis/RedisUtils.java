@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /***
  @Author:MrHuang
@@ -248,9 +249,20 @@ public class RedisUtils {
     }
 
 
+    public static <T> List<T> multiGetForString(Class<T> clazz, String ... keys) {
+        return multiGetForString(clazz, Arrays.asList(keys));
+    }
+
+    public static <T> List<T> multiGetForString(Class<T> clazz, Collection<String> keys) {
+        List<String> strings = multiGetForString(keys);
+        return Optional.ofNullable(strings).orElse(new ArrayList<>()).stream()
+                .map(s -> JSONUtils.json2Bean(s, clazz)).collect(Collectors.toList());
+    }
+
     public static List<String> multiGetForString(String... keys) {
         return multiGetForString(Arrays.asList(keys));
     }
+
 
     public static List<String> multiGetForString(Collection<String> keys) {
         try {
