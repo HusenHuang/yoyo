@@ -20,9 +20,9 @@ import org.springframework.util.StringUtils;
  @VERSION: 1.0
  ***/
 @Service
-public class MenuMongoServiceImpl extends RTMongoServiceCacheImpl<String,MenuDTO> implements IMenuService {
+public class MenuServiceImpl extends RTMongoServiceCacheImpl<String,MenuDTO> implements IMenuService {
 
-    public MenuMongoServiceImpl() {
+    public MenuServiceImpl() {
         super(ConfigManager.MENU_REDIS_CONFIG_PRE, ConfigManager.MENU_REDIS_CONFIG_EXPIRE_SECOND);
     }
 

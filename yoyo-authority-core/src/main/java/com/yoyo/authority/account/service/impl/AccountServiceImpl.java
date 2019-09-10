@@ -25,9 +25,9 @@ import java.time.LocalDateTime;
  @VERSION: 1.0
  ***/
 @Service
-public class AccountMongoServiceImpl extends RTMongoServiceCacheImpl<String, AccountDTO> implements IAccountService  {
+public class AccountServiceImpl extends RTMongoServiceCacheImpl<String, AccountDTO> implements IAccountService  {
 
-    public AccountMongoServiceImpl() {
+    public AccountServiceImpl() {
         super(ConfigManager.ACCOUNT_REDIS_CONFIG_PRE, ConfigManager.ACCOUNT_REDIS_CONFIG_EXPIRE_SECOND);
     }
 

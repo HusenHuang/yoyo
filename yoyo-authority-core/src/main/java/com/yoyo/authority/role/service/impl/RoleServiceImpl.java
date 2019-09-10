@@ -25,9 +25,9 @@ import java.util.stream.Collectors;
  @VERSION: 1.0
  ***/
 @Repository
-public class RoleMongoServiceImpl extends RTMongoServiceCacheImpl<String, RoleDTO> implements IRoleService {
+public class RoleServiceImpl extends RTMongoServiceCacheImpl<String, RoleDTO> implements IRoleService {
 
-    public RoleMongoServiceImpl() {
+    public RoleServiceImpl() {
         super(ConfigManager.ROLE_REDIS_CONFIG_PRE, ConfigManager.ROLE_REDIS_CONFIG_EXPIRE_SECOND);
     }
 
