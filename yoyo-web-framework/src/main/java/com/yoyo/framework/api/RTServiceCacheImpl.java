@@ -80,29 +80,41 @@ public class RTServiceCacheImpl<K,V> extends RTServiceImpl<K,V> {
     @Override
     public List<V> list(K... ids) {
         Class<V> vClass = (Class<V>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+        // 组装缓存Key
         List<String> keys = Arrays.stream(ids).map(s -> this.getCacheKey(s.toString())).collect(Collectors.toList());
-        List<V> vs = RedisUtils.multiGetForString(vClass, keys);
-        List<K> asyncList = new ArrayList<>();
+        // 批量获取缓存值
+        List<V> result = RedisUtils.multiGetForString(vClass, keys);
+        List<K> asyncKeyList = new ArrayList<>();
+        List<V> cacheResult = new ArrayList<>();
         for (int i = 0; i < ids.length; i ++) {
-            V v = vs.get(i);
+            V v = result.get(i);
             if (Objects.isNull(v)) {
                 // 收集起来,异步缓存起来
-                asyncList.add(ids[i]);
+                asyncKeyList.add(ids[i]);
             } else {
                 ReflectUtil.FieldNameValue fieldNameValue = ReflectUtil.getFieldNameValue(v, Id.class);
                 if (Objects.isNull(fieldNameValue.getFieldValue())) {
-                    // 如果是空缓存,设置为null
-                    vs.set(i, null);
+                    // 如果是空缓存，不做处理
+                } else {
+                    // 如果是非空缓存，加入集合
+                    cacheResult.add(result.get(i));
                 }
             }
         }
-        AsyncExecutor.execute(() -> {
-            for (K id : asyncList) {
-                // 异步刷新缓存
-                this.get(id);
-            }
-        });
-        return super.list(ids);
+
+        // 缓存中未命中的Key
+        if (!asyncKeyList.isEmpty()) {
+            List<V> dbResult = super.list(asyncKeyList);
+            cacheResult.addAll(dbResult);
+            // 异步刷新缓存
+            AsyncExecutor.execute(() -> {
+                for (K id : asyncKeyList) {
+                    // 异步刷新缓存
+                    this.get(id);
+                }
+            });
+        }
+        return cacheResult;
     }
 
     @Override

@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
+
 /***
  @Author:MrHuang
  @Date: 2019/9/5 18:25
@@ -54,9 +56,11 @@ public class MenuServiceImpl extends RTServiceCacheImpl<String,MenuDTO> implemen
 
     @Override
     public MenuGetRsp getMenu(String mid) {
-        MenuDTO menuDTO = this.get(mid);
-        MenuVO menuVO = BeanUtils.copy(menuDTO, MenuVO.class);
-        return new MenuGetRsp().setMenu(menuVO);
+        List<MenuDTO> list = this.list(mid, "5d7202222914431ff47652f5");
+//        MenuDTO menuDTO = this.get(mid);
+//        MenuVO menuVO = BeanUtils.copy(menuDTO, MenuVO.class);
+//        return new MenuGetRsp().setMenu(menuVO);
+        return null;
     }
 
     @Override

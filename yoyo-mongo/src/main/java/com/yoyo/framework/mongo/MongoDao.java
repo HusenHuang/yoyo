@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,6 +68,17 @@ public class MongoDao<K,V> {
      * @return
      */
     public List<V> findByIds(K ... ids) {
+        writeClassType();
+        return mongoTemplate.find(Query.query(Criteria.where("_id").in(ids)), vClass);
+    }
+
+    /**
+     * 根据ID批量查询
+     * @param ids
+     * @return
+     */
+    public List<V> findByIds(Collection<K> ids) {
+        writeClassType();
         return mongoTemplate.find(Query.query(Criteria.where("_id").in(ids)), vClass);
     }
 
@@ -95,7 +107,7 @@ public class MongoDao<K,V> {
         // 版本号+1
         ReflectUtil.setFieldValue(v, version.getFieldName(), (Integer.parseInt(fieldValue.toString()) + 1) + "");
         Update update = Update.fromDocument(Document.parse(JSONUtils.object2Json(v)));
-        update.set("_class", vClass.getName());
+        update.set("_class", v.getClass());
         return mongoTemplate.updateFirst(Query.query(criteria), update, v.getClass());
     }
 

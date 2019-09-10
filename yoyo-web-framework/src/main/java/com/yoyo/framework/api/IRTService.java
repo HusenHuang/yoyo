@@ -1,5 +1,6 @@
 package com.yoyo.framework.api;
 
+import java.util.Collection;
 import java.util.List;
 
 /***
@@ -30,6 +31,14 @@ public interface IRTService<K, V> {
      * @return
      */
     List<V> list(K ... ids);
+
+
+    /**
+     * 根据多个ID查询多个对象
+     * @param ids
+     * @return
+     */
+    List<V> list(Collection<K> ids);
 
     /**
      * 根据ID更新对象信息

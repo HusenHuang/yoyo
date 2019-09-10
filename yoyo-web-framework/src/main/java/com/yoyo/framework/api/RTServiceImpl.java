@@ -3,6 +3,7 @@ package com.yoyo.framework.api;
 import com.yoyo.framework.mongo.MongoDao;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Collection;
 import java.util.List;
 
 /***
@@ -28,6 +29,11 @@ public class RTServiceImpl<K,V> implements IRTService<K,V> {
 
     @Override
     public List<V> list(K... ids) {
+        return dao.findByIds(ids);
+    }
+
+    @Override
+    public List<V> list(Collection<K> ids) {
         return dao.findByIds(ids);
     }
 
