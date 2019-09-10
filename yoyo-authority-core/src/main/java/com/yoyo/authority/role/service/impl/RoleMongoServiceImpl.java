@@ -7,7 +7,7 @@ import com.yoyo.authority.role.config.ConfigManager;
 import com.yoyo.authority.role.pojo.RoleDTO;
 import com.yoyo.authority.role.pojo.RoleMenuGetRsp;
 import com.yoyo.authority.role.service.IRoleService;
-import com.yoyo.framework.api.RTServiceCacheImpl;
+import com.yoyo.framework.api.RTMongoServiceCacheImpl;
 import com.yoyo.framework.date.DateUtils;
 import com.yoyo.framework.exception.RTException;
 import com.yoyo.framework.utils.BeanUtils;
@@ -25,9 +25,9 @@ import java.util.stream.Collectors;
  @VERSION: 1.0
  ***/
 @Repository
-public class RoleServiceImpl extends RTServiceCacheImpl<String, RoleDTO> implements IRoleService {
+public class RoleMongoServiceImpl extends RTMongoServiceCacheImpl<String, RoleDTO> implements IRoleService {
 
-    public RoleServiceImpl() {
+    public RoleMongoServiceImpl() {
         super(ConfigManager.ROLE_REDIS_CONFIG_PRE, ConfigManager.ROLE_REDIS_CONFIG_EXPIRE_SECOND);
     }
 

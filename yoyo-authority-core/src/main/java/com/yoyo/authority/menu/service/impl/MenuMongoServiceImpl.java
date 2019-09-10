@@ -6,7 +6,7 @@ import com.yoyo.authority.menu.pojo.MenuDTO;
 import com.yoyo.authority.menu.pojo.MenuGetRsp;
 import com.yoyo.authority.menu.pojo.MenuVO;
 import com.yoyo.authority.menu.service.IMenuService;
-import com.yoyo.framework.api.RTMongoMongoServiceCacheImpl;
+import com.yoyo.framework.api.RTMongoServiceCacheImpl;
 import com.yoyo.framework.exception.RTException;
 import com.yoyo.framework.utils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +20,9 @@ import org.springframework.util.StringUtils;
  @VERSION: 1.0
  ***/
 @Service
-public class MenuMongoMongoServiceImpl extends RTMongoMongoServiceCacheImpl<String,MenuDTO> implements IMenuService {
+public class MenuMongoServiceImpl extends RTMongoServiceCacheImpl<String,MenuDTO> implements IMenuService {
 
-    public MenuMongoMongoServiceImpl() {
+    public MenuMongoServiceImpl() {
         super(ConfigManager.MENU_REDIS_CONFIG_PRE, ConfigManager.MENU_REDIS_CONFIG_EXPIRE_SECOND);
     }
 

@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  @VERSION: 1.0
  ***/
 @Slf4j
-public class RTMongoMongoServiceCacheImpl<K,V> extends RTMongoServiceImpl<K,V> {
+public class RTMongoServiceCacheImpl<K,V> extends RTMongoServiceImpl<K,V> {
 
     private String cacheKey;
 
@@ -30,7 +30,7 @@ public class RTMongoMongoServiceCacheImpl<K,V> extends RTMongoServiceImpl<K,V> {
 
     private static final int SHORT_CACHE_SECOND = 1000;
 
-    public RTMongoMongoServiceCacheImpl(String cacheKey, int cacheExpireSecond) {
+    public RTMongoServiceCacheImpl(String cacheKey, int cacheExpireSecond) {
         this.cacheKey = cacheKey;
         this.cacheExpireSecond = cacheExpireSecond;
     }
@@ -45,7 +45,7 @@ public class RTMongoMongoServiceCacheImpl<K,V> extends RTMongoServiceImpl<K,V> {
         ReflectUtil.FieldNameValue nameValue = ReflectUtil.getFieldNameValue(result, Id.class);
         Assert.notNull(nameValue, "nameValue not null");
         boolean cacheResult = RedisUtils.setForString(getCacheKey(nameValue.getFieldValue().toString()), result, cacheExpireSecond);
-        log.info("RTMongoMongoServiceCacheImpl cacheResult = {} result = {}", cacheResult, result);
+        log.info("RTMongoServiceCacheImpl cacheResult = {} result = {}", cacheResult, result);
         return result;
     }
 
@@ -60,7 +60,7 @@ public class RTMongoMongoServiceCacheImpl<K,V> extends RTMongoServiceImpl<K,V> {
                     result = vClass.newInstance();
                     RedisUtils.setForString(getCacheKey(id.toString()), result, SHORT_CACHE_SECOND);
                 }  catch (Exception e) {
-                    log.error("RTMongoMongoServiceCacheImpl get fail", e);
+                    log.error("RTMongoServiceCacheImpl get fail", e);
                 }
                 return null;
             } else {
@@ -126,7 +126,7 @@ public class RTMongoMongoServiceCacheImpl<K,V> extends RTMongoServiceImpl<K,V> {
             ReflectUtil.FieldNameValue nameValue = ReflectUtil.getFieldNameValue(v, Id.class);
             Assert.notNull(nameValue, "nameValue not null");
             boolean cacheResult = RedisUtils.setForString(getCacheKey(nameValue.getFieldValue().toString()), v, cacheExpireSecond);
-            log.info("RTMongoMongoServiceCacheImpl  update cacheResult = {} result = {}", cacheResult, result);
+            log.info("RTMongoServiceCacheImpl  update cacheResult = {} result = {}", cacheResult, result);
         }
         return result;
     }
@@ -138,7 +138,7 @@ public class RTMongoMongoServiceCacheImpl<K,V> extends RTMongoServiceImpl<K,V> {
             ReflectUtil.FieldNameValue nameValue = ReflectUtil.getFieldNameValue(v, Id.class);
             Assert.notNull(nameValue, "nameValue not null");
             boolean cacheResult = RedisUtils.setForString(getCacheKey(nameValue.getFieldValue().toString()), v, cacheExpireSecond);
-            log.info("RTMongoMongoServiceCacheImpl  updateWithVersion cacheResult = {} result = {}", cacheResult, result);
+            log.info("RTMongoServiceCacheImpl  updateWithVersion cacheResult = {} result = {}", cacheResult, result);
         }
         return result;
     }
@@ -148,7 +148,7 @@ public class RTMongoMongoServiceCacheImpl<K,V> extends RTMongoServiceImpl<K,V> {
         boolean result = super.delete(id);
         if (result) {
             Boolean cacheResult = RedisUtils.delete(getCacheKey(id.toString()));
-            log.info("RTMongoMongoServiceCacheImpl delete cacheResult = {} result = {}", cacheResult, result);
+            log.info("RTMongoServiceCacheImpl delete cacheResult = {} result = {}", cacheResult, result);
         }
         return result;
     }
