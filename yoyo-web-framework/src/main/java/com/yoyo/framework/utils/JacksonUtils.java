@@ -43,7 +43,7 @@ public class JacksonUtils {
      * json string convert to map
      * @return
      */
-    public static <T> Map json2map(String jsonStr)
+    public static Map json2map(String jsonStr)
             throws Exception {
         return OBJECT_MAPPER.readValue(jsonStr, Map.class);
     }
