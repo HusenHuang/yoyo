@@ -1,7 +1,6 @@
 package com.yoyo.framework.api;
 
 import com.yoyo.framework.common.SystemConstant;
-import com.yoyo.framework.utils.CookieUtil;
 import com.yoyo.framework.utils.IpUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
@@ -41,7 +40,7 @@ public class RTMvcInterceptor implements HandlerInterceptor {
                 .setSpanId(Optional.ofNullable(MDC.get(SystemConstant.SYSTEM_SPAN_ID)).orElse(SystemConstant.SYSTEM_EMPTY))
                 .setTokenId(request.getHeader(SystemConstant.HEADER_TOKEN_ID))
                 .setClientReqType(request.getHeader(SystemConstant.HEADER_RQUEST_TYPE));
-        RTMvcContextHodler.setWebRequest(context);
+        RTMvcContextHodler.setMvcContext(context);
         log.info("{} preHadnle context = {}", "[RTMvcInterceptor]", context);
         return true;
     }
@@ -65,6 +64,6 @@ public class RTMvcInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         log.info("{} afterCompletion remove context", "[RTMvcInterceptor]");
-        RTMvcContextHodler.removeWebRequest();
+        RTMvcContextHodler.removeMvcContext();
     }
 }

@@ -10,15 +10,15 @@ public class RTMvcContextHodler {
 
     private static final ThreadLocal<RTMvcContext> CONTEXT = new ThreadLocal<>();
 
-    public static RTMvcContext getWebRequest() {
+    public static RTMvcContext getMvcContext() {
         return CONTEXT.get();
     }
 
-    protected static void setWebRequest(RTMvcContext bean) {
+    protected static void setMvcContext(RTMvcContext bean) {
         CONTEXT.set(bean);
     }
 
-    protected static void removeWebRequest() {
+    protected static void removeMvcContext() {
         CONTEXT.remove();
     }
 }
