@@ -79,18 +79,23 @@ public class RTServiceCacheImpl<K,V> extends RTServiceImpl<K,V> {
 
     @Override
     public List<V> list(K... ids) {
+        return this.list(Arrays.asList(ids));
+    }
+
+    @Override
+    public List<V> list(List<K> ids) {
         Class<V> vClass = (Class<V>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[1];
         // 组装缓存Key
-        List<String> keys = Arrays.stream(ids).map(s -> this.getCacheKey(s.toString())).collect(Collectors.toList());
+        List<String> keys = ids.stream().map(s -> this.getCacheKey(s.toString())).collect(Collectors.toList());
         // 批量获取缓存值
         List<V> result = RedisUtils.multiGetForString(vClass, keys);
         List<K> asyncKeyList = new ArrayList<>();
         List<V> cacheResult = new ArrayList<>();
-        for (int i = 0; i < ids.length; i ++) {
+        for (int i = 0; i < ids.size(); i ++) {
             V v = result.get(i);
             if (Objects.isNull(v)) {
                 // 收集起来,异步缓存起来
-                asyncKeyList.add(ids[i]);
+                asyncKeyList.add(ids.get(i));
             } else {
                 ReflectUtil.FieldNameValue fieldNameValue = ReflectUtil.getFieldNameValue(v, Id.class);
                 if (Objects.isNull(fieldNameValue.getFieldValue())) {

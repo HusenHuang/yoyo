@@ -1,7 +1,7 @@
 package com.yoyo.framework.api;
 
-import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /***
  @Author:MrHuang
@@ -27,18 +27,36 @@ public interface IRTService<K, V> {
 
     /**
      * 根据多个ID查询多个对象
+     * 如果为空不返回
      * @param ids
      * @return
      */
     List<V> list(K ... ids);
 
-
     /**
      * 根据多个ID查询多个对象
+     * 如果为空不返回
      * @param ids
      * @return
      */
-    List<V> list(Collection<K> ids);
+    List<V> list(List<K> ids);
+
+
+    /**
+     * 根据多个ID查询多个对象
+     * 如果为空,返回null
+     * @param ids
+     * @return
+     */
+    Map<K,V> map(List<K> ids);
+
+    /**
+     * 根据多个ID查询多个对象
+     * 如果为空,返回null
+     * @param ids
+     * @return
+     */
+    Map<K,V> map(K ... ids);
 
     /**
      * 根据ID更新对象信息

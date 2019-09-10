@@ -15,7 +15,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
 import java.lang.reflect.ParameterizedType;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,17 +54,7 @@ public class MongoDao<K,V> {
      * @param ids
      * @return
      */
-    public List<V> findByIds(K ... ids) {
-        Class<V> vClass = (Class<V>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[1];
-        return mongoTemplate.find(Query.query(Criteria.where("_id").in(ids)), vClass);
-    }
-
-    /**
-     * 根据ID批量查询
-     * @param ids
-     * @return
-     */
-    public List<V> findByIds(Collection<K> ids) {
+    public List<V> findByIds(List<K> ids) {
         Class<V> vClass = (Class<V>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[1];
         return mongoTemplate.find(Query.query(Criteria.where("_id").in(ids)), vClass);
     }

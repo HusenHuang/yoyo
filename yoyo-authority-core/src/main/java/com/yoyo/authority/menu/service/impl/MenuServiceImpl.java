@@ -6,15 +6,13 @@ import com.yoyo.authority.menu.pojo.MenuGetRsp;
 import com.yoyo.authority.menu.pojo.MenuVO;
 import com.yoyo.authority.menu.service.IMenuService;
 import com.yoyo.framework.api.RTServiceCacheImpl;
-import com.yoyo.framework.api.RTServiceImpl;
-import com.yoyo.framework.common.SystemConstant;
 import com.yoyo.framework.exception.RTException;
 import com.yoyo.framework.utils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.List;
+import java.util.Map;
 
 /***
  @Author:MrHuang
@@ -56,11 +54,9 @@ public class MenuServiceImpl extends RTServiceCacheImpl<String,MenuDTO> implemen
 
     @Override
     public MenuGetRsp getMenu(String mid) {
-        List<MenuDTO> list = this.list(mid, "5d7202222914431ff47652f5");
-//        MenuDTO menuDTO = this.get(mid);
-//        MenuVO menuVO = BeanUtils.copy(menuDTO, MenuVO.class);
-//        return new MenuGetRsp().setMenu(menuVO);
-        return null;
+        MenuDTO menuDTO = this.get(mid);
+        MenuVO menuVO = BeanUtils.copy(menuDTO, MenuVO.class);
+        return new MenuGetRsp().setMenu(menuVO);
     }
 
     @Override

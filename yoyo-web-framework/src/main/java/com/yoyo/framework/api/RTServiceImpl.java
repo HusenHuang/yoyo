@@ -1,10 +1,16 @@
 package com.yoyo.framework.api;
 
+import com.google.common.collect.Maps;
 import com.yoyo.framework.mongo.MongoDao;
+import com.yoyo.framework.reflect.ReflectUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.Id;
 
-import java.util.Collection;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /***
  @Author:MrHuang
@@ -29,12 +35,32 @@ public class RTServiceImpl<K,V> implements IRTService<K,V> {
 
     @Override
     public List<V> list(K... ids) {
+        return this.list(Arrays.asList(ids));
+    }
+
+    @Override
+    public List<V> list(List<K> ids) {
         return dao.findByIds(ids);
     }
 
     @Override
-    public List<V> list(Collection<K> ids) {
-        return dao.findByIds(ids);
+    public Map<K, V> map(List<K> ids) {
+        Map<K, V> kvMap = this.list(ids).stream().collect(Collectors.toMap(
+                v -> {
+                    ReflectUtil.FieldNameValue nameValue = ReflectUtil.getFieldNameValue(v, Id.class);
+                    return (K) nameValue.getFieldValue();
+                },
+                v -> v, (oldValue, newValue) -> newValue));
+        LinkedHashMap<K,V> linkedHashMap = Maps.newLinkedHashMap();
+        for (K id : ids) {
+            linkedHashMap.put(id, kvMap.getOrDefault(id, null));
+        }
+        return linkedHashMap;
+    }
+
+    @Override
+    public Map<K, V> map(K ... ids) {
+        return this.map(Arrays.asList(ids));
     }
 
     @Override
