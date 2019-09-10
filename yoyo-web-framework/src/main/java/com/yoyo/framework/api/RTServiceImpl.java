@@ -5,6 +5,7 @@ import com.yoyo.framework.mongo.MongoDao;
 import com.yoyo.framework.reflect.ReflectUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
+import org.springframework.util.Assert;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -50,6 +51,7 @@ public class RTServiceImpl<K,V> implements IRTService<K,V> {
         Map<K, V> kvMap = this.list(ids).stream().collect(Collectors.toMap(
                 v -> {
                     ReflectUtil.FieldNameValue nameValue = ReflectUtil.getFieldNameValue(v, Id.class);
+                    Assert.notNull(nameValue, "nameValue not null");
                     return (K) nameValue.getFieldValue();
                 },
                 v -> v, (oldValue, newValue) -> newValue));
