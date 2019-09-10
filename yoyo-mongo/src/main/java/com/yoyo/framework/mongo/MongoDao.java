@@ -31,18 +31,6 @@ public class MongoDao<K,V> {
     @Autowired
     private MongoTemplate mongoTemplate;
 
-    private Class<K> kClass;
-
-    private Class<V> vClass;
-
-    /**
-     * 写入泛型Class类型
-     */
-    private void writeClassType() {
-        kClass = (Class<K>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-        vClass = (Class<V>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[1];
-    }
-
     /**
      * 新增
      * @param v
@@ -58,7 +46,7 @@ public class MongoDao<K,V> {
      * @return
      */
     public V findById(K id) {
-        writeClassType();
+        Class<V> vClass = (Class<V>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[1];
         return mongoTemplate.findById(id, vClass);
     }
 
@@ -68,7 +56,7 @@ public class MongoDao<K,V> {
      * @return
      */
     public List<V> findByIds(K ... ids) {
-        writeClassType();
+        Class<V> vClass = (Class<V>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[1];
         return mongoTemplate.find(Query.query(Criteria.where("_id").in(ids)), vClass);
     }
 
@@ -78,7 +66,7 @@ public class MongoDao<K,V> {
      * @return
      */
     public List<V> findByIds(Collection<K> ids) {
-        writeClassType();
+        Class<V> vClass = (Class<V>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[1];
         return mongoTemplate.find(Query.query(Criteria.where("_id").in(ids)), vClass);
     }
 
@@ -107,7 +95,7 @@ public class MongoDao<K,V> {
         // 版本号+1
         ReflectUtil.setFieldValue(v, version.getFieldName(), (Integer.parseInt(fieldValue.toString()) + 1) + "");
         Update update = Update.fromDocument(Document.parse(JSONUtils.object2Json(v)));
-        update.set("_class", v.getClass());
+        update.set("_class", v.getClass().getName());
         return mongoTemplate.updateFirst(Query.query(criteria), update, v.getClass());
     }
 
