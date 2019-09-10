@@ -1,11 +1,12 @@
 package com.yoyo.authority.account.service.impl;
 
+import com.yoyo.authority.account.config.ConfigManager;
 import com.yoyo.authority.account.dao.AccountDao;
 import com.yoyo.authority.account.pojo.*;
 import com.yoyo.authority.account.service.IAccountService;
 import com.yoyo.authority.role.pojo.RoleMenuGetRsp;
 import com.yoyo.authority.role.service.IRoleService;
-import com.yoyo.framework.api.RTServiceImpl;
+import com.yoyo.framework.api.RTServiceCacheImpl;
 import com.yoyo.framework.auth.JwtUtils;
 import com.yoyo.framework.date.DateUtils;
 import com.yoyo.framework.exception.RTException;
@@ -24,8 +25,11 @@ import java.time.LocalDateTime;
  @VERSION: 1.0
  ***/
 @Service
-public class AccountServiceImpl extends RTServiceImpl<String, AccountDTO> implements IAccountService  {
+public class AccountServiceImpl extends RTServiceCacheImpl<String, AccountDTO> implements IAccountService  {
 
+    public AccountServiceImpl() {
+        super(ConfigManager.ACCOUNT_REDIS_CONFIG_PRE, ConfigManager.ACCOUNT_REDIS_CONFIG_EXPIRE_SECOND);
+    }
 
     @Autowired
     private AccountDao accountDao;
