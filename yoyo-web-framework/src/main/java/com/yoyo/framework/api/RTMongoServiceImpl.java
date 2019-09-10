@@ -17,11 +17,11 @@ import java.util.stream.Collectors;
  @Author:MrHuang
  @Date: 2019/9/9 11:28
  @DESC: TODO
- 业务CRUD
+ Mongo业务CRUD
  非缓存版本实现
  @VERSION: 1.0
  ***/
-public class RTServiceImpl<K,V> implements IRTService<K,V> {
+public class RTMongoServiceImpl<K,V> implements IRTService<K,V> {
 
     @Autowired
     private MongoDao<K,V> dao;
