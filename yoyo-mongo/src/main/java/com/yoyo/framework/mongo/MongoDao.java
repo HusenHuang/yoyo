@@ -94,6 +94,7 @@ public class MongoDao<K,V> {
      * @return
      */
     public DeleteResult deleteById(K id) {
-        return mongoTemplate.remove(Query.query(Criteria.where("_id").is(id)));
+        Class<V> vClass = (Class<V>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+        return mongoTemplate.remove(Query.query(Criteria.where("_id").is(id)), vClass);
     }
 }
