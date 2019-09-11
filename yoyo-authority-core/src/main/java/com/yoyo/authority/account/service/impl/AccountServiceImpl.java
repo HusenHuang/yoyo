@@ -82,7 +82,7 @@ public class AccountServiceImpl extends RTMongoServiceCacheImpl<String, AccountD
         AccountLoginRsp rsp = BeanUtils.copy(accountDTO, AccountLoginRsp.class);
         rsp.setTokenId(JwtUtils.encode(accountDTO.getAid()));
         if (StringUtils.hasLength(accountDTO.getBindRoleId())) {
-            RoleMenuGetRsp roleMenu = roleService.getRoleMenu(accountDTO.getBindRoleId());
+            RoleMenuGetRsp roleMenu = roleService.getRoleMenuTree(accountDTO.getBindRoleId());
             rsp.setMenuList(roleMenu.getMenuList());
         }
         return rsp;

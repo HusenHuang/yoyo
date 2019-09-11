@@ -70,4 +70,9 @@ public class SystemConstant {
      * 系统逻辑删除值
      */
     public static final String LOGIC_DELETE_STATUS = "-1";
+
+    /**
+     * 根节点名称
+     */
+    public static final String ROOT = "ROOT";
 }

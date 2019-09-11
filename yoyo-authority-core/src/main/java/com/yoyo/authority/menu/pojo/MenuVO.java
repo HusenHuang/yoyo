@@ -17,7 +17,7 @@ import java.util.List;
 public class MenuVO implements Serializable {
 
     private String mid;
-    
+
     private String parentId;
 
     private String name;
@@ -28,5 +28,5 @@ public class MenuVO implements Serializable {
 
     private Integer ordered;
 
-    private List<MenuVO> cliendMenuVO;
+    private List<MenuVO> childMenuVO;
 }

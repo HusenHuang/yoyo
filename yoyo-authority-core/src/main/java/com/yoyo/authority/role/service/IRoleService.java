@@ -18,5 +18,5 @@ public interface IRoleService {
 
     boolean bindMenu(String id, List<String> menuIdList);
 
-    RoleMenuGetRsp getRoleMenu(String rid);
+    RoleMenuGetRsp getRoleMenuTree(String rid);
 }

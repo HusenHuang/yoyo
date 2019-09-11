@@ -45,7 +45,7 @@ public class RoleApi {
 
     @GetMapping("/getRoleMenu/{roleId}")
     public RTRaw<RoleMenuGetRsp> getRoleMenu(@Validated @PathVariable String roleId) {
-        RoleMenuGetRsp result = roleService.getRoleMenu(roleId);
+        RoleMenuGetRsp result = roleService.getRoleMenuTree(roleId);
         return RTRawWrite.success(result);
     }
 }
