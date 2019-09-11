@@ -18,6 +18,7 @@ public class RTMvcConfiguration implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new RTMvcLoginInterceptor());
         registry.addInterceptor(new RTMvcInterceptor());
     }
 }
