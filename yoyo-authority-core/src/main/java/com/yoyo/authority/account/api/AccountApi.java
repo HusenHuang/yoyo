@@ -1,8 +1,6 @@
 package com.yoyo.authority.account.api;
 
-import com.yoyo.authority.account.pojo.AccountLoginReq;
-import com.yoyo.authority.account.pojo.AccountRegisterReq;
-import com.yoyo.authority.account.pojo.AccountRegisterRsp;
+import com.yoyo.authority.account.pojo.*;
 import com.yoyo.authority.account.service.IAccountService;
 import com.yoyo.framework.api.RTRaw;
 import com.yoyo.framework.api.RTRawWrite;
@@ -39,5 +37,10 @@ public class AccountApi {
     @PostMapping("/login")
     public RTRaw<Object> login(@RequestBody AccountLoginReq req) {
         return RTRawWrite.success(accountService.login(req));
+    }
+
+    @PostMapping("/bindRole")
+    public RTRaw<AccountBindRoleRsp> bindRole(@RequestBody AccountBindRoleReq req) {
+        return RTRawWrite.success(accountService.bindRole(req));
     }
 }
