@@ -11,8 +11,10 @@ import com.yoyo.framework.api.RTMongoServiceCacheImpl;
 import com.yoyo.framework.date.DateUtils;
 import com.yoyo.framework.exception.RTException;
 import com.yoyo.framework.utils.BeanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -73,7 +75,26 @@ public class RoleServiceImpl extends RTMongoServiceCacheImpl<String, RoleDTO> im
         }
         String[] menuIds = roleDTO.getBindMenuId().toArray(new String[]{});
         List<MenuDTO> menus = menuService.list(menuIds);
-        List<MenuVO> menuVOList = menus.stream().map(s -> BeanUtils.copy(s, MenuVO.class)).collect(Collectors.toList());
-        return new RoleMenuGetRsp().setMenuList(menuVOList);
+        List<MenuVO> menuVOS = menus.stream().map(s -> BeanUtils.copy(s, MenuVO.class)).collect(Collectors.toList());
+        List<MenuVO> loadTree = this.loadTree(menuVOS, "ROOT");
+        return new RoleMenuGetRsp().setMenuList(loadTree);
+    }
+
+    /**
+     * 递归设置菜单树
+     * @param vos
+     * @param parentId
+     * @return
+     */
+    public List<MenuVO> loadTree(List<MenuVO> vos, String parentId) {
+        List<MenuVO> collect = vos.stream().filter(s -> StringUtils.equals(parentId, s.getParentId())).collect(Collectors.toList());
+        if (!CollectionUtils.isEmpty(collect)) {
+            for (MenuVO menuVO : collect) {
+                List<MenuVO> a = this.loadTree(vos, menuVO.getMid());
+                menuVO.setCliendMenuVO(a);
+            }
+        } else {
+        }
+        return collect;
     }
 }

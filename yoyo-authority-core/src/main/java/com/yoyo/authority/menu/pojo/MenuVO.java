@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.List;
 
 /***
  @Author:MrHuang
@@ -15,6 +16,8 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class MenuVO implements Serializable {
 
+    private String mid;
+    
     private String parentId;
 
     private String name;
@@ -24,4 +27,6 @@ public class MenuVO implements Serializable {
     private Integer menuStatus;
 
     private Integer ordered;
+
+    private List<MenuVO> cliendMenuVO;
 }

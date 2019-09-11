@@ -34,7 +34,7 @@ public class MenuServiceImpl extends RTMongoServiceCacheImpl<String,MenuDTO> imp
         MenuDTO menuDTO = new MenuDTO()
                 .setName(name)
                 .setPath(path)
-                .setParentId(StringUtils.hasLength(parentId) ? parentId : null)
+                .setParentId(StringUtils.hasLength(parentId) ? parentId : "ROOT")
                 .setOrdered(ordered)
                 .setMenuStatus(0)
                 .setVersion("0");
