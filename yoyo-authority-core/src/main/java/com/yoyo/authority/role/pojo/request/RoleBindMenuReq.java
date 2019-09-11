@@ -1,4 +1,4 @@
-package com.yoyo.authority.role.pojo;
+package com.yoyo.authority.role.pojo.request;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

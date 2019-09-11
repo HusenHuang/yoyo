@@ -1,11 +1,11 @@
 package com.yoyo.authority.role.service.impl;
 
-import com.yoyo.authority.menu.pojo.MenuDTO;
+import com.yoyo.authority.menu.pojo.dto.MenuDTO;
 import com.yoyo.authority.menu.pojo.MenuVO;
 import com.yoyo.authority.menu.service.IMenuService;
 import com.yoyo.authority.role.config.ConfigManager;
-import com.yoyo.authority.role.pojo.RoleDTO;
-import com.yoyo.authority.role.pojo.RoleMenuGetRsp;
+import com.yoyo.authority.role.pojo.dto.RoleDTO;
+import com.yoyo.authority.role.pojo.resposne.RoleMenuGetRsp;
 import com.yoyo.authority.role.service.IRoleService;
 import com.yoyo.framework.api.RTMongoServiceCacheImpl;
 import com.yoyo.framework.date.DateUtils;

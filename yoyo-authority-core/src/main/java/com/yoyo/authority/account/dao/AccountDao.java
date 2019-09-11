@@ -1,6 +1,6 @@
 package com.yoyo.authority.account.dao;
 
-import com.yoyo.authority.account.pojo.AccountDTO;
+import com.yoyo.authority.account.pojo.dto.AccountDTO;
 import com.yoyo.framework.mongo.MongoDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;

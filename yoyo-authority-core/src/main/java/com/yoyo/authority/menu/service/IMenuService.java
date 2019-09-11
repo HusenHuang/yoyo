@@ -1,7 +1,7 @@
 package com.yoyo.authority.menu.service;
 
-import com.yoyo.authority.menu.pojo.MenuDTO;
-import com.yoyo.authority.menu.pojo.MenuGetRsp;
+import com.yoyo.authority.menu.pojo.dto.MenuDTO;
+import com.yoyo.authority.menu.pojo.response.MenuGetRsp;
 
 /***
  @Author:MrHuang

@@ -1,6 +1,6 @@
 package com.yoyo.authority.role.service;
 
-import com.yoyo.authority.role.pojo.RoleMenuGetRsp;
+import com.yoyo.authority.role.pojo.resposne.RoleMenuGetRsp;
 
 import java.util.List;
 

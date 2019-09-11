@@ -1,4 +1,4 @@
-package com.yoyo.authority.account.pojo;
+package com.yoyo.authority.menu.pojo.dto;
 
 import com.yoyo.framework.mongo.MongoVersion;
 import lombok.Data;
@@ -8,41 +8,32 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /***
  @Author:MrHuang
- @Date: 2019/9/3 22:30
+ @Date: 2019/9/4 10:49
  @DESC: TODO
  @VERSION: 1.0
  ***/
 @Data
 @Accessors(chain = true)
-@Document(collection = "t_account")
-public class AccountDTO implements Serializable {
+@Document(collection = "t_menu")
+public class MenuDTO implements Serializable {
 
     @Id
-    private String aid;
+    private String mid;
+
+    @Field
+    private String parentId;
 
     @Field
     private String name;
 
     @Field
-    private String password;
-
-    /**
-     * 0：待激活
-     * 1：已激活
-     * 2：已停用
-     */
-    @Field
-    private Integer activeState;
+    private String path;
 
     @Field
-    private String email;
-
-    @Field
-    private String bindRoleId;
+    private Integer menuStatus;
 
     @Field
     private String createTime;
@@ -50,6 +41,10 @@ public class AccountDTO implements Serializable {
     @Field
     private String updateTime;
 
+    @Field
+    private Integer ordered;
+
+    @Field
     @MongoVersion
     private String version;
 }

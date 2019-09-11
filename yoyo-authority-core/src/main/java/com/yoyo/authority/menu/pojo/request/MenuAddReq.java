@@ -1,4 +1,4 @@
-package com.yoyo.authority.menu.pojo;
+package com.yoyo.authority.menu.pojo.request;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

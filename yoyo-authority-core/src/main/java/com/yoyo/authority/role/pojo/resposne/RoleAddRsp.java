@@ -1,4 +1,4 @@
-package com.yoyo.authority.role.pojo;
+package com.yoyo.authority.role.pojo.resposne;
 
 import lombok.Data;
 import org.springframework.web.bind.annotation.RequestMapping;

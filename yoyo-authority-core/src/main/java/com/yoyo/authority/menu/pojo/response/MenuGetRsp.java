@@ -1,21 +1,20 @@
-package com.yoyo.authority.role.pojo;
+package com.yoyo.authority.menu.pojo.response;
 
 import com.yoyo.authority.menu.pojo.MenuVO;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.List;
 
 /***
  @Author:MrHuang
- @Date: 2019/9/6 15:11
+ @Date: 2019/9/6 14:32
  @DESC: TODO
  @VERSION: 1.0
  ***/
 @Data
 @Accessors(chain = true)
-public class RoleMenuGetRsp implements Serializable {
+public class MenuGetRsp implements Serializable {
 
-    private List<MenuVO> menuList;
+    private MenuVO menu;
 }

@@ -1,6 +1,6 @@
 package com.yoyo.authority.role.dao;
 
-import com.yoyo.authority.role.pojo.RoleDTO;
+import com.yoyo.authority.role.pojo.dto.RoleDTO;
 import com.yoyo.framework.mongo.MongoDao;
 import org.springframework.stereotype.Repository;
 

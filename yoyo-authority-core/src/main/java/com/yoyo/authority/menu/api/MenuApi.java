@@ -1,8 +1,8 @@
 package com.yoyo.authority.menu.api;
 
-import com.yoyo.authority.menu.pojo.MenuAddReq;
-import com.yoyo.authority.menu.pojo.MenuGetRsp;
-import com.yoyo.authority.menu.pojo.MenuUpdateReq;
+import com.yoyo.authority.menu.pojo.request.MenuAddReq;
+import com.yoyo.authority.menu.pojo.response.MenuGetRsp;
+import com.yoyo.authority.menu.pojo.request.MenuUpdateReq;
 import com.yoyo.authority.menu.service.IMenuService;
 import com.yoyo.framework.api.RTRaw;
 import com.yoyo.framework.api.RTRawWrite;

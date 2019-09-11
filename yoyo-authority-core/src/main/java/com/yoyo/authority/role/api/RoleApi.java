@@ -1,9 +1,9 @@
 package com.yoyo.authority.role.api;
 
-import com.yoyo.authority.role.pojo.RoleAddReq;
-import com.yoyo.authority.role.pojo.RoleBindMenuReq;
-import com.yoyo.authority.role.pojo.RoleMenuGetRsp;
-import com.yoyo.authority.role.pojo.RoleUpdateReq;
+import com.yoyo.authority.role.pojo.request.RoleAddReq;
+import com.yoyo.authority.role.pojo.request.RoleBindMenuReq;
+import com.yoyo.authority.role.pojo.resposne.RoleMenuGetRsp;
+import com.yoyo.authority.role.pojo.request.RoleUpdateReq;
 import com.yoyo.authority.role.service.IRoleService;
 import com.yoyo.framework.api.RTRaw;
 import com.yoyo.framework.api.RTRawWrite;

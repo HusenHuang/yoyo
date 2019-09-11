@@ -2,8 +2,8 @@ package com.yoyo.authority.menu.service.impl;
 
 import com.yoyo.authority.menu.config.ConfigManager;
 import com.yoyo.authority.menu.dao.MenuDao;
-import com.yoyo.authority.menu.pojo.MenuDTO;
-import com.yoyo.authority.menu.pojo.MenuGetRsp;
+import com.yoyo.authority.menu.pojo.dto.MenuDTO;
+import com.yoyo.authority.menu.pojo.response.MenuGetRsp;
 import com.yoyo.authority.menu.pojo.MenuVO;
 import com.yoyo.authority.menu.service.IMenuService;
 import com.yoyo.framework.api.RTMongoServiceCacheImpl;

@@ -1,6 +1,6 @@
 package com.yoyo.authority.menu.dao;
 
-import com.yoyo.authority.menu.pojo.MenuDTO;
+import com.yoyo.authority.menu.pojo.dto.MenuDTO;
 import com.yoyo.framework.mongo.MongoDao;
 import org.springframework.stereotype.Repository;
 

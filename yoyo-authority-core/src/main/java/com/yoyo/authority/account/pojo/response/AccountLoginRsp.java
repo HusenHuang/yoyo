@@ -1,7 +1,6 @@
-package com.yoyo.authority.account.pojo;
+package com.yoyo.authority.account.pojo.response;
 
 import com.yoyo.authority.menu.pojo.MenuVO;
-import com.yoyo.authority.role.pojo.RoleMenuGetRsp;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
