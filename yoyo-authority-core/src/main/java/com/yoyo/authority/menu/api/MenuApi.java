@@ -4,6 +4,7 @@ import com.yoyo.authority.menu.pojo.request.MenuAddReq;
 import com.yoyo.authority.menu.pojo.response.MenuGetRsp;
 import com.yoyo.authority.menu.pojo.request.MenuUpdateReq;
 import com.yoyo.authority.menu.service.IMenuService;
+import com.yoyo.framework.PrintMethod;
 import com.yoyo.framework.api.RTRaw;
 import com.yoyo.framework.api.RTRawWrite;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,7 @@ public class MenuApi {
     }
 
     @GetMapping("/get/{mid}")
+    @PrintMethod
     public RTRaw<MenuGetRsp> getMenu(@PathVariable String mid) {
         MenuGetRsp result = menuService.getMenu(mid);
         return RTRawWrite.success(result);
