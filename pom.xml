@@ -19,6 +19,7 @@
         <module>yoyo-web-framework</module>
         <module>yoyo-mongo</module>
         <module>yoyo-redis</module>
+        <module>yoyo-zookeeper</module>
     </modules>
 
 
