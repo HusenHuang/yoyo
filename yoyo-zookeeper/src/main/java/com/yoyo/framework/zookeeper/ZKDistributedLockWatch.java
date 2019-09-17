@@ -40,7 +40,7 @@ public class ZKDistributedLockWatch {
     /**
      * Connection超时时间
      */
-    private int connectionTimeoutMs = 15000;
+    private int connectionTimeoutMs = 60000;
 
     /**
      * zooKeeper 服务地址, 单机格式为:(127.0.0.1:2181), 集群格式为:(127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183)

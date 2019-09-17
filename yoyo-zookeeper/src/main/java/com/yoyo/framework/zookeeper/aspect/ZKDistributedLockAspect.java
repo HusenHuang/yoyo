@@ -53,7 +53,7 @@ public class ZKDistributedLockAspect {
         boolean isGetLock = watch.acquire(client, distributedLockPath, expireSecond);
         // 锁获取失败 直接抛出异常
         if (!isGetLock) {
-//            watch.release(client);
+            watch.release(client);
             throw new RTGetLockException(RTCode.GET_LOCK_FAIL.getMsg());
         }
         // 2. 执行代码逻辑
