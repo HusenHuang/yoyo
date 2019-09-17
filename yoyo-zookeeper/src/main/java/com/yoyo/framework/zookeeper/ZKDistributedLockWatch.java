@@ -25,25 +25,21 @@ public class ZKDistributedLockWatch {
     /**
      * 最大重试次数
      */
-    @Value("${spring.zookeeper.maxRetries}")
     private int maxRetries = 3;
 
     /**
      * 初始化睡眠时间
      */
-    @Value("${spring.zookeeper.baseSleepTimeMs}")
     private int baseSleepTimeMs = 1000;
 
     /**
      * Session超时时间
      */
-    @Value("${spring.zookeeper.sessionTimeoutMs}")
     private int sessionTimeoutMs = 60000;
 
     /**
      * Connection超时时间
      */
-    @Value("${spring.zookeeper.connectionTimeoutMs}")
     private int connectionTimeoutMs = 15000;
 
     /**
