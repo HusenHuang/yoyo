@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
  ***/
 @Component
 @Slf4j
-public class DistributedLockWatch {
+public class ZKDistributedLockWatch {
 
     private int baseSleepTimeMs = 1000;
 
@@ -33,7 +33,7 @@ public class DistributedLockWatch {
     /**
      * zooKeeper 服务地址, 单机格式为:(127.0.0.1:2181), 集群格式为:(127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183)
      */
-    @Value("${zookeeper.address}")
+    @Value("${spring.zookeeper.address}")
     private String zookeeperAddress;
 
     /**
@@ -53,7 +53,7 @@ public class DistributedLockWatch {
             new InterProcessSemaphoreMutex(client, lockPath).acquire();
             return true;
         } catch (Exception e) {
-            log.error("DistributedLock acquire fail", e);
+            log.error("ZKDistributedLock acquire fail", e);
             return false;
         }
     }
@@ -68,7 +68,7 @@ public class DistributedLockWatch {
         try {
             return new InterProcessSemaphoreMutex(client, lockPath).acquire(timeoutS, TimeUnit.SECONDS);
         } catch (Exception e) {
-            log.error("DistributedLock acquire fail", e);
+            log.error("ZKDistributedLock acquire fail", e);
             return false;
         }
     }

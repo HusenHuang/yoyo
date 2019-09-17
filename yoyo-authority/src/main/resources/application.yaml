@@ -18,3 +18,5 @@ spring:
     password: hxc
     host: redis.limaila.com
     port: 6379
+  zookeeper:
+    address: zk.limaila.com:2181

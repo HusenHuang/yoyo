@@ -9,6 +9,7 @@ import com.yoyo.authority.menu.service.IMenuService;
 import com.yoyo.framework.api.RTMongoServiceCacheImpl;
 import com.yoyo.framework.exception.RTException;
 import com.yoyo.framework.utils.BeanUtils;
+import com.yoyo.framework.zookeeper.annotation.ZKDistributedLock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -51,6 +52,7 @@ public class MenuServiceImpl extends RTMongoServiceCacheImpl<String,MenuDTO> imp
         return this.updateWithVersion(menuDTO);
     }
 
+    @ZKDistributedLock(value = "zkPath")
     @Override
     public MenuGetRsp getMenu(String mid) {
         MenuDTO menuDTO = this.get(mid);

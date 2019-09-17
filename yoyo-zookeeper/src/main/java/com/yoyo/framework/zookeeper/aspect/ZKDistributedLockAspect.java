@@ -2,8 +2,8 @@ package com.yoyo.framework.zookeeper.aspect;
 
 import com.yoyo.framework.api.RTCode;
 import com.yoyo.framework.exception.RTGetLockException;
-import com.yoyo.framework.zookeeper.DistributedLockWatch;
-import com.yoyo.framework.zookeeper.annotation.DistributedLock;
+import com.yoyo.framework.zookeeper.ZKDistributedLockWatch;
+import com.yoyo.framework.zookeeper.annotation.ZKDistributedLock;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.framework.CuratorFramework;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -25,7 +25,7 @@ import java.util.Map;
 @Slf4j
 @Aspect
 @Component
-public class DistributedLockAspect {
+public class ZKDistributedLockAspect {
 
     /**
      * 分布式锁前缀
@@ -34,18 +34,18 @@ public class DistributedLockAspect {
 
 
     @Autowired
-    private DistributedLockWatch watch;
+    private ZKDistributedLockWatch watch;
     /**
      * 定义环绕通知
      * @annotation(distributedLock) 切入点
      */
-    @Around(value = "@annotation(distributedLock)")
-    public Object around(ProceedingJoinPoint point, DistributedLock distributedLock) throws Throwable {
+    @Around(value = "@annotation(ZKDistributedLock)")
+    public Object around(ProceedingJoinPoint point, ZKDistributedLock ZKDistributedLock) throws Throwable {
         // 获取注解值
-        Map<String, Object> annotationAttributes = AnnotationUtils.getAnnotationAttributes(distributedLock);
+        Map<String, Object> annotationAttributes = AnnotationUtils.getAnnotationAttributes(ZKDistributedLock);
         String lockPath = (String)annotationAttributes.get("value");
         Assert.hasLength(lockPath, "lockPath not empty");
-        int expireSecond = distributedLock.expireSecond();
+        int expireSecond = ZKDistributedLock.expireSecond();
         // 分布式锁
         String distributedLockPath =  DEFAULT_LOCK_PATH_PRE + lockPath;
         CuratorFramework client = watch.getClient();

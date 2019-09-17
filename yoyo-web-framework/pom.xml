@@ -20,21 +20,28 @@
             <version>${project.parent.version}</version>
         </dependency>
 
-        <!-- 基础框架包 -->
+        <!-- Mongo框架包 -->
         <dependency>
             <groupId>com.husen</groupId>
             <artifactId>yoyo-mongo</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
 
-        <!-- 基础框架包 -->
+        <!-- Redis框架包 -->
         <dependency>
             <groupId>com.husen</groupId>
             <artifactId>yoyo-redis</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
 
-        <!-- WEB框架包 -->
+        <!-- Zookeeper框架包 -->
+        <dependency>
+            <groupId>com.husen</groupId>
+            <artifactId>yoyo-zookeeper</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- Log框架包 -->
         <dependency>
             <groupId>com.husen</groupId>
             <artifactId>yoyo-log</artifactId>
