@@ -9,25 +9,21 @@ import java.lang.annotation.Target;
 
 /***
  @Author:MrHuang
- @Date: 2019/7/11 11:08
+ @Date: 2019/7/24 17:15
  @DESC: TODO
  @VERSION: 1.0
  ***/
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface DistributedLock {
+public @interface RedisDistributedLimit {
 
-    @AliasFor("lockKey")
+    @AliasFor("limitKey")
     String value() default "";
 
     @AliasFor("value")
-    String lockKey() default "";
+    String limitKey() default "";
 
-    String clientId() default "";
+    int limitNum() default 1000;
 
-    int expireSecond() default 3;
-
-    long blockMilliSecond() default 0;
-
-    long sleppMilliSecond() default 0;
+    int expireSecond() default 1;
 }

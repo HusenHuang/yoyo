@@ -7,7 +7,7 @@ package com.yoyo.framework.redis;
  @VERSION: 1.0
  ***/
 @FunctionalInterface
-public interface DistributedCall {
+public interface RedisDistributedCall {
 
     void call();
 }

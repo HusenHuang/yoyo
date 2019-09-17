@@ -18,7 +18,7 @@ import java.util.Collections;
  ***/
 @Slf4j
 @Component
-public class DistributedLimitUtils {
+public class RedisDistributedLimitUtils {
 
     /**
      * 限流。
@@ -43,8 +43,8 @@ public class DistributedLimitUtils {
     private static StringRedisTemplate template;
 
     @Autowired
-    public DistributedLimitUtils(StringRedisTemplate template) {
-        DistributedLimitUtils.template = template;
+    public RedisDistributedLimitUtils(StringRedisTemplate template) {
+        RedisDistributedLimitUtils.template = template;
     }
 
     /**
@@ -67,7 +67,7 @@ public class DistributedLimitUtils {
      * @param call
      * @return
      */
-    public static void limit(String limitKey, long limitNum, long expireSecond, DistributedCall call) {
+    public static void limit(String limitKey, long limitNum, long expireSecond, RedisDistributedCall call) {
         if (isLimit(limitKey, limitNum, expireSecond)) {
             call.call();
         } else {

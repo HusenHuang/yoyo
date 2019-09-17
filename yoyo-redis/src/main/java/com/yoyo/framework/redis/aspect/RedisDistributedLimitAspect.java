@@ -2,8 +2,8 @@ package com.yoyo.framework.redis.aspect;
 
 import com.yoyo.framework.api.RTCode;
 import com.yoyo.framework.exception.RTLimitException;
-import com.yoyo.framework.redis.DistributedLimitUtils;
-import com.yoyo.framework.redis.annotation.DistributedLimit;
+import com.yoyo.framework.redis.RedisDistributedLimitUtils;
+import com.yoyo.framework.redis.annotation.RedisDistributedLimit;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -23,26 +23,26 @@ import java.util.Map;
 @Slf4j
 @Aspect
 @Component
-public class DistributedLimitAspect {
+public class RedisDistributedLimitAspect {
 
     /**
      * 限流Key前缀
      */
-    private static final String DEFAULT_LIMIT_KEY_PRE = "DistributedLimit:";
+    private static final String DEFAULT_LIMIT_KEY_PRE = "RedisDistributedLimit:";
 
     /**
      * 定义环绕通知
      * @annotation(distributedLock) 切入点
      */
-    @Before("@annotation(distributedLimit)")
-    public void before(JoinPoint point, DistributedLimit distributedLimit){
+    @Before("@annotation(redisDistributedLimit)")
+    public void before(JoinPoint point, RedisDistributedLimit redisDistributedLimit){
         // 获取注解值
-        Map<String, Object> annotationAttributes = AnnotationUtils.getAnnotationAttributes(distributedLimit);
+        Map<String, Object> annotationAttributes = AnnotationUtils.getAnnotationAttributes(redisDistributedLimit);
         String limitKey = StringUtils.isEmpty(annotationAttributes.get("value")) ? point.getSignature().getDeclaringTypeName() + "#" + point.getSignature().getName() : (String)annotationAttributes.get("value");
-        int limitNum = distributedLimit.limitNum();
-        int expireSecond = distributedLimit.expireSecond();
+        int limitNum = redisDistributedLimit.limitNum();
+        int expireSecond = redisDistributedLimit.expireSecond();
         String distributedLimitKey = DEFAULT_LIMIT_KEY_PRE + limitKey;
-        boolean isLimit = DistributedLimitUtils.isLimit(distributedLimitKey, limitNum, expireSecond);
+        boolean isLimit = RedisDistributedLimitUtils.isLimit(distributedLimitKey, limitNum, expireSecond);
         log.info("DistributedLimitAspect isLimit = {}", isLimit);
         if (isLimit) {
             throw new RTLimitException(RTCode.LIMIT_FAIL.getMsg());

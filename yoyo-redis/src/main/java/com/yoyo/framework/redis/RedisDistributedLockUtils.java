@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  ***/
 @Slf4j
 @Component
-public class DistributedLockUtils {
+public class RedisDistributedLockUtils {
 
     /**
      * 获取不阻塞的锁成功返回：1
@@ -39,8 +39,8 @@ public class DistributedLockUtils {
     private static StringRedisTemplate template;
 
     @Autowired
-    public DistributedLockUtils(StringRedisTemplate template) {
-        DistributedLockUtils.template = template;
+    public RedisDistributedLockUtils(StringRedisTemplate template) {
+        RedisDistributedLockUtils.template = template;
     }
 
     /**
@@ -66,7 +66,7 @@ public class DistributedLockUtils {
      * @param call 执行的代码块
      * @return
      */
-    public static void tryLockWithNotBlock(String lockKey, String clientId, int expireSecond, DistributedCall call) {
+    public static void tryLockWithNotBlock(String lockKey, String clientId, int expireSecond, RedisDistributedCall call) {
         boolean lock = getNoBlockLock(lockKey, clientId, expireSecond);
         if (lock) {
             try {
@@ -87,7 +87,7 @@ public class DistributedLockUtils {
      * @param call 执行的代码块
      * @return
      */
-    public static void tryLockWithBlock(String lockKey, String clientId, int expireSecond, long blockMilliSecond, long sleppMilliSecond, DistributedCall call) {
+    public static void tryLockWithBlock(String lockKey, String clientId, int expireSecond, long blockMilliSecond, long sleppMilliSecond, RedisDistributedCall call) {
         boolean lock = getBlockLock(lockKey, clientId, expireSecond, blockMilliSecond, sleppMilliSecond);
         if (lock) {
             try {
