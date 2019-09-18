@@ -1,3 +1,17 @@
 spring:
   application:
     name: yoyo-authority
+  cloud:
+    nacos:
+      discovery:
+        server-addr: www.limaila.com:8848
+        cluster-name: YOYO
+      config:
+        server-addr: www.limaila.com:8848
+        file-extension: yaml
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

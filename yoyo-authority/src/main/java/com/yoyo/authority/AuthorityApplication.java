@@ -2,6 +2,7 @@ package com.yoyo.authority;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScans;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -21,6 +22,7 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 @ComponentScans(value = {
         @ComponentScan("com.yoyo.framework")
 })
+@EnableDiscoveryClient
 public class AuthorityApplication {
 
     public static void main(String[] args) {
