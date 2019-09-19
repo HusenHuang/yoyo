@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.reflect.FieldUtils;
+import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
 import java.io.Serializable;
@@ -42,7 +43,7 @@ public class ReflectUtil {
      * @return
      */
     public static Object getFieldValue(Object object, Class<? extends Annotation> annotationCls)  {
-        return  Optional.ofNullable(getFieldNameValue(object, annotationCls)).map(FieldNameValue::getFieldValue).orElse(null);
+        return Optional.ofNullable(getFieldNameValue(object, annotationCls)).map(FieldNameValue::getFieldValue).orElse(null);
     }
 
     /**
@@ -52,13 +53,12 @@ public class ReflectUtil {
      * @return
      */
     public static String getFieldName(Object object, Class<? extends Annotation> annotationCls) {
-        return  Optional.ofNullable(getFieldNameValue(object, annotationCls)).map(FieldNameValue::getFieldName).orElse(null);
+        return Optional.ofNullable(getFieldNameValue(object, annotationCls)).map(FieldNameValue::getFieldName).orElse(null);
     }
 
     public static String getFieldName(Class objectClass, Class<? extends Annotation> annotationCls) {
         Field field = ReflectUtil.getField(objectClass, annotationCls);
-        field.setAccessible(true);
-        return field.getName();
+        return field != null ? field.getName() : null;
     }
 
     /**
@@ -68,18 +68,17 @@ public class ReflectUtil {
      * @return
      */
     public static FieldNameValue getFieldNameValue(Object object, Class<? extends Annotation> annotationCls) {
-        if (object == null) {
+        if (object == null || annotationCls == null) {
             return null;
         }
         Field field = ReflectUtil.getField(object.getClass(), annotationCls);
-        if (field == null) {
-            return null;
-        }
-        field.setAccessible(true);
-        try {
-            return new FieldNameValue().setFieldName(field.getName()).setFieldValue(field.get(object));
-        } catch (IllegalAccessException e) {
-            log.error("ReflectUtil getFieldNameValue error", e);
+        if (field != null) {
+            field.setAccessible(true);
+            try {
+                return new FieldNameValue().setFieldName(field.getName()).setFieldValue(field.get(object));
+            } catch (IllegalAccessException e) {
+                log.error("ReflectUtil getFieldNameValue error", e);
+            }
         }
         return null;
     }
