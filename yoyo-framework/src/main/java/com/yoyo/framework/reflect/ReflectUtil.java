@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /***
@@ -58,7 +59,7 @@ public class ReflectUtil {
 
     public static String getFieldName(Class objectClass, Class<? extends Annotation> annotationCls) {
         Field field = ReflectUtil.getField(objectClass, annotationCls);
-        return field != null ? field.getName() : null;
+        return Objects.nonNull(field) ? field.getName() : null;
     }
 
     /**
@@ -68,11 +69,11 @@ public class ReflectUtil {
      * @return
      */
     public static FieldNameValue getFieldNameValue(Object object, Class<? extends Annotation> annotationCls) {
-        if (object == null || annotationCls == null) {
+        if (Objects.isNull(object) || Objects.isNull(annotationCls)) {
             return null;
         }
         Field field = ReflectUtil.getField(object.getClass(), annotationCls);
-        if (field != null) {
+        if (Objects.nonNull(field)) {
             field.setAccessible(true);
             try {
                 return new FieldNameValue().setFieldName(field.getName()).setFieldValue(field.get(object));
