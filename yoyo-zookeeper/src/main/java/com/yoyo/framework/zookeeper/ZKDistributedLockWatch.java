@@ -33,16 +33,6 @@ public class ZKDistributedLockWatch {
     private int baseSleepTimeMs = 1000;
 
     /**
-     * Session超时时间
-     */
-    private int sessionTimeoutMs = 60000;
-
-    /**
-     * Connection超时时间
-     */
-    private int connectionTimeoutMs = 60000;
-
-    /**
      * zooKeeper 服务地址, 单机格式为:(127.0.0.1:2181), 集群格式为:(127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183)
      */
     @Value("${spring.zookeeper.address}")
@@ -98,6 +88,14 @@ public class ZKDistributedLockWatch {
      * @return
      */
     public CuratorFramework getClient() {
+        /**
+         * Session超时时间
+         */
+        int sessionTimeoutMs = 60000;
+        /**
+         * Connection超时时间
+         */
+        int connectionTimeoutMs = 60000;
         CuratorFramework client = CuratorFrameworkFactory.newClient(zookeeperAddress, sessionTimeoutMs, connectionTimeoutMs, retry);
         client.start();
         return client;
