@@ -56,7 +56,9 @@ public class MongoDao<K,V> {
      */
     public List<V> findByIds(List<K> ids) {
         Class<V> vClass = (Class<V>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[1];
-        return mongoTemplate.find(Query.query(Criteria.where("_id").in(ids)), vClass);
+        String idFieldName = ReflectUtil.getFieldName(vClass, Id.class);
+        Assert.notNull(idFieldName, "@Id not find");
+        return mongoTemplate.find(Query.query(Criteria.where(idFieldName).in(ids)), vClass);
     }
 
     /**
@@ -66,8 +68,9 @@ public class MongoDao<K,V> {
      */
     public UpdateResult updateById(V v) {
         Update update = Update.fromDocument(Document.parse(JSONUtils.object2Json(v)));
-        Object id = ReflectUtil.getFieldValue(v, Id.class);
-        return mongoTemplate.updateFirst(Query.query(Criteria.where("_id").is(id)), update, v.getClass());
+        ReflectUtil.FieldNameValue id = ReflectUtil.getFieldNameValue(v, Id.class);
+        Assert.notNull(id, "@Id not find");
+        return mongoTemplate.updateFirst(Query.query(Criteria.where(id.getFieldName()).is(id.getFieldValue())), update, v.getClass());
     }
 
     /**
@@ -76,11 +79,12 @@ public class MongoDao<K,V> {
      * @return
      */
     public UpdateResult updateByIdWithVersion(V v) {
-        Object id = ReflectUtil.getFieldValue(v, Id.class);
+        ReflectUtil.FieldNameValue id = ReflectUtil.getFieldNameValue(v, Id.class);
+        Assert.notNull(id, "@Id not find");
         ReflectUtil.FieldNameValue version = ReflectUtil.getFieldNameValue(v, MongoVersion.class);
-        Assert.notNull(version, "MongoVersion not find");
+        Assert.notNull(version, "@MongoVersion not find");
         Object fieldValue = Optional.ofNullable(version.getFieldValue()).orElse("0");
-        Criteria criteria = Criteria.where("_id").is(id).and(version.getFieldName()).is(fieldValue);
+        Criteria criteria = Criteria.where(id.getFieldName()).is(id.getFieldValue()).and(version.getFieldName()).is(fieldValue);
         // 版本号+1
         ReflectUtil.setFieldValue(v, version.getFieldName(), (Integer.parseInt(fieldValue.toString()) + 1) + "");
         Update update = Update.fromDocument(Document.parse(JSONUtils.object2Json(v)));
@@ -95,6 +99,8 @@ public class MongoDao<K,V> {
      */
     public DeleteResult deleteById(K id) {
         Class<V> vClass = (Class<V>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[1];
-        return mongoTemplate.remove(Query.query(Criteria.where("_id").is(id)), vClass);
+        String idFieldName = ReflectUtil.getFieldName(vClass, Id.class);
+        Assert.notNull(idFieldName, "@Id not find");
+        return mongoTemplate.remove(Query.query(Criteria.where(idFieldName).is(id)), vClass);
     }
 }

@@ -46,6 +46,7 @@ public class MenuApi {
     }
 
     @DeleteMapping("/delete/{mid}")
+    @RTSkipLogin
     public RTRaw<Boolean> deleteMenu(@PathVariable String mid) {
         boolean result = menuService.deleteMenu(mid);
         return RTRawWrite.success(result);
