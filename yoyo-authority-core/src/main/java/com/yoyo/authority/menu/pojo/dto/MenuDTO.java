@@ -1,5 +1,6 @@
 package com.yoyo.authority.menu.pojo.dto;
 
+import com.yoyo.framework.mongo.annotation.MongoAutoKey;
 import com.yoyo.framework.mongo.annotation.MongoCreateTime;
 import com.yoyo.framework.mongo.annotation.MongoUpdateTime;
 import com.yoyo.framework.mongo.annotation.MongoVersion;
@@ -24,7 +25,8 @@ import java.time.LocalDateTime;
 public class MenuDTO implements Serializable {
 
     @Id
-    private String mid;
+    @MongoAutoKey
+    private Long mid;
 
     @Field
     private String parentId;
