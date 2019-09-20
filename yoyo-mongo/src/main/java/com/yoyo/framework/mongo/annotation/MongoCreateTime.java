@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 /***
  @Author:MrHuang
  @Date: 2019/9/20 18:27
- @DESC: TODO
+ @DESC: TODO 自动给CreateTime字段赋值
  @VERSION: 1.0
  ***/
 @Target({ElementType.FIELD})

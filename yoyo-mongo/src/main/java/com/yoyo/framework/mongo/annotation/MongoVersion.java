@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 /***
  @Author:MrHuang
  @Date: 2019/9/5 15:02
- @DESC: TODO 乐观锁版本
+ @DESC: TODO 乐观锁版本控制
  @VERSION: 1.0
  ***/
 @Target({ElementType.FIELD})
