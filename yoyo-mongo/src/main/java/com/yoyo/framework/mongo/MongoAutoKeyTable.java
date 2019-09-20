@@ -11,7 +11,7 @@ import java.io.Serializable;
 /***
  @Author:MrHuang
  @Date: 2019/9/20 20:14
- @DESC: TODO 自增主键存储表
+ @DESC: TODO 集合自增主键存储表
  @VERSION: 1.0
  ***/
 
