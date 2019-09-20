@@ -1,7 +1,7 @@
 package com.yoyo.authority.menu.service.impl;
 
 import com.yoyo.authority.menu.config.ConfigManager;
-import com.yoyo.authority.menu.dao.MenuDao;
+import com.yoyo.authority.menu.dao.MenuRepository;
 import com.yoyo.authority.menu.pojo.dto.MenuDTO;
 import com.yoyo.authority.menu.pojo.response.MenuGetRsp;
 import com.yoyo.authority.menu.pojo.MenuVO;
@@ -28,7 +28,7 @@ public class MenuServiceImpl extends RTMongoServiceCacheImpl<String,MenuDTO> imp
     }
 
     @Autowired
-    private MenuDao menuDao;
+    private MenuRepository menuDao;
 
     @Override
     public boolean addMenu(String name, String path, String parentId, int ordered) {
@@ -37,8 +37,7 @@ public class MenuServiceImpl extends RTMongoServiceCacheImpl<String,MenuDTO> imp
                 .setPath(path)
                 .setParentId(StringUtils.hasLength(parentId) ? parentId : "ROOT")
                 .setOrdered(ordered)
-                .setMenuStatus(0)
-                .setVersion("0");
+                .setMenuStatus(0);
         return this.add(menuDTO) != null;
     }
 

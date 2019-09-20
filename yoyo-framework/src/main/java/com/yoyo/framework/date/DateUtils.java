@@ -55,10 +55,6 @@ public class DateUtils {
         return Date.from(instant);
     }
 
-    public static String localDateTime2TimeString() {
-        return localDateTime2String(LocalDateTime.now(), SystemConstant.FORMAT_TIME_PATTERN);
-    }
-
     /**
      * localDateTime转时间字符串
      * @param localDateTime
@@ -97,12 +93,13 @@ public class DateUtils {
         return localDate.toString();
     }
 
-    /**
-     * localDate转字符串
-     * @return
-     */
-    public static String localDate2String() {
-        return LocalDate.now().toString();
+
+    public static String nowTime() {
+        return localDateTime2TimeString(LocalDateTime.now());
+    }
+
+    public static String nowDate() {
+        return localDate2String(LocalDate.now());
     }
 
 

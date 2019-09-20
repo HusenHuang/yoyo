@@ -19,8 +19,6 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
-import org.springframework.util.NumberUtils;
-import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
@@ -36,7 +34,7 @@ import java.util.Optional;
  @VERSION: 1.0
  ***/
 @Repository
-public class MongoDao<K,V> {
+public class MongoRepository<K,V> {
 
     @Autowired
     private MongoTemplate mongoTemplate;
@@ -85,7 +83,7 @@ public class MongoDao<K,V> {
         // 设置更新时间
         builderUpdateTime(v);
         Update update = Update.fromDocument(Document.parse(JSONUtils.object2Json(v)));
-        update.set("_class", v.getClass().getName());
+        update.set(MongoConstant.CLASS, v.getClass().getName());
         return mongoTemplate.updateFirst(Query.query(Criteria.where(id.getFieldName()).is(id.getFieldValue())), update, v.getClass());
     }
 
@@ -106,7 +104,7 @@ public class MongoDao<K,V> {
         // 设置更新时间
         builderUpdateTime(v);
         Update update = Update.fromDocument(Document.parse(JSONUtils.object2Json(v)));
-        update.set("_class", v.getClass().getName());
+        update.set(MongoConstant.CLASS, v.getClass().getName());
         return mongoTemplate.updateFirst(Query.query(criteria), update, v.getClass());
     }
 
@@ -204,21 +202,33 @@ public class MongoDao<K,V> {
         return mongoTemplate.updateMulti(Query.query(criteria), update, vClass);
     }
 
+    /**
+     * 生成创建时间字段
+     * @param v
+     */
     private void builderCreateTime(V v) {
         Field field = ReflectUtil.getField(v.getClass(), MongoCreateTime.class);
         builderTime(field, v);
     }
 
+    /**
+     * 生成更新时间字段
+     * @param v
+     */
     private void builderUpdateTime(V v) {
         Field field = ReflectUtil.getField(v.getClass(), MongoUpdateTime.class);
         builderTime(field, v);
     }
 
+    /**
+     * 生成时间方法
+     * @param v
+     */
     private void builderTime(Field field, V v) {
         if (Objects.nonNull(field)) {
             Class<?> type = field.getType();
             if (type == String.class) {
-                ReflectUtil.setFieldValue(v, field.getName(), DateUtils.localDateTime2TimeString(LocalDateTime.now()));
+                ReflectUtil.setFieldValue(v, field.getName(), DateUtils.nowTime());
             } else if (type == LocalDateTime.class) {
                 ReflectUtil.setFieldValue(v, field.getName(), LocalDateTime.now());
             }

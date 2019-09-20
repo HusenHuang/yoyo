@@ -42,8 +42,7 @@ public class RoleServiceImpl extends RTMongoServiceCacheImpl<String, RoleDTO> im
     public boolean addRole(String name, String remark) {
         RoleDTO roleDTO = new RoleDTO().setName(name).setRemark(remark).setRoleStatus(0)
                 .setCreateTime(DateUtils.localDateTime2TimeString(LocalDateTime.now()))
-                .setUpdateTime(DateUtils.localDateTime2TimeString(LocalDateTime.now()))
-                .setVersion("0");
+                .setUpdateTime(DateUtils.localDateTime2TimeString(LocalDateTime.now()));
         RoleDTO result = this.add(roleDTO);
         return result != null;
     }

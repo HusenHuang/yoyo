@@ -33,6 +33,7 @@ public class MenuApi {
     }
 
     @PostMapping("/update")
+    @RTSkipLogin
     public RTRaw<Boolean> updateMenu(@Validated @RequestBody MenuUpdateReq req) {
         boolean result = menuService.updateMenu(req.getMid(), req.getName(), req.getPath(), req.getParentId(), req.getOrdered());
         return RTRawWrite.success(result);

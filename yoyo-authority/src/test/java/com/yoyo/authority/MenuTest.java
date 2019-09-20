@@ -1,6 +1,6 @@
 package com.yoyo.authority;
 
-import com.yoyo.authority.menu.dao.MenuDao;
+import com.yoyo.authority.menu.dao.MenuRepository;
 import com.yoyo.authority.menu.pojo.dto.MenuDTO;
 import com.yoyo.framework.api.RTPaging;
 import org.junit.Test;
@@ -22,7 +22,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class MenuTest {
 
     @Autowired
-    private MenuDao menuDao;
+    private MenuRepository menuDao;
 
     @Test
     public void test() {

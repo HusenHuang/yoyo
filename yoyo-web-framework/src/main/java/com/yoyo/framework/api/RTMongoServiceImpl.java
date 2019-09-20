@@ -1,7 +1,7 @@
 package com.yoyo.framework.api;
 
 import com.google.common.collect.Maps;
-import com.yoyo.framework.mongo.MongoDao;
+import com.yoyo.framework.mongo.MongoRepository;
 import com.yoyo.framework.reflect.ReflectUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 public class RTMongoServiceImpl<K,V> implements IRTService<K,V> {
 
     @Autowired
-    private MongoDao<K,V> dao;
+    private MongoRepository<K,V> dao;
 
     @Override
     public V add(V v) {

@@ -1,7 +1,7 @@
 package com.yoyo.authority;
 
 import com.mongodb.client.result.UpdateResult;
-import com.yoyo.authority.role.dao.RoleDao;
+import com.yoyo.authority.role.dao.RoleRepository;
 import com.yoyo.authority.role.pojo.dto.RoleDTO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,7 +11,6 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +26,7 @@ import java.util.Map;
 public class RoleTest {
 
     @Autowired
-    private RoleDao roleDao;
+    private RoleRepository roleDao;
 
 
     /**

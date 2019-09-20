@@ -1,7 +1,7 @@
 package com.yoyo.authority.account.dao;
 
 import com.yoyo.authority.account.pojo.dto.AccountDTO;
-import com.yoyo.framework.mongo.MongoDao;
+import com.yoyo.framework.mongo.MongoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -16,7 +16,7 @@ import org.springframework.util.StringUtils;
  @VERSION: 1.0
  ***/
 @Repository
-public class AccountDao extends MongoDao<String, AccountDTO> {
+public class AccountRepository extends MongoRepository<String, AccountDTO> {
 
     @Autowired
     private MongoTemplate mongoTemplate;

@@ -52,5 +52,5 @@ public class MenuDTO implements Serializable {
 
     @Field
     @MongoUpdateTime
-    private LocalDateTime updateTime;
+    private String updateTime;
 }

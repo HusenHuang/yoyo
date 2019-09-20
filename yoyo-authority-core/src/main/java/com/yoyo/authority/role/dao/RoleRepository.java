@@ -1,7 +1,7 @@
 package com.yoyo.authority.role.dao;
 
 import com.yoyo.authority.role.pojo.dto.RoleDTO;
-import com.yoyo.framework.mongo.MongoDao;
+import com.yoyo.framework.mongo.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 /***
@@ -11,5 +11,5 @@ import org.springframework.stereotype.Repository;
  @VERSION: 1.0
  ***/
 @Repository
-public class RoleDao extends MongoDao<String, RoleDTO> {
+public class RoleRepository extends MongoRepository<String, RoleDTO> {
 }

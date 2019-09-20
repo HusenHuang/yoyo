@@ -1,7 +1,7 @@
 package com.yoyo.authority.account.service.impl;
 
 import com.yoyo.authority.account.config.ConfigManager;
-import com.yoyo.authority.account.dao.AccountDao;
+import com.yoyo.authority.account.dao.AccountRepository;
 import com.yoyo.authority.account.pojo.dto.AccountDTO;
 import com.yoyo.authority.account.pojo.request.AccountBindRoleReq;
 import com.yoyo.authority.account.pojo.request.AccountLoginReq;
@@ -38,7 +38,7 @@ public class AccountServiceImpl extends RTMongoServiceCacheImpl<String, AccountD
     }
 
     @Autowired
-    private AccountDao accountDao;
+    private AccountRepository accountDao;
 
     @Autowired
     private IRoleService roleService;
@@ -59,8 +59,7 @@ public class AccountServiceImpl extends RTMongoServiceCacheImpl<String, AccountD
                 .setPassword(req.getPassword())
                 .setEmail(req.getEmail())
                 .setCreateTime(DateUtils.localDateTime2TimeString(LocalDateTime.now()))
-                .setUpdateTime(DateUtils.localDateTime2TimeString(LocalDateTime.now()))
-                .setVersion("0");
+                .setUpdateTime(DateUtils.localDateTime2TimeString(LocalDateTime.now()));
         AccountDTO result = this.add(accountDTO);
         return BeanUtils.copy(result, AccountRegisterRsp.class);
     }
