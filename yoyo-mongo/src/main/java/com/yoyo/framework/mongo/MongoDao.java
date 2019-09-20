@@ -3,7 +3,11 @@ package com.yoyo.framework.mongo;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import com.yoyo.framework.api.RTPaging;
+import com.yoyo.framework.date.DateUtils;
 import com.yoyo.framework.json.JSONUtils;
+import com.yoyo.framework.mongo.annotation.MongoCreateTime;
+import com.yoyo.framework.mongo.annotation.MongoUpdateTime;
+import com.yoyo.framework.mongo.annotation.MongoVersion;
 import com.yoyo.framework.reflect.ReflectUtil;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +19,12 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
+import org.springframework.util.NumberUtils;
+import org.springframework.util.StringUtils;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -39,6 +47,8 @@ public class MongoDao<K,V> {
      * @return
      */
     public V insert(V v) {
+        this.builderCreateTime(v);
+        this.builderUpdateTime(v);
         return mongoTemplate.insert(v);
     }
 
@@ -70,9 +80,12 @@ public class MongoDao<K,V> {
      * @return
      */
     public UpdateResult updateById(V v) {
-        Update update = Update.fromDocument(Document.parse(JSONUtils.object2Json(v)));
         ReflectUtil.FieldNameValue id = ReflectUtil.getFieldNameValue(v, Id.class);
         Assert.notNull(id, "@Id not find");
+        // 设置更新时间
+        builderUpdateTime(v);
+        Update update = Update.fromDocument(Document.parse(JSONUtils.object2Json(v)));
+        update.set("_class", v.getClass().getName());
         return mongoTemplate.updateFirst(Query.query(Criteria.where(id.getFieldName()).is(id.getFieldValue())), update, v.getClass());
     }
 
@@ -86,10 +99,12 @@ public class MongoDao<K,V> {
         Assert.notNull(id, "@Id not find");
         ReflectUtil.FieldNameValue version = ReflectUtil.getFieldNameValue(v, MongoVersion.class);
         Assert.notNull(version, "@MongoVersion not find");
-        Object fieldValue = Optional.ofNullable(version.getFieldValue()).orElse("0");
+        Object fieldValue = Optional.ofNullable(version.getFieldValue()).orElse(0);
         Criteria criteria = Criteria.where(id.getFieldName()).is(id.getFieldValue()).and(version.getFieldName()).is(fieldValue);
         // 版本号+1
-        ReflectUtil.setFieldValue(v, version.getFieldName(), (Integer.parseInt(fieldValue.toString()) + 1) + "");
+        ReflectUtil.setFieldValue(v, version.getFieldName(), (int)fieldValue + 1);
+        // 设置更新时间
+        builderUpdateTime(v);
         Update update = Update.fromDocument(Document.parse(JSONUtils.object2Json(v)));
         update.set("_class", v.getClass().getName());
         return mongoTemplate.updateFirst(Query.query(criteria), update, v.getClass());
@@ -187,5 +202,26 @@ public class MongoDao<K,V> {
     public UpdateResult updateMulti(Criteria criteria, Update update) {
         Class<V> vClass = (Class<V>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[1];
         return mongoTemplate.updateMulti(Query.query(criteria), update, vClass);
+    }
+
+    private void builderCreateTime(V v) {
+        Field field = ReflectUtil.getField(v.getClass(), MongoCreateTime.class);
+        builderTime(field, v);
+    }
+
+    private void builderUpdateTime(V v) {
+        Field field = ReflectUtil.getField(v.getClass(), MongoUpdateTime.class);
+        builderTime(field, v);
+    }
+
+    private void builderTime(Field field, V v) {
+        if (Objects.nonNull(field)) {
+            Class<?> type = field.getType();
+            if (type == String.class) {
+                ReflectUtil.setFieldValue(v, field.getName(), DateUtils.localDateTime2TimeString(LocalDateTime.now()));
+            } else if (type == LocalDateTime.class) {
+                ReflectUtil.setFieldValue(v, field.getName(), LocalDateTime.now());
+            }
+        }
     }
 }

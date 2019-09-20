@@ -1,6 +1,6 @@
 package com.yoyo.authority.role.pojo.dto;
 
-import com.yoyo.framework.mongo.MongoVersion;
+import com.yoyo.framework.mongo.annotation.MongoVersion;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
@@ -8,7 +8,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /***
@@ -44,5 +43,5 @@ public class RoleDTO implements Serializable {
     private String updateTime;
 
     @MongoVersion
-    private String version;
+    private int version;
 }

@@ -76,7 +76,7 @@ public class ReflectUtil {
         if (Objects.nonNull(field)) {
             field.setAccessible(true);
             try {
-                return new FieldNameValue().setFieldName(field.getName()).setFieldValue(field.get(object));
+                return new FieldNameValue().setFieldName(field.getName()).setFieldType(field.getType()).setFieldValue(field.get(object));
             } catch (IllegalAccessException e) {
                 log.error("ReflectUtil getFieldNameValue error", e);
             }
@@ -106,5 +106,7 @@ public class ReflectUtil {
         private String fieldName;
 
         private Object fieldValue;
+
+        private Class<?> fieldType;
     }
 }

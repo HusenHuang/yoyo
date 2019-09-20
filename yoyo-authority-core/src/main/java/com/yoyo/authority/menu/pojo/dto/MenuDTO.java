@@ -1,6 +1,8 @@
 package com.yoyo.authority.menu.pojo.dto;
 
-import com.yoyo.framework.mongo.MongoVersion;
+import com.yoyo.framework.mongo.annotation.MongoCreateTime;
+import com.yoyo.framework.mongo.annotation.MongoUpdateTime;
+import com.yoyo.framework.mongo.annotation.MongoVersion;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
@@ -8,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /***
  @Author:MrHuang
@@ -36,15 +39,18 @@ public class MenuDTO implements Serializable {
     private Integer menuStatus;
 
     @Field
-    private String createTime;
-
-    @Field
-    private String updateTime;
-
-    @Field
     private Integer ordered;
 
     @Field
     @MongoVersion
-    private String version;
+    private int version;
+
+    @Field
+    @MongoCreateTime
+    private String createTime;
+
+
+    @Field
+    @MongoUpdateTime
+    private LocalDateTime updateTime;
 }

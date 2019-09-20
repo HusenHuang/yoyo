@@ -25,6 +25,7 @@ public class MenuApi {
     @Autowired
     private IMenuService menuService;
 
+    @RTSkipLogin
     @PostMapping("/add")
     public RTRaw<Boolean> addMenu(@Validated @RequestBody MenuAddReq req) {
         boolean result = menuService.addMenu(req.getName(), req.getPath(), req.getParentId(), req.getOrdered());
