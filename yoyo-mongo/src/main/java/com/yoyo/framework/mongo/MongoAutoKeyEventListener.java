@@ -8,7 +8,6 @@ import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
 import org.springframework.data.mongodb.core.mapping.event.BeforeConvertEvent;
-import org.springframework.data.mongodb.core.mapping.event.BeforeSaveEvent;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
@@ -30,12 +29,6 @@ public class MongoAutoKeyEventListener extends AbstractMongoEventListener<Object
 
     @Autowired
     private MongoTemplate mongoTemplate;
-
-    @Override
-    public void onBeforeSave(BeforeSaveEvent<Object> event) {
-        log.info("onBeforeSave");
-        super.onBeforeSave(event);
-    }
 
     @Override
     public void onBeforeConvert(BeforeConvertEvent<Object> event) {
