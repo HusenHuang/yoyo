@@ -96,13 +96,13 @@ public class MongoRepository<K,V> {
         ReflectUtil.FieldNameValue version = ReflectUtil.getFieldNameValue(v, MongoVersion.class);
         Assert.notNull(version, "@MongoVersion not find");
         Object fieldValue = Optional.ofNullable(version.getFieldValue()).orElse(0);
-        Criteria criteria = Criteria.where(id.getFieldName()).is(id.getFieldValue()).and(version.getFieldName()).is(fieldValue);
         // 版本号+1
         ReflectUtil.setFieldValue(v, version.getFieldName(), (int)fieldValue + 1);
         // 设置更新时间
         mongoOperation.builderUpdateTime(v);
         Update update = Update.fromDocument(Document.parse(JSONUtils.object2Json(v)));
         update.set(MongoConstant.CLASS, v.getClass().getName());
+        Criteria criteria = Criteria.where(id.getFieldName()).is(id.getFieldValue()).and(version.getFieldName()).is(fieldValue);
         return mongoTemplate.updateFirst(Query.query(criteria), update, v.getClass());
     }
 
