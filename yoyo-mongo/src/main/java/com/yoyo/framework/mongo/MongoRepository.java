@@ -3,10 +3,7 @@ package com.yoyo.framework.mongo;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import com.yoyo.framework.api.RTPaging;
-import com.yoyo.framework.date.DateUtils;
 import com.yoyo.framework.json.JSONUtils;
-import com.yoyo.framework.mongo.annotation.MongoCreateTime;
-import com.yoyo.framework.mongo.annotation.MongoUpdateTime;
 import com.yoyo.framework.mongo.annotation.MongoVersion;
 import com.yoyo.framework.reflect.ReflectUtil;
 import org.bson.Document;
@@ -20,9 +17,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -39,14 +34,17 @@ public class MongoRepository<K,V> {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    @Autowired
+    private MongoOperation mongoOperation;
+
     /**
      * 新增
      * @param v
      * @return
      */
     public V insert(V v) {
-        this.builderCreateTime(v);
-        this.builderUpdateTime(v);
+        mongoOperation.builderCreateTime(v);
+        mongoOperation.builderUpdateTime(v);
         return mongoTemplate.insert(v);
     }
 
@@ -81,7 +79,7 @@ public class MongoRepository<K,V> {
         ReflectUtil.FieldNameValue id = ReflectUtil.getFieldNameValue(v, Id.class);
         Assert.notNull(id, "@Id not find");
         // 设置更新时间
-        builderUpdateTime(v);
+        mongoOperation.builderUpdateTime(v);
         Update update = Update.fromDocument(Document.parse(JSONUtils.object2Json(v)));
         update.set(MongoConstant.CLASS, v.getClass().getName());
         return mongoTemplate.updateFirst(Query.query(Criteria.where(id.getFieldName()).is(id.getFieldValue())), update, v.getClass());
@@ -102,7 +100,7 @@ public class MongoRepository<K,V> {
         // 版本号+1
         ReflectUtil.setFieldValue(v, version.getFieldName(), (int)fieldValue + 1);
         // 设置更新时间
-        builderUpdateTime(v);
+        mongoOperation.builderUpdateTime(v);
         Update update = Update.fromDocument(Document.parse(JSONUtils.object2Json(v)));
         update.set(MongoConstant.CLASS, v.getClass().getName());
         return mongoTemplate.updateFirst(Query.query(criteria), update, v.getClass());
@@ -200,38 +198,5 @@ public class MongoRepository<K,V> {
     public UpdateResult updateMulti(Criteria criteria, Update update) {
         Class<V> vClass = (Class<V>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[1];
         return mongoTemplate.updateMulti(Query.query(criteria), update, vClass);
-    }
-
-    /**
-     * 生成创建时间字段
-     * @param v
-     */
-    private void builderCreateTime(V v) {
-        Field field = ReflectUtil.getField(v.getClass(), MongoCreateTime.class);
-        builderTime(field, v);
-    }
-
-    /**
-     * 生成更新时间字段
-     * @param v
-     */
-    private void builderUpdateTime(V v) {
-        Field field = ReflectUtil.getField(v.getClass(), MongoUpdateTime.class);
-        builderTime(field, v);
-    }
-
-    /**
-     * 生成时间方法
-     * @param v
-     */
-    private void builderTime(Field field, V v) {
-        if (Objects.nonNull(field)) {
-            Class<?> type = field.getType();
-            if (type == String.class) {
-                ReflectUtil.setFieldValue(v, field.getName(), DateUtils.nowTime());
-            } else if (type == LocalDateTime.class) {
-                ReflectUtil.setFieldValue(v, field.getName(), LocalDateTime.now());
-            }
-        }
     }
 }
