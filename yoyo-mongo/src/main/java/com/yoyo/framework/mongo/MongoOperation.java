@@ -49,21 +49,24 @@ public class MongoOperation {
         if (Objects.nonNull(field)) {
             Class<?> type = field.getType();
             Annotation annotation = AnnotationUtils.findAnnotation(v.getClass(), annotationClass);
-            String value = AnnotationUtils.getValue(annotation).toString();
-            if (StringUtils.equals("time", value)) {
+            MongoTimeType value = (MongoTimeType)AnnotationUtils.getValue(annotation);
+            if (MongoTimeType.TIME == value) {
                 if (type == String.class) {
                     ReflectUtil.setFieldValue(v, field.getName(), DateUtils.nowTime());
                 } else if (type == LocalDateTime.class) {
                     ReflectUtil.setFieldValue(v, field.getName(), LocalDateTime.now());
+                } else {
+                    throw new IllegalArgumentException("field type need String or LocalDateTime");
                 }
             } else {
                 if (type == String.class) {
                     ReflectUtil.setFieldValue(v, field.getName(), DateUtils.nowDate());
                 } else if (type == LocalDate.class) {
                     ReflectUtil.setFieldValue(v, field.getName(), LocalDate.now());
+                } else {
+                    throw new IllegalArgumentException("field type need String or LocalDate");
                 }
             }
-
         }
     }
 }

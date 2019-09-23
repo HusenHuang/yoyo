@@ -1,5 +1,7 @@
 package com.yoyo.framework.mongo.annotation;
 
+import com.yoyo.framework.mongo.MongoTimeType;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -15,5 +17,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface MongoCreateTime {
 
-    String value() default "time";
+    MongoTimeType value() default MongoTimeType.TIME;
 }
