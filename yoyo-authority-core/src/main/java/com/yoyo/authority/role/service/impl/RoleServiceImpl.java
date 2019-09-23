@@ -1,5 +1,6 @@
 package com.yoyo.authority.role.service.impl;
 
+import com.yoyo.authority.menu.manager.MenuManager;
 import com.yoyo.authority.menu.pojo.dto.MenuDTO;
 import com.yoyo.authority.menu.pojo.MenuVO;
 import com.yoyo.authority.menu.service.IMenuService;
@@ -78,27 +79,12 @@ public class RoleServiceImpl extends RTMongoServiceCacheImpl<String, RoleDTO> im
             String[] menuIds = roleDTO.getBindMenuId().toArray(new String[]{});
             List<MenuDTO> menus = menuService.list(menuIds);
             List<MenuVO> menuVOS = menus.stream().map(s -> BeanUtils.copy(s, MenuVO.class)).collect(Collectors.toList());
-            List<MenuVO> loadTree = this.loadTree(menuVOS, SystemConstant.ROOT);
+            List<MenuVO> loadTree = MenuManager.loadTree(menuVOS, SystemConstant.ROOT);
             return new RoleMenuGetRsp().setMenuList(loadTree);
         } else {
             return new RoleMenuGetRsp().setMenuList(new ArrayList<>());
         }
     }
 
-    /**
-     * 递归设置菜单树
-     * @param menuVOS
-     * @param parentId
-     * @return
-     */
-    private List<MenuVO> loadTree(List<MenuVO> menuVOS, String parentId) {
-        List<MenuVO> collect = menuVOS.stream().filter(s -> StringUtils.equals(parentId, s.getParentId())).collect(Collectors.toList());
-        if (!CollectionUtils.isEmpty(collect)) {
-            for (MenuVO menuVO : collect) {
-                List<MenuVO> childMenuVO = this.loadTree(menuVOS, menuVO.getMid());
-                menuVO.setChildMenuVO(childMenuVO);
-            }
-        }
-        return collect;
-    }
+
 }

@@ -18,4 +18,6 @@ public interface IMenuService extends com.yoyo.framework.api.IRTService<String, 
     MenuGetRsp getMenu(String mid);
 
     boolean deleteMenu(String mid);
+
+
 }
