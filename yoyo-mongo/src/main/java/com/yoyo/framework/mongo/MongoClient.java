@@ -21,6 +21,6 @@ public class MongoClient {
     }
 
     public static MongoTemplate getMongoTemplate() {
-        return MongoClient.getMongoTemplate();
+        return MongoClient.mongoTemplate;
     }
 }
