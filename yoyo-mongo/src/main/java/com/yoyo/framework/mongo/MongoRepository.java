@@ -134,8 +134,11 @@ public class MongoRepository<K,V> {
      * @return
      */
     public List<V> find(Criteria criteria) {
-        Class<V> vClass = (Class<V>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[1];
-        return mongoTemplate.find(Query.query(criteria), vClass);
+        return this.find(criteria, null, null, null);
+    }
+
+    public List<V> find(Criteria criteria, Sort sort) {
+        return this.find(criteria, sort, null, null);
     }
 
     /**
