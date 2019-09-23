@@ -1,5 +1,6 @@
 package com.yoyo.authority.menu.pojo.dto;
 
+import com.yoyo.framework.mongo.MongoTimeType;
 import com.yoyo.framework.mongo.annotation.MongoAutoKey;
 import com.yoyo.framework.mongo.annotation.MongoCreateTime;
 import com.yoyo.framework.mongo.annotation.MongoUpdateTime;
@@ -48,11 +49,11 @@ public class MenuDTO implements Serializable {
     private int version;
 
     @Field
-    @MongoCreateTime
+    @MongoCreateTime(MongoTimeType.DATE)
     private String createTime;
 
 
     @Field
-    @MongoUpdateTime
+    @MongoUpdateTime(MongoTimeType.TIME)
     private String updateTime;
 }
