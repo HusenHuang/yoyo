@@ -4,7 +4,6 @@ import com.yoyo.framework.date.DateUtils;
 import com.yoyo.framework.mongo.annotation.MongoCreateTime;
 import com.yoyo.framework.mongo.annotation.MongoUpdateTime;
 import com.yoyo.framework.reflect.ReflectUtil;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 
@@ -48,7 +47,7 @@ public class MongoOperation {
     private <V> void builderTime(Field field, V v, Class<? extends Annotation> annotationClass) {
         if (Objects.nonNull(field)) {
             Class<?> type = field.getType();
-            Annotation annotation = AnnotationUtils.findAnnotation(v.getClass(), annotationClass);
+            Annotation annotation = field.getAnnotation(annotationClass);
             MongoTimeType value = (MongoTimeType)AnnotationUtils.getValue(annotation);
             if (MongoTimeType.TIME == value) {
                 if (type == String.class) {
