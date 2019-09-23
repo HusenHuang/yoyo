@@ -20,6 +20,8 @@
         <module>yoyo-mongo</module>
         <module>yoyo-redis</module>
         <module>yoyo-zookeeper</module>
+        <module>yoyo-sleuth</module>
+        <module>yoyo-session</module>
     </modules>
 
 
