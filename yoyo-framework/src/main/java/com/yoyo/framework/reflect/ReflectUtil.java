@@ -57,6 +57,12 @@ public class ReflectUtil {
         return Optional.ofNullable(getFieldNameValue(object, annotationCls)).map(FieldNameValue::getFieldName).orElse(null);
     }
 
+    /**
+     * 根据注解获取FieldName
+     * @param objectClass
+     * @param annotationCls
+     * @return
+     */
     public static String getFieldName(Class objectClass, Class<? extends Annotation> annotationCls) {
         Field field = ReflectUtil.getField(objectClass, annotationCls);
         return Objects.nonNull(field) ? field.getName() : null;

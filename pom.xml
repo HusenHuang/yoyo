@@ -22,6 +22,7 @@
         <module>yoyo-zookeeper</module>
         <module>yoyo-sleuth</module>
         <module>yoyo-session</module>
+        <module>yoyo-mq</module>
     </modules>
 
 
