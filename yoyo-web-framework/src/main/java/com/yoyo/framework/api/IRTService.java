@@ -25,6 +25,13 @@ public interface IRTService<K, V> {
      */
     V get(K id);
 
+
+    /**
+     * 显示所有
+     * @return
+     */
+    List<V> list();
+
     /**
      * 根据多个ID查询多个对象
      * 如果为空不返回

@@ -37,6 +37,11 @@ public class RTMongoServiceImpl<K,V> implements IRTService<K,V> {
     }
 
     @Override
+    public List<V> list() {
+        return dao.findAll();
+    }
+
+    @Override
     public List<V> list(K... ids) {
         return this.list(Arrays.asList(ids));
     }

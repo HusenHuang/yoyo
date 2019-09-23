@@ -49,6 +49,15 @@ public class MongoRepository<K,V> {
     }
 
     /**
+     * 查询所有
+     * @return
+     */
+    public List<V> findAll() {
+        Class<V> vClass = (Class<V>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+        return mongoTemplate.findAll(vClass);
+    }
+
+    /**
      * 查询
      * @param id
      * @return

@@ -2,17 +2,23 @@ package com.yoyo.authority.menu.service.impl;
 
 import com.yoyo.authority.menu.config.ConfigManager;
 import com.yoyo.authority.menu.dao.MenuRepository;
+import com.yoyo.authority.menu.manager.MenuManager;
 import com.yoyo.authority.menu.pojo.dto.MenuDTO;
 import com.yoyo.authority.menu.pojo.response.MenuGetRsp;
 import com.yoyo.authority.menu.pojo.MenuVO;
+import com.yoyo.authority.menu.pojo.response.MenuListShowRsp;
 import com.yoyo.authority.menu.service.IMenuService;
 import com.yoyo.framework.api.RTMongoServiceCacheImpl;
+import com.yoyo.framework.common.SystemConstant;
 import com.yoyo.framework.exception.RTException;
 import com.yoyo.framework.utils.BeanUtils;
 import com.yoyo.framework.zookeeper.annotation.ZKDistributedLock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /***
  @Author:MrHuang
@@ -62,5 +68,13 @@ public class MenuServiceImpl extends RTMongoServiceCacheImpl<String,MenuDTO> imp
     @Override
     public boolean deleteMenu(String mid) {
         return this.delete(mid);
+    }
+
+    @Override
+    public MenuListShowRsp showAllMenu() {
+        List<MenuDTO> menus = this.list();
+        List<MenuVO> vos = menus.stream().map(s -> BeanUtils.copy(s, MenuVO.class)).collect(Collectors.toList());
+        vos = MenuManager.loadTree(vos, SystemConstant.ROOT);
+        return new MenuListShowRsp().setVos(vos);
     }
 }

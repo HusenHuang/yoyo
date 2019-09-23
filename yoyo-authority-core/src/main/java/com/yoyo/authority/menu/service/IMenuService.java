@@ -2,6 +2,7 @@ package com.yoyo.authority.menu.service;
 
 import com.yoyo.authority.menu.pojo.dto.MenuDTO;
 import com.yoyo.authority.menu.pojo.response.MenuGetRsp;
+import com.yoyo.authority.menu.pojo.response.MenuListShowRsp;
 
 /***
  @Author:MrHuang
@@ -18,6 +19,8 @@ public interface IMenuService extends com.yoyo.framework.api.IRTService<String, 
     MenuGetRsp getMenu(String mid);
 
     boolean deleteMenu(String mid);
+
+    MenuListShowRsp showAllMenu();
 
 
 }
