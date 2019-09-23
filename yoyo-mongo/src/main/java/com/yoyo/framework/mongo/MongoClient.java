@@ -20,6 +20,7 @@ public class MongoClient {
         MongoClient.mongoTemplate = mongoTemplate;
     }
 
+
     public static MongoTemplate getMongoTemplate() {
         return MongoClient.mongoTemplate;
     }
