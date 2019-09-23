@@ -4,9 +4,13 @@ import com.yoyo.framework.date.DateUtils;
 import com.yoyo.framework.mongo.annotation.MongoCreateTime;
 import com.yoyo.framework.mongo.annotation.MongoUpdateTime;
 import com.yoyo.framework.reflect.ReflectUtil;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -25,7 +29,7 @@ public class MongoOperation {
      */
     public <V> void builderCreateTime(V v) {
         Field field = ReflectUtil.getField(v.getClass(), MongoCreateTime.class);
-        builderTime(field, v);
+        builderTime(field, v, MongoCreateTime.class);
     }
 
     /**
@@ -34,21 +38,32 @@ public class MongoOperation {
      */
     public <V> void builderUpdateTime(V v) {
         Field field = ReflectUtil.getField(v.getClass(), MongoUpdateTime.class);
-        builderTime(field, v);
+        builderTime(field, v, MongoUpdateTime.class);
     }
 
     /**
      * 生成时间方法
      * @param v
      */
-    private <V> void builderTime(Field field, V v) {
+    private <V> void builderTime(Field field, V v, Class<? extends Annotation> annotationClass) {
         if (Objects.nonNull(field)) {
             Class<?> type = field.getType();
-            if (type == String.class) {
-                ReflectUtil.setFieldValue(v, field.getName(), DateUtils.nowTime());
-            } else if (type == LocalDateTime.class) {
-                ReflectUtil.setFieldValue(v, field.getName(), LocalDateTime.now());
+            Annotation annotation = AnnotationUtils.findAnnotation(v.getClass(), annotationClass);
+            String value = AnnotationUtils.getValue(annotation).toString();
+            if (StringUtils.equals("time", value)) {
+                if (type == String.class) {
+                    ReflectUtil.setFieldValue(v, field.getName(), DateUtils.nowTime());
+                } else if (type == LocalDateTime.class) {
+                    ReflectUtil.setFieldValue(v, field.getName(), LocalDateTime.now());
+                }
+            } else {
+                if (type == String.class) {
+                    ReflectUtil.setFieldValue(v, field.getName(), DateUtils.nowDate());
+                } else if (type == LocalDate.class) {
+                    ReflectUtil.setFieldValue(v, field.getName(), LocalDate.now());
+                }
             }
+
         }
     }
 }
