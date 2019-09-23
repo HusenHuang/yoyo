@@ -39,7 +39,7 @@ public class MongoRepository<K,V> {
 
     /**
      * 新增
-     * @param v
+     * @param v 新增对象
      * @return
      */
     public V insert(V v) {
@@ -59,7 +59,7 @@ public class MongoRepository<K,V> {
 
     /**
      * 查询
-     * @param id
+     * @param id 主键ID
      * @return
      */
     public V findById(K id) {
@@ -69,7 +69,7 @@ public class MongoRepository<K,V> {
 
     /**
      * 根据ID批量查询
-     * @param ids
+     * @param ids 主键ID集合
      * @return
      */
     public List<V> findByIds(List<K> ids) {
@@ -81,7 +81,7 @@ public class MongoRepository<K,V> {
 
     /**
      * 强制更新
-     * @param v
+     * @param v 更新对象
      * @return
      */
     public UpdateResult updateById(V v) {
@@ -96,7 +96,7 @@ public class MongoRepository<K,V> {
 
     /**
      * 乐观锁更新
-     * @param v
+     * @param v 更新对象
      * @return
      */
     public UpdateResult updateByIdWithVersion(V v) {
@@ -117,7 +117,7 @@ public class MongoRepository<K,V> {
 
     /**
      * 物理删除
-     * @param id
+     * @param id 主键ID
      * @return
      */
     public DeleteResult deleteById(K id) {
@@ -130,20 +130,29 @@ public class MongoRepository<K,V> {
 
     /**
      * 根据查询条件查找列表
-     * @param criteria
+     * @param criteria 查询条件
      * @return
      */
     public List<V> find(Criteria criteria) {
         return this.find(criteria, null, null, null);
     }
 
+    /**
+     * 根据查询条件查找列表
+     * @param criteria 查询条件
+     * @param sort 排序条件
+     * @return
+     */
     public List<V> find(Criteria criteria, Sort sort) {
         return this.find(criteria, sort, null, null);
     }
 
     /**
      * 根据查询条件查找列表
-     * @param criteria
+     * @param criteria 查询条件
+     * @param sort 排序条件
+     * @param skip 分页跳过条数
+     * @param limit 分页限制条数
      * @return
      */
     public List<V> find(Criteria criteria, Sort sort, Long skip, Integer limit) {
@@ -163,7 +172,7 @@ public class MongoRepository<K,V> {
 
     /**
      * 根据查询条件查找条数
-     * @param criteria
+     * @param criteria 查询条件
      * @return
      */
     public long count(Criteria criteria) {
@@ -192,8 +201,8 @@ public class MongoRepository<K,V> {
 
     /**
      * 更新第一条匹配到的
-     * @param criteria
-     * @param update
+     * @param criteria 查询条件
+     * @param update 修改
      * @return
      */
     public UpdateResult updateFirst(Criteria criteria, Update update) {
@@ -203,8 +212,8 @@ public class MongoRepository<K,V> {
 
     /**
      * 更新所有匹配到的
-     * @param criteria
-     * @param update
+     * @param criteria 查询条件
+     * @param update 修改
      * @return
      */
     public UpdateResult updateMulti(Criteria criteria, Update update) {
