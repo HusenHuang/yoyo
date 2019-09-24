@@ -1,8 +1,8 @@
 package com.yoyo.authority.role.service.impl;
 
 import com.yoyo.authority.menu.manager.MenuManager;
-import com.yoyo.authority.menu.pojo.dto.MenuDTO;
 import com.yoyo.authority.menu.pojo.MenuVO;
+import com.yoyo.authority.menu.pojo.dto.MenuDTO;
 import com.yoyo.authority.menu.service.IMenuService;
 import com.yoyo.authority.role.config.ConfigManager;
 import com.yoyo.authority.role.pojo.dto.RoleDTO;
@@ -13,9 +13,7 @@ import com.yoyo.framework.common.SystemConstant;
 import com.yoyo.framework.date.DateUtils;
 import com.yoyo.framework.exception.RTException;
 import com.yoyo.framework.utils.BeanUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
@@ -29,7 +27,8 @@ import java.util.stream.Collectors;
  @DESC: TODO
  @VERSION: 1.0
  ***/
-@Repository
+@org.springframework.stereotype.Service
+@org.apache.dubbo.config.annotation.Service
 public class RoleServiceImpl extends RTMongoServiceCacheImpl<String, RoleDTO> implements IRoleService {
 
     public RoleServiceImpl() {
