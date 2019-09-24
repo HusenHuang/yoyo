@@ -26,8 +26,7 @@ import java.time.LocalDateTime;
 public class MenuDTO implements Serializable {
 
     @Id
-    @MongoAutoKey
-    private Long mid;
+    private String mid;
 
     @Field
     private String parentId;

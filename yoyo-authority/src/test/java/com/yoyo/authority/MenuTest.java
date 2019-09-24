@@ -11,6 +11,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 /***
  @Author:MrHuang
  @Date: 2019/9/19 17:13
@@ -28,5 +30,11 @@ public class MenuTest {
     public void test() {
         RTPaging<MenuDTO> paging = menuDao.paging(Criteria.where("name").is("商品删除"), Sort.by(Sort.Direction.DESC, "ordered"), 1, 4);
         System.out.println(paging);
+
+        List<MenuDTO> menuDTOS = menuDao.find(new Criteria().orOperator(
+                Criteria.where("path").is("/good"),
+                Criteria.where("path").is("/good/add")
+        ));
+        System.out.println(menuDTOS);
     }
 }

@@ -22,13 +22,10 @@ management:
 dubbo:
   scan:
     base-packages: com.yoyo
-  # dubbo协议
   protocol:
     name: dubbo
     port: -1
   registry:
-    # 转发到springCloud的注册中心去
     address: spring-cloud://localhost
   cloud:
-    # 订阅所有服务
-    subscribed-services: *
+    subscribed-services: '*'
