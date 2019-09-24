@@ -8,6 +8,8 @@ import com.yoyo.framework.PrintMethod;
 import com.yoyo.framework.RTSkipLogin;
 import com.yoyo.framework.api.RTRaw;
 import com.yoyo.framework.api.RTRawWrite;
+import com.yoyo.notify.INotifyService;
+import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +26,9 @@ public class MenuApi {
 
     @Autowired
     private IMenuService menuService;
+
+    @Reference
+    private INotifyService notifyService;
 
     @RTSkipLogin
     @PostMapping("/add")
@@ -44,6 +49,8 @@ public class MenuApi {
     @RTSkipLogin
     public RTRaw<MenuGetRsp> getMenu(@PathVariable String mid) {
         MenuGetRsp result = menuService.getMenu(mid);
+        String echo = notifyService.echo();
+        System.out.println(echo);
         return RTRawWrite.success(result);
     }
 

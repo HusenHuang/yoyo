@@ -23,6 +23,9 @@
         <module>yoyo-sleuth</module>
         <module>yoyo-session</module>
         <module>yoyo-mq</module>
+        <module>yoyo-notify</module>
+        <module>yoyo-notify-api</module>
+        <module>yoyo-notify-core</module>
     </modules>
 
 

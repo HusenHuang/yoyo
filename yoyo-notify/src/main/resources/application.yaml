@@ -1,0 +1,22 @@
+server:
+  port: 82
+
+logging:
+  path: ${user.home}/${spring.application.name}
+  level:
+    root: info
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://mongo.limaila.com/yoyo-notify
+      port: 27017
+  jackson:
+    default-property-inclusion: non_null
+  redis:
+    database: 0
+    password: hxc
+    host: redis.limaila.com
+    port: 6379
+  zookeeper:
+    address: zk.limaila.com:2181

@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: yoyo-notify
+  cloud:
+    nacos:
+      discovery:
+        server-addr: www.limaila.com:8848
+        cluster-name: YOYO
+      config:
+        server-addr: www.limaila.com:8848
+        file-extension: yaml
+  main:
+    allow-bean-definition-overriding: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+
+dubbo:
+  scan:
+    base-packages: com.yoyo
+  protocol:
+    name: dubbo
+    port: -1
+  registry:
+    address: spring-cloud://localhost
+  cloud:
+    subscribed-services: '*'
