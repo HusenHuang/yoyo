@@ -8,7 +8,7 @@ import com.yoyo.notify.INotifyService;
  @DESC: TODO
  @VERSION: 1.0
  ***/
-@org.apache.dubbo.config.annotation.Service
+@org.apache.dubbo.config.annotation.Service(timeout = 10)
 @org.springframework.stereotype.Service
 public class NotifyServiceImpl implements INotifyService {
     @Override
