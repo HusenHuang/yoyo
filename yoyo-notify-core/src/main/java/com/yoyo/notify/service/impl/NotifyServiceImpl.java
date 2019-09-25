@@ -2,6 +2,8 @@ package com.yoyo.notify.service.impl;
 
 import com.yoyo.notify.INotifyService;
 
+import java.util.concurrent.TimeUnit;
+
 /***
  @Author:MrHuang
  @Date: 2019/9/24 17:39
