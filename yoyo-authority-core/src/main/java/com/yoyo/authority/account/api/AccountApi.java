@@ -4,6 +4,7 @@ import com.yoyo.authority.account.pojo.request.AccountBindRoleRequest;
 import com.yoyo.authority.account.pojo.request.AccountLoginRequest;
 import com.yoyo.authority.account.pojo.request.AccountRegisterRequest;
 import com.yoyo.authority.account.pojo.response.AccountBindRoleResponse;
+import com.yoyo.authority.account.pojo.response.AccountLoginResponse;
 import com.yoyo.authority.account.pojo.response.AccountRegisterResponse;
 import com.yoyo.authority.account.service.IAccountService;
 import com.yoyo.framework.api.RTRaw;
@@ -39,7 +40,7 @@ public class AccountApi {
     }
 
     @PostMapping("/login")
-    public RTRaw<Object> login(@RequestBody AccountLoginRequest req) {
+    public RTRaw<AccountLoginResponse> login(@RequestBody AccountLoginRequest req) {
         return RTRawWrite.success(accountService.login(req));
     }
 
