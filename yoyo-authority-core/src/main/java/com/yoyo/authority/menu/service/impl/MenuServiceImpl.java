@@ -33,8 +33,6 @@ public class MenuServiceImpl extends RTMongoServiceCacheImpl<String,MenuDTO> imp
         super(ConfigManager.MENU_REDIS_CONFIG_PRE, ConfigManager.MENU_REDIS_CONFIG_EXPIRE_SECOND);
     }
 
-    @Autowired
-    private MenuRepository menuDao;
 
     @Override
     public boolean addMenu(String name, String path, String parentId, int ordered) {
