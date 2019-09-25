@@ -13,13 +13,5 @@ import com.yoyo.framework.api.IRTService;
  ***/
 public interface IMenuService extends IRTService<String, MenuDTO> {
 
-    boolean addMenu(String name, String path, String parentId, int ordered);
 
-    boolean updateMenu(String mid ,String name, String path, String parentId, int ordered);
-
-    MenuShowResponse getMenu(String mid);
-
-    boolean deleteMenu(String mid);
-
-    MenuListShowResponse showAllMenu();
 }

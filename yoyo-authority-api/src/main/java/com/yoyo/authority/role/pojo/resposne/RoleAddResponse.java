@@ -1,7 +1,9 @@
 package com.yoyo.authority.role.pojo.resposne;
 
 import lombok.Data;
-import org.springframework.web.bind.annotation.RequestMapping;
+import lombok.experimental.Accessors;
+
+import java.io.Serializable;
 
 /***
  @Author:MrHuang
@@ -10,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
  @VERSION: 1.0
  ***/
 @Data
-@RequestMapping
-public class RoleAddResponse {
+@Accessors(chain = true)
+public class RoleAddResponse implements Serializable {
 
     private boolean opStatus;
 }

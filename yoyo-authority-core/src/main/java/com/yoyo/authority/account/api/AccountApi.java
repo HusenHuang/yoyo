@@ -6,7 +6,7 @@ import com.yoyo.authority.account.pojo.request.AccountRegisterRequest;
 import com.yoyo.authority.account.pojo.response.AccountBindRoleResponse;
 import com.yoyo.authority.account.pojo.response.AccountLoginResponse;
 import com.yoyo.authority.account.pojo.response.AccountRegisterResponse;
-import com.yoyo.authority.account.service.IAccountService;
+import com.yoyo.authority.account.service.IAccountApiService;
 import com.yoyo.framework.api.RTRaw;
 import com.yoyo.framework.api.RTRawWrite;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AccountApi {
 
     @Autowired
-    private IAccountService accountService;
+    private IAccountApiService accountApiService;
 
     @RequestMapping
     public String index() {
@@ -36,16 +36,16 @@ public class AccountApi {
 
     @PostMapping("/register")
     public RTRaw<AccountRegisterResponse> register(@Validated @RequestBody AccountRegisterRequest req) {
-        return RTRawWrite.success(accountService.register(req));
+        return RTRawWrite.success(accountApiService.register(req));
     }
 
     @PostMapping("/login")
     public RTRaw<AccountLoginResponse> login(@RequestBody AccountLoginRequest req) {
-        return RTRawWrite.success(accountService.login(req));
+        return RTRawWrite.success(accountApiService.login(req));
     }
 
     @PostMapping("/bindRole")
     public RTRaw<AccountBindRoleResponse> bindRole(@RequestBody AccountBindRoleRequest req) {
-        return RTRawWrite.success(accountService.bindRole(req));
+        return RTRawWrite.success(accountApiService.bindRole(req));
     }
 }

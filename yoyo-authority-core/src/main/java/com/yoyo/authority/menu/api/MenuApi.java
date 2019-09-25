@@ -3,6 +3,7 @@ package com.yoyo.authority.menu.api;
 import com.yoyo.authority.menu.pojo.request.MenuAddRequest;
 import com.yoyo.authority.menu.pojo.response.MenuShowResponse;
 import com.yoyo.authority.menu.pojo.request.MenuUpdateRequest;
+import com.yoyo.authority.menu.service.IMenuApiService;
 import com.yoyo.authority.menu.service.IMenuService;
 import com.yoyo.framework.PrintMethod;
 import com.yoyo.framework.RTSkipLogin;
@@ -25,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 public class MenuApi {
 
     @Autowired
-    private IMenuService menuService;
+    private IMenuApiService menuApiService;
 
     @Reference
     private INotifyService notifyService;
@@ -33,14 +34,14 @@ public class MenuApi {
     @RTSkipLogin
     @PostMapping("/add")
     public RTRaw<Boolean> addMenu(@Validated @RequestBody MenuAddRequest req) {
-        boolean result = menuService.addMenu(req.getName(), req.getPath(), req.getParentId(), req.getOrdered());
+        boolean result = menuApiService.addMenu(req.getName(), req.getPath(), req.getParentId(), req.getOrdered());
         return RTRawWrite.success(result);
     }
 
     @PostMapping("/update")
     @RTSkipLogin
     public RTRaw<Boolean> updateMenu(@Validated @RequestBody MenuUpdateRequest req) {
-        boolean result = menuService.updateMenu(req.getMid(), req.getName(), req.getPath(), req.getParentId(), req.getOrdered());
+        boolean result = menuApiService.updateMenu(req.getMid(), req.getName(), req.getPath(), req.getParentId(), req.getOrdered());
         return RTRawWrite.success(result);
     }
 
@@ -48,7 +49,7 @@ public class MenuApi {
     @PrintMethod
     @RTSkipLogin
     public RTRaw<MenuShowResponse> getMenu(@PathVariable String mid) {
-        MenuShowResponse result = menuService.getMenu(mid);
+        MenuShowResponse result = menuApiService.getMenu(mid);
         String echo = notifyService.echo();
         System.out.println(echo);
         return RTRawWrite.success(result);
@@ -57,7 +58,7 @@ public class MenuApi {
     @DeleteMapping("/delete/{mid}")
     @RTSkipLogin
     public RTRaw<Boolean> deleteMenu(@PathVariable String mid) {
-        boolean result = menuService.deleteMenu(mid);
+        boolean result = menuApiService.deleteMenu(mid);
         return RTRawWrite.success(result);
     }
 }

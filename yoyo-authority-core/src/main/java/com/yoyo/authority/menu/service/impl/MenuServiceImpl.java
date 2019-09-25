@@ -32,47 +32,4 @@ public class MenuServiceImpl extends RTMongoServiceCacheImpl<String,MenuDTO> imp
     public MenuServiceImpl() {
         super(ConfigManager.MENU_REDIS_CONFIG_PRE, ConfigManager.MENU_REDIS_CONFIG_EXPIRE_SECOND);
     }
-
-
-    @Override
-    public boolean addMenu(String name, String path, String parentId, int ordered) {
-        MenuDTO menuDTO = new MenuDTO()
-                .setName(name)
-                .setPath(path)
-                .setParentId(StringUtils.hasLength(parentId) ? parentId : "ROOT")
-                .setOrdered(ordered)
-                .setMenuStatus(0);
-        return this.add(menuDTO) != null;
-    }
-
-    @Override
-    public boolean updateMenu(String mid, String name, String path, String parentId, int ordered) {
-        MenuDTO menuDTO = this.get(mid);
-        if (menuDTO == null) {
-            throw new RTException("菜单不存在");
-        }
-        menuDTO.setName(name).setPath(path).setParentId(StringUtils.hasLength(parentId) ? parentId : null).setOrdered(ordered);
-        return this.updateWithVersion(menuDTO);
-    }
-
-    @ZKDistributedLock(value = "zkPath")
-    @Override
-    public MenuShowResponse getMenu(String mid) {
-        MenuDTO menuDTO = this.get(mid);
-        MenuVO menuVO = BeanUtils.copy(menuDTO, MenuVO.class);
-        return new MenuShowResponse().setMenu(menuVO);
-    }
-
-    @Override
-    public boolean deleteMenu(String mid) {
-        return this.delete(mid);
-    }
-
-    @Override
-    public MenuListShowResponse showAllMenu() {
-        List<MenuDTO> menus = this.list();
-        List<MenuVO> vos = menus.stream().map(s -> BeanUtils.copy(s, MenuVO.class)).collect(Collectors.toList());
-        vos = MenuManager.loadTree(vos, SystemConstant.ROOT);
-        return new MenuListShowResponse().setVos(vos);
-    }
 }

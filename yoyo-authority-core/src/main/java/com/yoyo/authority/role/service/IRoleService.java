@@ -14,11 +14,5 @@ import java.util.List;
  ***/
 public interface IRoleService extends IRTService<String, RoleDTO> {
 
-    boolean addRole(String name, String remark);
 
-    boolean updateRole(String id ,String name, String remark);
-
-    boolean bindMenu(String id, List<String> menuIdList);
-
-    RoleMenuGetResponse getRoleMenuTree(String rid);
 }

@@ -38,66 +38,11 @@ public class AccountServiceImpl extends RTMongoServiceCacheImpl<String, AccountD
     }
 
     @Autowired
-    private AccountRepository accountDao;
+    private AccountRepository accountRepository;
 
-    @Autowired
-    private IRoleService roleService;
 
     @Override
-    public AccountRegisterResponse register(AccountRegisterRequest req) {
-        if (!CheckUtils.isEmail(req.getEmail())) {
-            throw new RTException("邮箱格式不对");
-        }
-        if (accountDao.findByCriteria(req.getName(), null, null) != null) {
-            throw new RTException("用户名已存在");
-        }
-        if (accountDao.findByCriteria(null, req.getEmail(), null) != null) {
-            throw new RTException("邮箱已存在");
-        }
-        AccountDTO accountDTO = new AccountDTO().setActiveState(0)
-                .setName(req.getName())
-                .setPassword(req.getPassword())
-                .setEmail(req.getEmail())
-                .setCreateTime(DateUtils.localDateTime2TimeString(LocalDateTime.now()))
-                .setUpdateTime(DateUtils.localDateTime2TimeString(LocalDateTime.now()));
-        AccountDTO result = this.add(accountDTO);
-        return BeanUtils.copy(result, AccountRegisterResponse.class);
+    public AccountDTO findByCriteria(String name, String email, String password) {
+        return accountRepository.findByCriteria(name, email, password);
     }
-
-    @Override
-    public AccountLoginResponse login(AccountLoginRequest req) {
-        AccountDTO accountDTO = null;
-        if (StringUtils.hasLength(req.getName())) {
-            accountDTO = accountDao.findByCriteria(req.getName(), null, req.getPassword());
-        } else if (StringUtils.hasLength(req.getEmail())) {
-            if (!CheckUtils.isEmail(req.getEmail())) {
-                throw new RTException("邮箱格式不对");
-            }
-            accountDTO = accountDao.findByCriteria(null , req.getEmail(), req.getPassword());
-        }
-        if (accountDTO == null) {
-            throw new RTException("登录名或者密码错误");
-        }
-        AccountLoginResponse rsp = BeanUtils.copy(accountDTO, AccountLoginResponse.class);
-        rsp.setTokenId(JwtUtils.encode(accountDTO.getAid()));
-        if (StringUtils.hasLength(accountDTO.getBindRoleId())) {
-            RoleMenuGetResponse roleMenu = roleService.getRoleMenuTree(accountDTO.getBindRoleId());
-            rsp.setMenuList(roleMenu.getMenuList());
-        }
-        return rsp;
-    }
-
-    @Override
-    public AccountBindRoleResponse bindRole(AccountBindRoleRequest req) {
-        String aid = JwtUtils.decode(req.getTokenId());
-        AccountDTO accountDTO = this.get(aid);
-        if (accountDTO == null) {
-            throw new RTException("账号不存在");
-        }
-        accountDTO.setBindRoleId(req.getRid());
-        boolean result = this.updateWithVersion(accountDTO);
-        return new AccountBindRoleResponse().setOpStatus(result);
-    }
-
-
 }
