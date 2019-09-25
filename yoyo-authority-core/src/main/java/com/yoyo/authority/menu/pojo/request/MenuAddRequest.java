@@ -14,10 +14,7 @@ import java.io.Serializable;
  ***/
 @Data
 @Accessors(chain = true)
-public class MenuUpdateReq implements Serializable {
-
-    @NotBlank(message = "菜单ID不能为空")
-    private String mid;
+public class MenuAddRequest implements Serializable {
 
     @NotBlank(message = "菜单名不能为空")
     private String name;

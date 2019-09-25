@@ -15,7 +15,7 @@ import java.util.List;
  ***/
 @Data
 @Accessors(chain = true)
-public class RoleBindMenuReq implements Serializable {
+public class RoleBindMenuRequest implements Serializable {
 
     @NotBlank(message = "角色ID不能为空")
     private String rid;

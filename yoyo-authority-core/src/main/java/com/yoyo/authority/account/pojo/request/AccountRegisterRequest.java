@@ -15,7 +15,7 @@ import java.io.Serializable;
  ***/
 @Data
 @Accessors(chain = true)
-public class AccountRegisterReq implements Serializable {
+public class AccountRegisterRequest implements Serializable {
 
     @NotBlank(message = "注册名不能为空")
     private String name;

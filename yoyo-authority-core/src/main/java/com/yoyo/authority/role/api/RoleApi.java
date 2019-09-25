@@ -1,9 +1,9 @@
 package com.yoyo.authority.role.api;
 
-import com.yoyo.authority.role.pojo.request.RoleAddReq;
-import com.yoyo.authority.role.pojo.request.RoleBindMenuReq;
-import com.yoyo.authority.role.pojo.resposne.RoleMenuGetRsp;
-import com.yoyo.authority.role.pojo.request.RoleUpdateReq;
+import com.yoyo.authority.role.pojo.request.RoleAddRequest;
+import com.yoyo.authority.role.pojo.request.RoleBindMenuRequest;
+import com.yoyo.authority.role.pojo.resposne.RoleMenuGetResponse;
+import com.yoyo.authority.role.pojo.request.RoleUpdateRequest;
 import com.yoyo.authority.role.service.IRoleService;
 import com.yoyo.framework.api.RTRaw;
 import com.yoyo.framework.api.RTRawWrite;
@@ -25,27 +25,27 @@ public class RoleApi {
     private IRoleService roleService;
 
     @PostMapping("/add")
-    public RTRaw<Boolean> add(@Validated @RequestBody RoleAddReq req) {
+    public RTRaw<Boolean> add(@Validated @RequestBody RoleAddRequest req) {
         boolean result = roleService.addRole(req.getName(), req.getRemark());
         return RTRawWrite.success(result);
     }
 
     @PostMapping("/update")
-    public RTRaw<Boolean> update(@Validated @RequestBody RoleUpdateReq req) {
+    public RTRaw<Boolean> update(@Validated @RequestBody RoleUpdateRequest req) {
         boolean result = roleService.updateRole(req.getRid(), req.getName(), req.getRemark());
         return RTRawWrite.success(result);
     }
 
     @PostMapping("/bindMenu")
-    public RTRaw<Boolean> bindMenu(@Validated @RequestBody RoleBindMenuReq req) {
+    public RTRaw<Boolean> bindMenu(@Validated @RequestBody RoleBindMenuRequest req) {
         boolean result = roleService.bindMenu(req.getRid(), req.getMidList());
         return RTRawWrite.success(result);
     }
 
 
     @GetMapping("/getRoleMenu/{roleId}")
-    public RTRaw<RoleMenuGetRsp> getRoleMenu(@Validated @PathVariable String roleId) {
-        RoleMenuGetRsp result = roleService.getRoleMenuTree(roleId);
+    public RTRaw<RoleMenuGetResponse> getRoleMenu(@Validated @PathVariable String roleId) {
+        RoleMenuGetResponse result = roleService.getRoleMenuTree(roleId);
         return RTRawWrite.success(result);
     }
 }

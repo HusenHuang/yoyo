@@ -14,7 +14,7 @@ import java.io.Serializable;
  ***/
 @Data
 @Accessors(chain = true)
-public class AccountLoginReq implements Serializable {
+public class AccountLoginRequest implements Serializable {
 
     private String name;
 

@@ -15,7 +15,7 @@ import java.util.List;
  ***/
 @Data
 @Accessors(chain = true)
-public class MenuListShowRsp implements Serializable {
+public class MenuListShowResponse implements Serializable {
 
     private List<MenuVO> vos;
 }

@@ -3,14 +3,14 @@ package com.yoyo.authority.account.service.impl;
 import com.yoyo.authority.account.config.ConfigManager;
 import com.yoyo.authority.account.dao.AccountRepository;
 import com.yoyo.authority.account.pojo.dto.AccountDTO;
-import com.yoyo.authority.account.pojo.request.AccountBindRoleReq;
-import com.yoyo.authority.account.pojo.request.AccountLoginReq;
-import com.yoyo.authority.account.pojo.request.AccountRegisterReq;
-import com.yoyo.authority.account.pojo.response.AccountBindRoleRsp;
-import com.yoyo.authority.account.pojo.response.AccountLoginRsp;
-import com.yoyo.authority.account.pojo.response.AccountRegisterRsp;
+import com.yoyo.authority.account.pojo.request.AccountBindRoleRequest;
+import com.yoyo.authority.account.pojo.request.AccountLoginRequest;
+import com.yoyo.authority.account.pojo.request.AccountRegisterRequest;
+import com.yoyo.authority.account.pojo.response.AccountBindRoleResponse;
+import com.yoyo.authority.account.pojo.response.AccountLoginResponse;
+import com.yoyo.authority.account.pojo.response.AccountRegisterResponse;
 import com.yoyo.authority.account.service.IAccountService;
-import com.yoyo.authority.role.pojo.resposne.RoleMenuGetRsp;
+import com.yoyo.authority.role.pojo.resposne.RoleMenuGetResponse;
 import com.yoyo.authority.role.service.IRoleService;
 import com.yoyo.framework.api.RTMongoServiceCacheImpl;
 import com.yoyo.framework.auth.JwtUtils;
@@ -44,7 +44,7 @@ public class AccountServiceImpl extends RTMongoServiceCacheImpl<String, AccountD
     private IRoleService roleService;
 
     @Override
-    public AccountRegisterRsp register(AccountRegisterReq req) {
+    public AccountRegisterResponse register(AccountRegisterRequest req) {
         if (!CheckUtils.isEmail(req.getEmail())) {
             throw new RTException("邮箱格式不对");
         }
@@ -61,11 +61,11 @@ public class AccountServiceImpl extends RTMongoServiceCacheImpl<String, AccountD
                 .setCreateTime(DateUtils.localDateTime2TimeString(LocalDateTime.now()))
                 .setUpdateTime(DateUtils.localDateTime2TimeString(LocalDateTime.now()));
         AccountDTO result = this.add(accountDTO);
-        return BeanUtils.copy(result, AccountRegisterRsp.class);
+        return BeanUtils.copy(result, AccountRegisterResponse.class);
     }
 
     @Override
-    public AccountLoginRsp login(AccountLoginReq req) {
+    public AccountLoginResponse login(AccountLoginRequest req) {
         AccountDTO accountDTO = null;
         if (StringUtils.hasLength(req.getName())) {
             accountDTO = accountDao.findByCriteria(req.getName(), null, req.getPassword());
@@ -78,17 +78,17 @@ public class AccountServiceImpl extends RTMongoServiceCacheImpl<String, AccountD
         if (accountDTO == null) {
             throw new RTException("登录名或者密码错误");
         }
-        AccountLoginRsp rsp = BeanUtils.copy(accountDTO, AccountLoginRsp.class);
+        AccountLoginResponse rsp = BeanUtils.copy(accountDTO, AccountLoginResponse.class);
         rsp.setTokenId(JwtUtils.encode(accountDTO.getAid()));
         if (StringUtils.hasLength(accountDTO.getBindRoleId())) {
-            RoleMenuGetRsp roleMenu = roleService.getRoleMenuTree(accountDTO.getBindRoleId());
+            RoleMenuGetResponse roleMenu = roleService.getRoleMenuTree(accountDTO.getBindRoleId());
             rsp.setMenuList(roleMenu.getMenuList());
         }
         return rsp;
     }
 
     @Override
-    public AccountBindRoleRsp bindRole(AccountBindRoleReq req) {
+    public AccountBindRoleResponse bindRole(AccountBindRoleRequest req) {
         String aid = JwtUtils.decode(req.getTokenId());
         AccountDTO accountDTO = this.get(aid);
         if (accountDTO == null) {
@@ -96,7 +96,7 @@ public class AccountServiceImpl extends RTMongoServiceCacheImpl<String, AccountD
         }
         accountDTO.setBindRoleId(req.getRid());
         boolean result = this.updateWithVersion(accountDTO);
-        return new AccountBindRoleRsp().setOpStatus(result);
+        return new AccountBindRoleResponse().setOpStatus(result);
     }
 
 

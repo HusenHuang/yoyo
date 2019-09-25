@@ -6,7 +6,7 @@ import com.yoyo.authority.menu.pojo.dto.MenuDTO;
 import com.yoyo.authority.menu.service.IMenuService;
 import com.yoyo.authority.role.config.ConfigManager;
 import com.yoyo.authority.role.pojo.dto.RoleDTO;
-import com.yoyo.authority.role.pojo.resposne.RoleMenuGetRsp;
+import com.yoyo.authority.role.pojo.resposne.RoleMenuGetResponse;
 import com.yoyo.authority.role.service.IRoleService;
 import com.yoyo.framework.api.RTMongoServiceCacheImpl;
 import com.yoyo.framework.common.SystemConstant;
@@ -69,7 +69,7 @@ public class RoleServiceImpl extends RTMongoServiceCacheImpl<String, RoleDTO> im
     }
 
     @Override
-    public RoleMenuGetRsp getRoleMenuTree(String rid) {
+    public RoleMenuGetResponse getRoleMenuTree(String rid) {
         RoleDTO roleDTO = this.get(rid);
         if (roleDTO == null) {
             throw new RTException("角色不存在");
@@ -79,9 +79,9 @@ public class RoleServiceImpl extends RTMongoServiceCacheImpl<String, RoleDTO> im
             List<MenuDTO> menus = menuService.list(menuIds);
             List<MenuVO> menuVOS = menus.stream().map(s -> BeanUtils.copy(s, MenuVO.class)).collect(Collectors.toList());
             List<MenuVO> loadTree = MenuManager.loadTree(menuVOS, SystemConstant.ROOT);
-            return new RoleMenuGetRsp().setMenuList(loadTree);
+            return new RoleMenuGetResponse().setMenuList(loadTree);
         } else {
-            return new RoleMenuGetRsp().setMenuList(new ArrayList<>());
+            return new RoleMenuGetResponse().setMenuList(new ArrayList<>());
         }
     }
 

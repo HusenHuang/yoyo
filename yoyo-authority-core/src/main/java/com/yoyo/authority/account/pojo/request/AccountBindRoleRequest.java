@@ -13,7 +13,7 @@ import java.io.Serializable;
  ***/
 @Data
 @Accessors(chain = true)
-public class AccountBindRoleReq implements Serializable {
+public class AccountBindRoleRequest implements Serializable {
 
     private String tokenId;
 

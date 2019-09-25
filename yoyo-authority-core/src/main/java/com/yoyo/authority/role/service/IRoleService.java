@@ -1,6 +1,6 @@
 package com.yoyo.authority.role.service;
 
-import com.yoyo.authority.role.pojo.resposne.RoleMenuGetRsp;
+import com.yoyo.authority.role.pojo.resposne.RoleMenuGetResponse;
 
 import java.util.List;
 
@@ -18,5 +18,5 @@ public interface IRoleService {
 
     boolean bindMenu(String id, List<String> menuIdList);
 
-    RoleMenuGetRsp getRoleMenuTree(String rid);
+    RoleMenuGetResponse getRoleMenuTree(String rid);
 }

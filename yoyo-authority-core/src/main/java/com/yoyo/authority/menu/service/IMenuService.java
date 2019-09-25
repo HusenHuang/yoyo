@@ -1,8 +1,7 @@
 package com.yoyo.authority.menu.service;
 
-import com.yoyo.authority.menu.pojo.dto.MenuDTO;
-import com.yoyo.authority.menu.pojo.response.MenuGetRsp;
-import com.yoyo.authority.menu.pojo.response.MenuListShowRsp;
+import com.yoyo.authority.menu.pojo.response.MenuShowResponse;
+import com.yoyo.authority.menu.pojo.response.MenuListShowResponse;
 
 /***
  @Author:MrHuang
@@ -16,9 +15,9 @@ public interface IMenuService {
 
     boolean updateMenu(String mid ,String name, String path, String parentId, int ordered);
 
-    MenuGetRsp getMenu(String mid);
+    MenuShowResponse getMenu(String mid);
 
     boolean deleteMenu(String mid);
 
-    MenuListShowRsp showAllMenu();
+    MenuListShowResponse showAllMenu();
 }

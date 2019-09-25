@@ -14,7 +14,7 @@ import java.io.Serializable;
  ***/
 @Data
 @Accessors(chain = true)
-public class RoleAddReq implements Serializable {
+public class RoleAddRequest implements Serializable {
 
     @NotBlank(message = "角色名称不能为空")
     private String name;

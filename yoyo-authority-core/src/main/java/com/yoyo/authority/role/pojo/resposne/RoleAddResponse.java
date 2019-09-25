@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  ***/
 @Data
 @RequestMapping
-public class RoleAddRsp {
+public class RoleAddResponse {
 
     private boolean opStatus;
 }

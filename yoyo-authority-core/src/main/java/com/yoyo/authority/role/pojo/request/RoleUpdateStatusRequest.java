@@ -8,5 +8,5 @@ import java.io.Serializable;
  @DESC: TODO
  @VERSION: 1.0
  ***/
-public class RoleUpdateStatusReq implements Serializable {
+public class RoleUpdateStatusRequest implements Serializable {
 }

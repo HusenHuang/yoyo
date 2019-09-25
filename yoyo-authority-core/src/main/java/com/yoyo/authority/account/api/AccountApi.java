@@ -1,10 +1,10 @@
 package com.yoyo.authority.account.api;
 
-import com.yoyo.authority.account.pojo.request.AccountBindRoleReq;
-import com.yoyo.authority.account.pojo.request.AccountLoginReq;
-import com.yoyo.authority.account.pojo.request.AccountRegisterReq;
-import com.yoyo.authority.account.pojo.response.AccountBindRoleRsp;
-import com.yoyo.authority.account.pojo.response.AccountRegisterRsp;
+import com.yoyo.authority.account.pojo.request.AccountBindRoleRequest;
+import com.yoyo.authority.account.pojo.request.AccountLoginRequest;
+import com.yoyo.authority.account.pojo.request.AccountRegisterRequest;
+import com.yoyo.authority.account.pojo.response.AccountBindRoleResponse;
+import com.yoyo.authority.account.pojo.response.AccountRegisterResponse;
 import com.yoyo.authority.account.service.IAccountService;
 import com.yoyo.framework.api.RTRaw;
 import com.yoyo.framework.api.RTRawWrite;
@@ -34,17 +34,17 @@ public class AccountApi {
     }
 
     @PostMapping("/register")
-    public RTRaw<AccountRegisterRsp> register(@Validated @RequestBody AccountRegisterReq req) {
+    public RTRaw<AccountRegisterResponse> register(@Validated @RequestBody AccountRegisterRequest req) {
         return RTRawWrite.success(accountService.register(req));
     }
 
     @PostMapping("/login")
-    public RTRaw<Object> login(@RequestBody AccountLoginReq req) {
+    public RTRaw<Object> login(@RequestBody AccountLoginRequest req) {
         return RTRawWrite.success(accountService.login(req));
     }
 
     @PostMapping("/bindRole")
-    public RTRaw<AccountBindRoleRsp> bindRole(@RequestBody AccountBindRoleReq req) {
+    public RTRaw<AccountBindRoleResponse> bindRole(@RequestBody AccountBindRoleRequest req) {
         return RTRawWrite.success(accountService.bindRole(req));
     }
 }

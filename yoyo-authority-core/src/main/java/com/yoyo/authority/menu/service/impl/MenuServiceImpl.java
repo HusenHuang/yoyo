@@ -4,9 +4,9 @@ import com.yoyo.authority.menu.config.ConfigManager;
 import com.yoyo.authority.menu.dao.MenuRepository;
 import com.yoyo.authority.menu.manager.MenuManager;
 import com.yoyo.authority.menu.pojo.dto.MenuDTO;
-import com.yoyo.authority.menu.pojo.response.MenuGetRsp;
+import com.yoyo.authority.menu.pojo.response.MenuShowResponse;
 import com.yoyo.authority.menu.pojo.MenuVO;
-import com.yoyo.authority.menu.pojo.response.MenuListShowRsp;
+import com.yoyo.authority.menu.pojo.response.MenuListShowResponse;
 import com.yoyo.authority.menu.service.IMenuService;
 import com.yoyo.framework.api.RTMongoServiceCacheImpl;
 import com.yoyo.framework.common.SystemConstant;
@@ -59,10 +59,10 @@ public class MenuServiceImpl extends RTMongoServiceCacheImpl<String,MenuDTO> imp
 
     @ZKDistributedLock(value = "zkPath")
     @Override
-    public MenuGetRsp getMenu(String mid) {
+    public MenuShowResponse getMenu(String mid) {
         MenuDTO menuDTO = this.get(mid);
         MenuVO menuVO = BeanUtils.copy(menuDTO, MenuVO.class);
-        return new MenuGetRsp().setMenu(menuVO);
+        return new MenuShowResponse().setMenu(menuVO);
     }
 
     @Override
@@ -71,10 +71,10 @@ public class MenuServiceImpl extends RTMongoServiceCacheImpl<String,MenuDTO> imp
     }
 
     @Override
-    public MenuListShowRsp showAllMenu() {
+    public MenuListShowResponse showAllMenu() {
         List<MenuDTO> menus = this.list();
         List<MenuVO> vos = menus.stream().map(s -> BeanUtils.copy(s, MenuVO.class)).collect(Collectors.toList());
         vos = MenuManager.loadTree(vos, SystemConstant.ROOT);
-        return new MenuListShowRsp().setVos(vos);
+        return new MenuListShowResponse().setVos(vos);
     }
 }

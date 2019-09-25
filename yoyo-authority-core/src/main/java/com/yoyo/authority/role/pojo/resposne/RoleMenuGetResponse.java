@@ -15,7 +15,7 @@ import java.util.List;
  ***/
 @Data
 @Accessors(chain = true)
-public class RoleMenuGetRsp implements Serializable {
+public class RoleMenuGetResponse implements Serializable {
 
     private List<MenuVO> menuList;
 }

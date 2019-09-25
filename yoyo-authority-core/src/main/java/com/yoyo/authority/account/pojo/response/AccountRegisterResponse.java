@@ -1,24 +1,20 @@
 package com.yoyo.authority.account.pojo.response;
 
-import com.yoyo.authority.menu.pojo.MenuVO;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
 
 /***
  @Author:MrHuang
- @Date: 2019/9/5 14:18
+ @Date: 2019/9/5 11:04
  @DESC: TODO
  @VERSION: 1.0
  ***/
 @Data
 @Accessors(chain = true)
-public class AccountLoginRsp implements Serializable {
-
-    private String tokenId;
+public class AccountRegisterResponse implements Serializable {
 
     private String name;
 
@@ -27,6 +23,4 @@ public class AccountLoginRsp implements Serializable {
     private String email;
 
     private LocalDateTime createTime;
-
-    private List<MenuVO> menuList;
 }

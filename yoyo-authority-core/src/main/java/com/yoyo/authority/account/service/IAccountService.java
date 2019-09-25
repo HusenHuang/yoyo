@@ -1,13 +1,11 @@
 package com.yoyo.authority.account.service;
 
-import com.yoyo.authority.account.pojo.dto.AccountDTO;
-import com.yoyo.authority.account.pojo.request.AccountBindRoleReq;
-import com.yoyo.authority.account.pojo.request.AccountLoginReq;
-import com.yoyo.authority.account.pojo.request.AccountRegisterReq;
-import com.yoyo.authority.account.pojo.response.AccountBindRoleRsp;
-import com.yoyo.authority.account.pojo.response.AccountLoginRsp;
-import com.yoyo.authority.account.pojo.response.AccountRegisterRsp;
-import com.yoyo.framework.api.IRTService;
+import com.yoyo.authority.account.pojo.request.AccountBindRoleRequest;
+import com.yoyo.authority.account.pojo.request.AccountLoginRequest;
+import com.yoyo.authority.account.pojo.request.AccountRegisterRequest;
+import com.yoyo.authority.account.pojo.response.AccountBindRoleResponse;
+import com.yoyo.authority.account.pojo.response.AccountLoginResponse;
+import com.yoyo.authority.account.pojo.response.AccountRegisterResponse;
 
 /***
  @Author:MrHuang
@@ -17,9 +15,9 @@ import com.yoyo.framework.api.IRTService;
  ***/
 public interface IAccountService {
 
-    AccountRegisterRsp register(AccountRegisterReq req);
+    AccountRegisterResponse register(AccountRegisterRequest req);
 
-    AccountLoginRsp login(AccountLoginReq req);
+    AccountLoginResponse login(AccountLoginRequest req);
 
-    AccountBindRoleRsp bindRole(AccountBindRoleReq req);
+    AccountBindRoleResponse bindRole(AccountBindRoleRequest req);
 }

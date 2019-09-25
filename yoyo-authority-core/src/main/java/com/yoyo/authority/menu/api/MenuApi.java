@@ -1,8 +1,8 @@
 package com.yoyo.authority.menu.api;
 
-import com.yoyo.authority.menu.pojo.request.MenuAddReq;
-import com.yoyo.authority.menu.pojo.response.MenuGetRsp;
-import com.yoyo.authority.menu.pojo.request.MenuUpdateReq;
+import com.yoyo.authority.menu.pojo.request.MenuAddRequest;
+import com.yoyo.authority.menu.pojo.response.MenuShowResponse;
+import com.yoyo.authority.menu.pojo.request.MenuUpdateRequest;
 import com.yoyo.authority.menu.service.IMenuService;
 import com.yoyo.framework.PrintMethod;
 import com.yoyo.framework.RTSkipLogin;
@@ -32,14 +32,14 @@ public class MenuApi {
 
     @RTSkipLogin
     @PostMapping("/add")
-    public RTRaw<Boolean> addMenu(@Validated @RequestBody MenuAddReq req) {
+    public RTRaw<Boolean> addMenu(@Validated @RequestBody MenuAddRequest req) {
         boolean result = menuService.addMenu(req.getName(), req.getPath(), req.getParentId(), req.getOrdered());
         return RTRawWrite.success(result);
     }
 
     @PostMapping("/update")
     @RTSkipLogin
-    public RTRaw<Boolean> updateMenu(@Validated @RequestBody MenuUpdateReq req) {
+    public RTRaw<Boolean> updateMenu(@Validated @RequestBody MenuUpdateRequest req) {
         boolean result = menuService.updateMenu(req.getMid(), req.getName(), req.getPath(), req.getParentId(), req.getOrdered());
         return RTRawWrite.success(result);
     }
@@ -47,8 +47,8 @@ public class MenuApi {
     @GetMapping("/get/{mid}")
     @PrintMethod
     @RTSkipLogin
-    public RTRaw<MenuGetRsp> getMenu(@PathVariable String mid) {
-        MenuGetRsp result = menuService.getMenu(mid);
+    public RTRaw<MenuShowResponse> getMenu(@PathVariable String mid) {
+        MenuShowResponse result = menuService.getMenu(mid);
         String echo = notifyService.echo();
         System.out.println(echo);
         return RTRawWrite.success(result);

@@ -14,7 +14,7 @@ import java.io.Serializable;
  ***/
 @Data
 @Accessors(chain = true)
-public class RoleUpdateReq implements Serializable {
+public class RoleUpdateRequest implements Serializable {
 
     @NotBlank(message = "角色ID不能为空")
     private String rid;
