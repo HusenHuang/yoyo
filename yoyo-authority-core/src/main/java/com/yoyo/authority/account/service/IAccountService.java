@@ -15,7 +15,7 @@ import com.yoyo.framework.api.IRTService;
  @DESC: TODO
  @VERSION: 1.0
  ***/
-public interface IAccountService extends IRTService<String, AccountDTO> {
+public interface IAccountService {
 
     AccountRegisterRsp register(AccountRegisterReq req);
 

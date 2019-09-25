@@ -10,7 +10,7 @@ import com.yoyo.authority.menu.pojo.response.MenuListShowRsp;
  @DESC: TODO
  @VERSION: 1.0
  ***/
-public interface IMenuService extends com.yoyo.framework.api.IRTService<String, MenuDTO> {
+public interface IMenuService {
 
     boolean addMenu(String name, String path, String parentId, int ordered);
 
@@ -21,6 +21,4 @@ public interface IMenuService extends com.yoyo.framework.api.IRTService<String, 
     boolean deleteMenu(String mid);
 
     MenuListShowRsp showAllMenu();
-
-
 }
