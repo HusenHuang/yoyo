@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: yoyo-gateway
+  cloud:
+    nacos:
+      config:
+        server-addr: www.limaila.com:8848
+        file-extension: yaml
+      discovery:
+        server-addr: www.limaila.com:8848
+        cluster-name: YOYO
+  main:
+    allow-bean-definition-overriding: true

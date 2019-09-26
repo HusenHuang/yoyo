@@ -26,6 +26,7 @@
         <module>yoyo-notify</module>
         <module>yoyo-notify-api</module>
         <module>yoyo-notify-core</module>
+        <module>yoyo-gateway</module>
     </modules>
 
 

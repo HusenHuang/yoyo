@@ -1,0 +1,28 @@
+server:
+  port: 79
+
+logging:
+  path: ${user.home}/${spring.application.name}
+  level:
+    root: info
+
+spring:
+  jackson:
+    default-property-inclusion: non_null
+  cloud:
+    gateway:
+      routes:
+        - id: yoyo-authority
+          uri: lb://yoyo-authority
+          predicates:
+            - name: Path
+              args[pattern]: /authority/**
+          filters:
+            - StripPrefix=1
+        - id: yoyo-notify
+          uri: lb://yoyo-notify
+          predicates:
+            - name: Path
+              args[pattern]: /notify/**
+          filters:
+            - StripPrefix=1
