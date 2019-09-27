@@ -5,10 +5,13 @@ spring:
     nacos:
       discovery:
         server-addr: www.limaila.com:8848
+        namespace: 8c506fb0-c559-4ec4-ab5e-9cdfd320bc85
         cluster-name: YOYO
       config:
         server-addr: www.limaila.com:8848
         file-extension: yaml
+        namespace: 8c506fb0-c559-4ec4-ab5e-9cdfd320bc85
+        cluster-name: YOYO
   main:
     allow-bean-definition-overriding: true
 
@@ -30,4 +33,4 @@ dubbo:
   cloud:
     subscribed-services: yoyo-notify
   consumer:
-    check: false
+    check: true
