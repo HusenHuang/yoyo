@@ -17,7 +17,7 @@
         <xstream.version>1.4.11.1</xstream.version>
         <easyexcel.version>1.1.2-beat1</easyexcel.version>
         <guava.version>27.1-jre</guava.version>
-        <commons-io.version>2.6</commons-io.version>
+        <commons-io.version>2.7</commons-io.version>
         <commons-codec.version>1.12</commons-codec.version>
         <java-jwt.version>3.8.1</java-jwt.version>
     </properties>
